@@ -36,10 +36,12 @@ class _FoodDetailState extends State<FoodDetail> {
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: Text(
-         widget.foodModel.foodName!=null ?  widget.foodModel.foodName[0].toUpperCase() +
-             widget.foodModel.foodName
-                 .toLowerCase()
-                 .substring(1, widget.foodModel.foodName.length): "",
+          widget.foodModel.foodName != null
+              ? widget.foodModel.foodName[0].toUpperCase() +
+                  widget.foodModel.foodName
+                      .toLowerCase()
+                      .substring(1, widget.foodModel.foodName.length)
+              : "",
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
       ),
@@ -64,7 +66,12 @@ class _FoodDetailState extends State<FoodDetail> {
                       child: InkWell(
                           onTap: () {
                             print("kullaniciya tıklandi");
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userID: foodModel.user.id,)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage(
+                                          userID: foodModel.user.id,
+                                        )));
                           },
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 10),
@@ -73,27 +80,38 @@ class _FoodDetailState extends State<FoodDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.amber,
-                                    child: Text(
-                                      foodModel?.user?.username != null
-                                          ? foodModel.user.username[0]
-                                              .toUpperCase()
-                                          : "U",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: Container(
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(200),
+                                        child: FadeInImage.assetNetwork(
+                                          fit: BoxFit.cover,
+                                          placeholder: 'assets/loading.gif',
+                                          image: widget.foodModel.user
+                                                      ?.profilePhoto !=
+                                                  null
+                                              ? Constants.BASE_URL +
+                                                  Constants.IMAGE_BASE_URL +
+                                                  widget.foodModel.user
+                                                      .profilePhoto.name
+                                              : 'assets/loading.gif',
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   flex: 1,
                                 ),
                                 Expanded(
                                   child: Text(
-                                    foodModel?.user != null
-                                        ? foodModel?.user.username
+                                    widget?.foodModel?.user != null
+                                        ? "   " +
+                                            widget?.foodModel?.user.username
                                         : "UserName",
-                                    style: TextStyle(fontSize: 17),
+                                    style: TextStyle(
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   flex: 5,
                                 )

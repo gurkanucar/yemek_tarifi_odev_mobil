@@ -47,11 +47,11 @@ class FoodModel {
     modified: json["modified"],
     foodName: json["foodName"],
     recipe: json["recipe"],
-    ingredients: json["ingredients"] == null ? null : json["ingredients"],
+    ingredients: json["ingredients"],
     categoryList: List<dynamic>.from(json["categoryList"].map((x) => x)),
-    image: json["image"] == null ? null : Image.fromJson(json["image"]),
-    completedCount: json["completedCount"] == null ? null : json["completedCount"],
-    rankStar: json["rankStar"] == null ? null : json["rankStar"],
+    image: Image.fromJson(json["image"]),
+    completedCount: json["completedCount"],
+    rankStar: json["rankStar"],
     hardness: json["hardness"],
     prepTime: json["prepTime"],
     personCount: json["personCount"],
@@ -64,11 +64,11 @@ class FoodModel {
     "modified": modified,
     "foodName": foodName,
     "recipe": recipe,
-    "ingredients": ingredients == null ? null : ingredients,
+    "ingredients": ingredients,
     "categoryList": List<dynamic>.from(categoryList.map((x) => x)),
-    "image": image == null ? null : image.toJson(),
-    "completedCount": completedCount == null ? null : completedCount,
-    "rankStar": rankStar == null ? null : rankStar,
+    "image": image.toJson(),
+    "completedCount": completedCount,
+    "rankStar": rankStar,
     "hardness": hardness,
     "prepTime": prepTime,
     "personCount": personCount,
@@ -131,7 +131,7 @@ class User {
   String email;
   bool resetPassword;
   String role;
-  dynamic profilePhoto;
+  Image profilePhoto;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
@@ -143,7 +143,7 @@ class User {
     email: json["email"],
     resetPassword: json["resetPassword"],
     role: json["role"],
-    profilePhoto: json["profilePhoto"],
+    profilePhoto: Image.fromJson(json["profilePhoto"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -156,11 +156,6 @@ class User {
     "email": email,
     "resetPassword": resetPassword,
     "role": role,
-    "profilePhoto": profilePhoto,
+    "profilePhoto": profilePhoto.toJson(),
   };
-
-  @override
-  String toString() {
-    return 'User{id: $id, created: $created, modified: $modified, name: $name, surname: $surname, username: $username, email: $email, resetPassword: $resetPassword, role: $role, profilePhoto: $profilePhoto}';
-  }
 }

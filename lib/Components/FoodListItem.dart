@@ -40,7 +40,11 @@ class _FoodListItemState extends State<FoodListItem> {
                   child: InkWell(
                       onTap: () {
                         print("kullaniciya tıklandi");
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userID:widget.foodModel.user.id)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                    userID: widget.foodModel.user.id)));
                       },
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 10),
@@ -49,17 +53,24 @@ class _FoodListItemState extends State<FoodListItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                              child: CircleAvatar(
-                                backgroundColor: Colors.amber,
-                                child: Text(
-                                  widget?.foodModel?.user?.username != null
-                                      ? widget.foodModel.user.username[0]
-                                          .toUpperCase()
-                                      : "U",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                              child: SizedBox(
+                                height: 60,
+                                child: Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(200),
+                                    child: FadeInImage.assetNetwork(
+                                      fit: BoxFit.cover,
+                                      placeholder: 'assets/loading.gif',
+                                      image:
+                                          widget.foodModel.user?.profilePhoto !=
+                                                  null
+                                              ? Constants.BASE_URL +
+                                                  Constants.IMAGE_BASE_URL +
+                                                  widget.foodModel.user
+                                                      .profilePhoto.name
+                                              : 'assets/loading.gif',
+                                    ),
+                                  ),
                                 ),
                               ),
                               flex: 1,
@@ -67,9 +78,10 @@ class _FoodListItemState extends State<FoodListItem> {
                             Expanded(
                               child: Text(
                                 widget?.foodModel?.user != null
-                                    ? widget?.foodModel?.user.username
+                                    ? "   " + widget?.foodModel?.user.username
                                     : "UserName",
-                                style: TextStyle(fontSize: 17),
+                                style: TextStyle(
+                                    fontSize: 19, fontWeight: FontWeight.bold),
                               ),
                               flex: 5,
                             )
@@ -84,8 +96,8 @@ class _FoodListItemState extends State<FoodListItem> {
                     placeholder: 'assets/loading.gif',
                     image: widget?.foodModel?.image?.url != null
                         ? Constants.BASE_URL +
-                        Constants.IMAGE_BASE_URL +
-                        widget.foodModel?.image?.name
+                            Constants.IMAGE_BASE_URL +
+                            widget.foodModel?.image?.name
                         : 'assets/loading.gif',
                   ),
                 ),
@@ -97,8 +109,10 @@ class _FoodListItemState extends State<FoodListItem> {
                         widget?.foodModel?.foodName != null
                             ? widget?.foodModel?.foodName
                             : "Yemek Adı",
-                        style:
-                            TextStyle(fontSize: 28, color: Color(0xff4C4C4C),),
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: Color(0xff4C4C4C),
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
