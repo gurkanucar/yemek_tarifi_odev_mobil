@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/login_page.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
@@ -9,14 +10,18 @@ class RouterPage extends StatefulWidget {
 }
 
 class _RouterPageState extends State<RouterPage> {
-  List<Food> _foods;
+  List<FoodModel> _foods;
   bool _loading;
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    LoginPage(),
+    FoodListItem(),
+    Text(
+      'SCHOOL',
+      style: optionStyle,
+    ),
     Text(
       'SCHOOL',
       style: optionStyle,
@@ -61,12 +66,8 @@ class _RouterPageState extends State<RouterPage> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
-      body: TextButton(
-        child: Text("getir"),
-        onPressed: () {
-          getFoods();
-          
-        },
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
     );
   }
