@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CommentListItem.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CommentList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
+import 'package:yemek_tarifi_odev_mobil/models/CommentModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/MyProfilePage.dart';
@@ -21,10 +24,9 @@ class _RouterPageState extends State<RouterPage> {
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     FoodList(),
-    Text(
-      'Oluştur',
-      style: optionStyle,
-    ),
+   // CommentItem(commentModel: new CommentModel()),
+    CommentList(foodId: 1),
+
     MyProfilePage(),
   ];
 

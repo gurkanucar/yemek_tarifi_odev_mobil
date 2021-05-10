@@ -14,6 +14,7 @@ class CommentModel {
     this.id,
     this.userId,
     this.userPhotoUrl,
+    this.username,
     this.foodId,
   });
 
@@ -21,6 +22,7 @@ class CommentModel {
   int id;
   int userId;
   String userPhotoUrl;
+  String username;
   int foodId;
 
   factory CommentModel.fromJson(Map<String, dynamic> json) => CommentModel(
@@ -28,6 +30,7 @@ class CommentModel {
     id: json["id"],
     userId: json["userID"],
     userPhotoUrl: json["userPhotoUrl"],
+    username: json["username"],
     foodId: json["foodID"],
   );
 
@@ -36,6 +39,7 @@ class CommentModel {
     "id": id,
     "userID": userId,
     "userPhotoUrl": userPhotoUrl,
+    "username": username,
     "foodID": foodId,
   };
 }

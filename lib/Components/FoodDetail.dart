@@ -4,6 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../Constans.dart';
+import 'CommentList.dart';
 
 class FoodDetail extends StatefulWidget {
   FoodModel foodModel;
@@ -227,6 +228,13 @@ class _FoodDetailState extends State<FoodDetail> {
                         ),
                       ],
                     ),
+
+                    SizedBox(
+                      height: 50,
+                    ),
+
+                   CommentList(foodId: foodModel.id),
+
                   ],
                 ),
               ),

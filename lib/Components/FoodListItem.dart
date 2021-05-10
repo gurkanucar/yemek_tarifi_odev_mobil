@@ -18,7 +18,8 @@ class _FoodListItemState extends State<FoodListItem> {
   @override
   Widget build(BuildContext context) {
     return Material(
-        elevation: 20,
+        borderRadius: BorderRadius.circular(20),
+       elevation: 5,
         child: InkWell(
           onTap: widget.onPressed,
           child: Container(
@@ -27,16 +28,13 @@ class _FoodListItemState extends State<FoodListItem> {
             width: MediaQuery.of(context).size.width * 0.96,
             decoration: BoxDecoration(
                 //border: Border.all(color: Colors.amber),
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white),
+                borderRadius: BorderRadius.circular(20)),
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(height: 10),
                 Material(
-                  elevation: 1,
-                  color: Colors.white,
                   child: InkWell(
                       onTap: () {
                         print("kullaniciya tıklandi");
@@ -47,7 +45,7 @@ class _FoodListItemState extends State<FoodListItem> {
                                     userID: widget.foodModel.user.id)));
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
