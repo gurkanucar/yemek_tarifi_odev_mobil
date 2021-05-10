@@ -26,8 +26,11 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-    //  color: Colors.amber,
+    return Material(
+      elevation: 10,
+      borderRadius: BorderRadius.circular(40),
+      child: Container(
+        //  color: Colors.amber,
         height: MediaQuery.of(context).size.height*0.23,
         width: MediaQuery.of(context).size.width * 0.95,
         child: ListView.builder(
@@ -57,6 +60,7 @@ class _CategoryListState extends State<CategoryList> {
                     ],
                   ));
             }),
+      ),
     );
   }
 }
