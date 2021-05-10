@@ -6,6 +6,11 @@ import '../Constans.dart';
 import 'FoodDetail.dart';
 
 class FoodListGrid extends StatefulWidget {
+
+  int userId;
+
+  FoodListGrid({@required this.userId});
+
   @override
   _FoodListGridState createState() => _FoodListGridState();
 }
@@ -16,29 +21,26 @@ class _FoodListGridState extends State<FoodListGrid> {
 
   void getFoods() {
     _loading = true;
-    FoodService.getFoodByUserID(Constants.USER_ID).then((value) {
+    FoodService.getFoodByUserID(widget.userId).then((value) {
       setState(() {
         _foods = value;
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
         _foods.add(_foods[0]);
-        _foods.add(_foods[1]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+
         _loading = false;
       });
     });

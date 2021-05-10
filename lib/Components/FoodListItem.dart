@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 
 import '../Constans.dart';
 
@@ -39,6 +40,7 @@ class _FoodListItemState extends State<FoodListItem> {
                   child: InkWell(
                       onTap: () {
                         print("kullaniciya tıklandi");
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userID:widget.foodModel.user.id)));
                       },
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 10),

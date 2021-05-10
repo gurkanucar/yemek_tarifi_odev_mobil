@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../Constans.dart';
@@ -35,10 +36,10 @@ class _FoodDetailState extends State<FoodDetail> {
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: Text(
-          foodModel.foodName[0].toUpperCase() +
-              foodModel.foodName
-                  .toLowerCase()
-                  .substring(1, foodModel.foodName.length),
+         widget.foodModel.foodName!=null ?  widget.foodModel.foodName[0].toUpperCase() +
+             widget.foodModel.foodName
+                 .toLowerCase()
+                 .substring(1, widget.foodModel.foodName.length): "",
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
       ),
@@ -63,6 +64,7 @@ class _FoodDetailState extends State<FoodDetail> {
                       child: InkWell(
                           onTap: () {
                             print("kullaniciya tıklandi");
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userID: foodModel.user.id,)));
                           },
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 10),

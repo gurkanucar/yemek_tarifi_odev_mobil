@@ -4,7 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
-import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/MyProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 class RouterPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _RouterPageState extends State<RouterPage> {
       'Oluştur',
       style: optionStyle,
     ),
-    ProfilePage(),
+    MyProfilePage(),
   ];
 
   void _onItemTapped(int index) {
