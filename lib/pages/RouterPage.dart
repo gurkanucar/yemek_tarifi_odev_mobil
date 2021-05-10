@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategoryList.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategoryListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentList.dart';
@@ -7,6 +9,7 @@ import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CommentModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
@@ -23,13 +26,26 @@ class _RouterPageState extends State<RouterPage> {
   bool _loading;
 
   int _selectedIndex = 0;
+  CategoryModel category = new CategoryModel();
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
 
-    CommentComponent(foodID: 1,),
+   SingleChildScrollView(
+     child:  Column(
+       mainAxisSize: MainAxisSize.max,
+       children: [
+         SizedBox(height: 25,),
+         CategoryList(),
+         FoodList(),
+       ],
+     ),
+   ),
 
-    FoodList(),
+   // CommentComponent(foodID: 1,),
+
+    CategoryList(),
     // CommentItem(commentModel: new CommentModel()),
     // CommentList(foodId: 1),
 

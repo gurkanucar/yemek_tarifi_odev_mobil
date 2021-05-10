@@ -23,7 +23,7 @@ class _FoodListItemState extends State<FoodListItem> {
         child: InkWell(
           onTap: widget.onPressed,
           child: Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(left: 10,right: 10),
             // height: MediaQuery.of(context).size.height * 0.62,
             width: MediaQuery.of(context).size.width * 0.96,
             decoration: BoxDecoration(

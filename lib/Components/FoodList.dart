@@ -35,15 +35,14 @@ class _FoodListState extends State<FoodList> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.95,
       child: ListView.builder(
-          //physics: NeverScrollableScrollPhysics(),
-          //shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           key: UniqueKey(),
           itemCount: null == _foods ? 0 : _foods.length,
           itemBuilder: (context, index) {
             return InkWell(
               child: Column(
                 children: [
-                  SizedBox(height: 15,),
                   FoodListItem(
                     foodModel: _foods[index],
                     onPressed: () {
