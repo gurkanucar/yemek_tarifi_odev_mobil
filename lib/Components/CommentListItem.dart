@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CommentModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CommentService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../Constans.dart';
+import 'BlurryDialog.dart';
+import 'FoodDetail.dart';
 
 class CommentListItem extends StatefulWidget {
-
   CommentModel commentModel;
 
   CommentListItem({@required this.commentModel});
@@ -16,7 +19,6 @@ class CommentListItem extends StatefulWidget {
 }
 
 class _CommentListItemState extends State<CommentListItem> {
-
   CommentModel data;
 
   @override
@@ -30,21 +32,26 @@ class _CommentListItemState extends State<CommentListItem> {
     });
 */
 
+
+
     setState(() {
-      data=widget.commentModel;
+      data = widget.commentModel;
     });
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Material(
+    return GestureDetector(
+        onLongPress: () {
+          print("silcen mi");
+          _showDialog(context);
+        },
+        child: SingleChildScrollView(
+            child: Material(
           borderRadius: BorderRadius.circular(20),
           elevation: 10,
           child: Container(
-            width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: [
                 Material(
@@ -52,14 +59,14 @@ class _CommentListItemState extends State<CommentListItem> {
                   child: InkWell(
                       onTap: () {
                         print("kullaniciya tıklandi");
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfilePage(
-                                  userID: data.userId)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProfilePage(userID: data.userId)));
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
+                        padding: EdgeInsets.only(bottom: 10, left: 10, top: 10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,11 +80,9 @@ class _CommentListItemState extends State<CommentListItem> {
                                     child: FadeInImage.assetNetwork(
                                       fit: BoxFit.cover,
                                       placeholder: 'assets/loading.gif',
-                                      image:
-                                      data?.userPhotoUrl !=
-                                          null
+                                      image: data?.userPhotoUrl != null
                                           ? Constants.BASE_URL +
-                                          data?.userPhotoUrl
+                                              data?.userPhotoUrl
                                           : 'assets/loading.gif',
                                     ),
                                   ),
@@ -99,15 +104,12 @@ class _CommentListItemState extends State<CommentListItem> {
                         ),
                       )),
                 ),
-
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: EdgeInsets.only(left: 10, top: 10,bottom: 20),
+                      margin: EdgeInsets.only(left: 10, top: 10, bottom: 20),
                       child: Text(
-                        data?.comment != null
-                            ? data?.comment
-                            : "yorum...",
+                        data?.comment != null ? data?.comment : "yorum...",
                         style: TextStyle(
                           fontSize: 20,
                           color: Color(0xff4C4C4C),
@@ -116,11 +118,51 @@ class _CommentListItemState extends State<CommentListItem> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     )),
-
               ],
             ),
           ),
-        )
+        )));
+  }
+
+  void _showDialog(BuildContext context) {
+
+    VoidCallback continueCallBack = () {
+       Navigator.of(context).pop();
+      // code on continue comes here
+      if(widget.commentModel.userId==Constants.USER_ID) {
+        CommentService.deleteCommentByID(widget.commentModel.id);
+        print("Sildiniz beyfendi!");
+        FoodService.getFoodByID(widget.commentModel.foodId).then((value) {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>RouterPage()));
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => FoodDetail(foodModel: value)));
+          /* Navigator.pushReplacement(
+               context,
+               MaterialPageRoute(
+                   builder: (BuildContext context) => super.widget));
+         }*/
+        });
+      }
+      else{
+        print("Şikayet Ettiniz beyfendi!");
+      }
+
+    };
+
+    BlurryDialog  alert;
+
+    if(widget.commentModel.userId==Constants.USER_ID){
+      alert = BlurryDialog("Uyarı!","Yorumu Silmek İstiyor musunuz?",continueCallBack);
+    }
+    else{
+      alert = BlurryDialog("Uyarı!","Yorumu Şikayet Etmek İstiyor musunuz?",continueCallBack);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

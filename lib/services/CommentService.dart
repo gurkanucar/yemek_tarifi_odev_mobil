@@ -17,17 +17,12 @@ class CommentService {
         "Authorization": "Bearer " + Constants.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      print(food.user.name);
 
-      List<CommentModel> commentModels = [comment];
-
-      final response = await http.post(url+"/"+food.id.toString(),
-          headers: header, body: commentModelToJson(commentModels));
+      final response = await http.post(url+"/foodID/"+food.id.toString(),
+          headers: header, body: commentModelToJson(comment));
       if (response.statusCode == 200) {
         print(response.body);
-        var jsonResponse = json.decode(response.body);
-        FoodModel foodModel = FoodModel.fromJson(jsonResponse);
-        return foodModel;
+        return null;
       } else {
         print("Hata Oluştu!");
         return null;
@@ -83,4 +78,26 @@ class CommentService {
       return null;
     }
   }
+
+  static Future<CommentModel> deleteCommentByID(int commentID) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response = await http.delete(url + "/" + commentID.toString(),
+          headers: header);
+      if (response.statusCode == 200) {
+        return null;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
+
 }

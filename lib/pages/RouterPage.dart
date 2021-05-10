@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CommentComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentList.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CustomButton.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
@@ -23,9 +26,15 @@ class _RouterPageState extends State<RouterPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
+
+    CommentComponent(foodID: 1,),
+
     FoodList(),
-   // CommentItem(commentModel: new CommentModel()),
-    CommentList(foodId: 1),
+    // CommentItem(commentModel: new CommentModel()),
+    // CommentList(foodId: 1),
+
+
+
 
     MyProfilePage(),
   ];
@@ -48,29 +57,33 @@ class _RouterPageState extends State<RouterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_circle_outline),
+                label: 'Oluştur',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Oluştur',
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-    );
+        ));
   }
 }

@@ -4,6 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../Constans.dart';
+import 'CommentComponent.dart';
 import 'CommentList.dart';
 
 class FoodDetail extends StatefulWidget {
@@ -62,179 +63,201 @@ class _FoodDetailState extends State<FoodDetail> {
                   children: [
                     SizedBox(height: 10),
                     Material(
-                      elevation: 1,
-                      color: Colors.white,
-                      child: InkWell(
-                          onTap: () {
-                            print("kullaniciya tıklandi");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfilePage(
-                                          userID: foodModel.user.id,
-                                        )));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 60,
-                                    child: Container(
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(200),
-                                        child: FadeInImage.assetNetwork(
-                                          fit: BoxFit.cover,
-                                          placeholder: 'assets/loading.gif',
-                                          image: widget.foodModel.user
-                                                      ?.profilePhoto !=
-                                                  null
-                                              ? Constants.BASE_URL +
-                                                  Constants.IMAGE_BASE_URL +
-                                                  widget.foodModel.user
-                                                      .profilePhoto.name
-                                              : 'assets/loading.gif',
+                      elevation: 10,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Column(
+                        children: [
+                          Material(
+                            child: InkWell(
+                                onTap: () {
+                                  print("kullaniciya tıklandi");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfilePage(
+                                            userID: foodModel.user.id,
+                                          )));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 10,top: 10,left: 10),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                          height: 60,
+                                          child: Container(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                              BorderRadius.circular(200),
+                                              child: FadeInImage.assetNetwork(
+                                                fit: BoxFit.cover,
+                                                placeholder: 'assets/loading.gif',
+                                                image: widget.foodModel.user
+                                                    ?.profilePhoto !=
+                                                    null
+                                                    ? Constants.BASE_URL +
+                                                    Constants.IMAGE_BASE_URL +
+                                                    widget.foodModel.user
+                                                        .profilePhoto.name
+                                                    : 'assets/loading.gif',
+                                              ),
+                                            ),
+                                          ),
                                         ),
+                                        flex: 1,
                                       ),
-                                    ),
+                                      Expanded(
+                                        child: Text(
+                                          widget?.foodModel?.user != null
+                                              ? "   " +
+                                              widget?.foodModel?.user.username
+                                              : "UserName",
+                                          style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        flex: 5,
+                                      )
+                                    ],
                                   ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    widget?.foodModel?.user != null
-                                        ? "   " +
-                                            widget?.foodModel?.user.username
-                                        : "UserName",
-                                    style: TextStyle(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  flex: 5,
-                                )
-                              ],
-                            ),
-                          )),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: 'assets/loading.gif',
-                        image: foodModel?.image?.url != null
-                            ? Constants.BASE_URL +
-                                Constants.IMAGE_BASE_URL +
-                                foodModel?.image?.name
-                            : 'assets/loading.gif',
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10, top: 10),
-                          child: Text(
-                            foodModel?.foodName != null
-                                ? foodModel.foodName[0].toUpperCase() +
-                                    foodModel.foodName
-                                        .toLowerCase()
-                                        .substring(1, foodModel.foodName.length)
-                                : "Yemek Adı",
-                            style: TextStyle(
-                                fontSize: 28, color: Color(0xff4C4C4C)),
+                                )),
                           ),
-                        )),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.all(15),
-                        child: Text(
-                          foodModel?.ingredients,
-                          textAlign: TextAlign.left,
-                          style:
-                              TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.all(15),
-                        child: Text(
-                          foodModel?.recipe,
-                          textAlign: TextAlign.left,
-                          style:
-                              TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Icon(Icons.timer),
-                            SizedBox(
-                              width: 5,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: FadeInImage.assetNetwork(
+                              fit: BoxFit.cover,
+                              placeholder: 'assets/loading.gif',
+                              image: foodModel?.image?.url != null
+                                  ? Constants.BASE_URL +
+                                  Constants.IMAGE_BASE_URL +
+                                  foodModel?.image?.name
+                                  : 'assets/loading.gif',
                             ),
-                            Text(foodModel?.prepTime?.toString() + " dk",
-                                style: TextStyle(fontSize: 18))
-                            /* Text(
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10, top: 10),
+                                child: Text(
+                                  foodModel?.foodName != null
+                                      ? foodModel.foodName[0].toUpperCase() +
+                                      foodModel.foodName
+                                          .toLowerCase()
+                                          .substring(1, foodModel.foodName.length)
+                                      : "Yemek Adı",
+                                  style: TextStyle(
+                                      fontSize: 28, color: Color(0xff4C4C4C)),
+                                ),
+                              )),
+                          SizedBox(height: 5),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.all(15),
+                              child: Text(
+                                foodModel?.ingredients,
+                                textAlign: TextAlign.left,
+                                style:
+                                TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.all(15),
+                              child: Text(
+                                foodModel?.recipe,
+                                textAlign: TextAlign.left,
+                                style:
+                                TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Row(
+                                children: [
+                                  Icon(Icons.timer),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(foodModel?.prepTime?.toString() + " dk",
+                                      style: TextStyle(fontSize: 18))
+                                  /* Text(
                     "20 dk",
                     style: TextStyle(fontSize: 18),
                   )*/
-                          ],
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(Icons.people),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            foodModel?.prepTime > 1
-                                ? Text(
-                                    (foodModel?.personCount - 1).toString() +
-                                        " - " +
-                                        (foodModel?.personCount + 1)
-                                            .toString() +
-                                        " kişilik",
-                                    style: TextStyle(fontSize: 18))
-                                : Text(
-                                    (foodModel?.personCount).toString() +
-                                        " kişilik",
-                                    style: TextStyle(fontSize: 18)),
-                            /*  Text(
+                                ],
+                              ),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(Icons.people),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  foodModel?.prepTime > 1
+                                      ? Text(
+                                      (foodModel?.personCount - 1).toString() +
+                                          " - " +
+                                          (foodModel?.personCount + 1)
+                                              .toString() +
+                                          " kişilik",
+                                      style: TextStyle(fontSize: 18))
+                                      : Text(
+                                      (foodModel?.personCount).toString() +
+                                          " kişilik",
+                                      style: TextStyle(fontSize: 18)),
+                                  /*  Text(
                     "2-4 kişilik",
                     style: TextStyle(fontSize: 18),
                   ),*/
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                      ],
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-
                     SizedBox(
                       height: 50,
                     ),
-
-                   CommentList(foodId: foodModel.id),
-
+                    CommentList(foodId: foodModel.id),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    CommentComponent(
+                      foodID: foodModel.id,
+                      onClick: () {
+                        setState(() {
+                          print("Geldi abeeey");
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      super.widget));
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
                   ],
                 ),
               ),
