@@ -5,7 +5,7 @@ class Constants {
   static String IMAGE_BASE_URL = "/api/files/downloadFile/";
   static String BEARER_TOKEN =
       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyNDYwNzQ5NiwiaWF0IjoxNjE1OTY3NDk2fQ.07tsQP1KAkQrcuJiavebYPnsBBAHUkBxTyxBcXruAmU";
-  static int USER_ID = 0;
+  static int USER_ID = 1;
   static UserModel USER;
   static int IMAGE_ID = 0;
 }

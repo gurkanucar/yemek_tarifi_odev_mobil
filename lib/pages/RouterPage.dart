@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
-import 'package:yemek_tarifi_odev_mobil/pages/login_page.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 class RouterPage extends StatefulWidget {
@@ -17,15 +20,12 @@ class _RouterPageState extends State<RouterPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    FoodListItem(),
+    FoodList(),
     Text(
-      'SCHOOL',
+      'Oluştur',
       style: optionStyle,
     ),
-    Text(
-      'SCHOOL',
-      style: optionStyle,
-    ),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -54,12 +54,12 @@ class _RouterPageState extends State<RouterPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.add_circle_outline),
+            label: 'Oluştur',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -31,7 +31,7 @@ class UserModel {
   String email;
   bool resetPassword;
   String role;
-  dynamic profilePhoto;
+  ProfilePhoto profilePhoto;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
@@ -43,7 +43,7 @@ class UserModel {
     email: json["email"],
     resetPassword: json["resetPassword"],
     role: json["role"],
-    profilePhoto: json["profilePhoto"],
+    profilePhoto: ProfilePhoto.fromJson(json["profilePhoto"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +56,38 @@ class UserModel {
     "email": email,
     "resetPassword": resetPassword,
     "role": role,
-    "profilePhoto": profilePhoto,
+    "profilePhoto": profilePhoto.toJson(),
+  };
+}
+
+class ProfilePhoto {
+  ProfilePhoto({
+    this.id,
+    this.created,
+    this.modified,
+    this.name,
+    this.url,
+  });
+
+  int id;
+  int created;
+  int modified;
+  String name;
+  String url;
+
+  factory ProfilePhoto.fromJson(Map<String, dynamic> json) => ProfilePhoto(
+    id: json["id"],
+    created: json["created"],
+    modified: json["modified"],
+    name: json["name"],
+    url: json["url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "created": created,
+    "modified": modified,
+    "name": name,
+    "url": url,
   };
 }
