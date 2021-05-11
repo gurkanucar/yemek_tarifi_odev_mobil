@@ -79,25 +79,19 @@ class FoodService {
       Map<String, String> header = {
         "Authorization": "Bearer " + Constants.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
       };
       print(food.user.name);
-
-      List<FoodModel> foodModels = [food];
-
-      final response = await http.post(url,
-          headers: header, body: foodModelToJson(foodModels));
+      final response = await http.post(
+          url, headers: header, body: foodToJson(food));
       if (response.statusCode == 200) {
-        print(response.body);
-        var jsonResponse = json.decode(response.body);
-        FoodModel foodModel = FoodModel.fromJson(jsonResponse);
-        return foodModel;
-      } else {
+        return null;
+      }
+      else {
         print("Hata Oluştu!");
         return null;
       }
-    } catch (e) {
+    }
+    catch (e) {
       print("Hata Oluştu!\n" + e.toString());
       return null;
     }

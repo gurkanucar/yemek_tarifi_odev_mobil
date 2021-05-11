@@ -16,6 +16,8 @@ import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/MyProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
+import 'CreateFoodPage.dart';
+
 class RouterPage extends StatefulWidget {
   @override
   _RouterPageState createState() => _RouterPageState();
@@ -78,6 +80,29 @@ class _RouterPageState extends State<RouterPage> {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Scaffold(
+          floatingActionButton: InkWell(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                iconSize: 32,
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Future.delayed(Duration.zero, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateFoodPage()),
+                    );
+                  });
+                },
+              ),
+            ),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -85,8 +110,8 @@ class _RouterPageState extends State<RouterPage> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.add_circle_outline),
-                label: 'Oluştur',
+                icon: Icon(Icons.search),
+                label: 'Search',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

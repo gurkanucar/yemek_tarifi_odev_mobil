@@ -4,9 +4,19 @@
 
 import 'dart:convert';
 
+import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
+
 List<FoodModel> foodModelFromJson(String str) => List<FoodModel>.from(json.decode(str).map((x) => FoodModel.fromJson(x)));
 
-String foodModelToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+//String foodModelToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+//String foodToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+//String foodToJson(List<Food> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String foodToJson(FoodModel data) {
+  final dyn = data.toJson();
+  return json.encode(dyn);
+}
+
 
 class FoodModel {
   FoodModel({
@@ -33,13 +43,13 @@ class FoodModel {
   String recipe;
   String ingredients;
   List<dynamic> categoryList;
-  Image image;
+  FileModel image;
   int completedCount;
   int rankStar;
   int hardness;
   int prepTime;
   int personCount;
-  User user;
+  UserModel user;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) => FoodModel(
     id: json["id"],
@@ -49,13 +59,13 @@ class FoodModel {
     recipe: json["recipe"],
     ingredients: json["ingredients"],
     categoryList: List<dynamic>.from(json["categoryList"].map((x) => x)),
-    image: Image.fromJson(json["image"]),
+    image: FileModel.fromJson(json["image"]),
     completedCount: json["completedCount"],
     rankStar: json["rankStar"],
     hardness: json["hardness"],
     prepTime: json["prepTime"],
     personCount: json["personCount"],
-    user: User.fromJson(json["user"]),
+    user: UserModel.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {

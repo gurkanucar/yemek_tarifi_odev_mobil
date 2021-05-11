@@ -23,23 +23,6 @@ class _FoodListGridState extends State<FoodListGrid> {
     FoodService.getFoodByUserID(widget.userId).then((value) {
       setState(() {
         _foods = value;
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-
         _loading = false;
       });
     });
@@ -91,8 +74,6 @@ class _FoodListGridState extends State<FoodListGrid> {
                   );
                 },
               )
-            : _foods == null
-                ? null
-                : CircularProgressIndicator());
+            : CircularProgressIndicator());
   }
 }

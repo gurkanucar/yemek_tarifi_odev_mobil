@@ -18,11 +18,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    UserService.getSelf(Constants.BEARER_TOKEN).then((value) {
+    UserService.getPublic(Constants.USER_ID).then((value) {
       setState(() {
         userModel = value;
         isLoading = false;
-        print("USER SELF: "+userModel.username);
       });
     });
   }
@@ -32,6 +31,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
     return SingleChildScrollView(
       child: isLoading == false
           ? Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.08,
@@ -41,7 +42,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   child: Material(
                     child: InkWell(
                       onTap: (){
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(
