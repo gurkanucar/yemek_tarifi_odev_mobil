@@ -80,12 +80,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     borderRadius: BorderRadius.circular(180),
                     child: FadeInImage.assetNetwork(
                       fit: BoxFit.cover,
-                      placeholder: 'assets/loading.gif',
+                      placeholder:'assets/user.png',
                       image: userModel?.profilePhoto != null
                           ? Constants.BASE_URL +
                               Constants.IMAGE_BASE_URL +
                               userModel?.profilePhoto.name
-                          : 'assets/loading.gif',
+                          : 'assets/user.png',
                     ),
                   ),
                 ),

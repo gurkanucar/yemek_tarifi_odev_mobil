@@ -102,7 +102,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                               child: FadeInImage.assetNetwork(
                                                 fit: BoxFit.cover,
                                                 placeholder:
-                                                    'assets/loading.gif',
+                                                'assets/user.png',
                                                 image: widget.foodModel.user
                                                             ?.profilePhoto !=
                                                         null
@@ -111,7 +111,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                                             .IMAGE_BASE_URL +
                                                         widget.foodModel.user
                                                             .profilePhoto.name
-                                                    : 'assets/loading.gif',
+                                                    : 'assets/user.png',
                                               ),
                                             ),
                                           ),
@@ -135,12 +135,12 @@ class _FoodDetailState extends State<FoodDetail> {
                             borderRadius: BorderRadius.circular(8.0),
                             child: FadeInImage.assetNetwork(
                               fit: BoxFit.cover,
-                              placeholder: 'assets/loading.gif',
-                              image: foodModel?.image?.url != null
+                              placeholder: 'assets/user.png',
+                              image: foodModel?.image != null
                                   ? Constants.BASE_URL +
                                   Constants.IMAGE_BASE_URL +
                                   foodModel?.image?.name
-                                  : 'assets/loading.gif',
+                                  :'assets/user.png',
                             ),
                           ),
                           Align(

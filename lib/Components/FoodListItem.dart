@@ -58,7 +58,7 @@ class _FoodListItemState extends State<FoodListItem> {
                                     borderRadius: BorderRadius.circular(200),
                                     child: FadeInImage.assetNetwork(
                                       fit: BoxFit.cover,
-                                      placeholder: 'assets/loading.gif',
+                                      placeholder: 'assets/user.png',
                                       image:
                                           widget.foodModel.user?.profilePhoto !=
                                                   null
@@ -66,7 +66,7 @@ class _FoodListItemState extends State<FoodListItem> {
                                                   Constants.IMAGE_BASE_URL +
                                                   widget.foodModel.user
                                                       .profilePhoto.name
-                                              : 'assets/loading.gif',
+                                              : 'assets/user.png',
                                     ),
                                   ),
                                 ),
