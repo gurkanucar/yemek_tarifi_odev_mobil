@@ -11,8 +11,9 @@ class CustomInputField1 extends StatefulWidget {
   int showError;
   int isNumeric;
   int maxLines;
+  bool filled;
 
-  CustomInputField1({@required this.maxLines,@required this.label,@required this.fontSize,@required this.hint,@required this.isNumeric, @required this.tcontrol,@required this.size,@required this.showError,@required this.errorMessage});
+  CustomInputField1({this.filled,@required this.maxLines,@required this.label,@required this.fontSize,@required this.hint,@required this.isNumeric, @required this.tcontrol,@required this.size,@required this.showError,@required this.errorMessage});
 
 
   @override
@@ -27,7 +28,6 @@ class _CustomInputField1State extends State<CustomInputField1> {
       margin: EdgeInsets.all(12),
       height: widget.maxLines * 24.0,
       child: TextField(
-        autofocus: false,
         controller: widget.tcontrol,
         style: TextStyle(fontSize: widget.fontSize),
         maxLines: widget.maxLines,
@@ -46,7 +46,7 @@ class _CustomInputField1State extends State<CustomInputField1> {
           labelStyle: TextStyle(fontSize: widget.fontSize),
           labelText: widget.label,
           hintText: widget.hint,
-          filled: true
+          filled: widget.filled==null ? true : widget.filled,
         ),
       ),
     );

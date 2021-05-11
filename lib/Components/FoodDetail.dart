@@ -120,10 +120,11 @@ class _FoodDetailState extends State<FoodDetail> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          widget?.foodModel?.user.username,
+                                          widget?.foodModel?.user != null
+                                              ? "   " + widget?.foodModel?.user.username
+                                              : "UserName",
                                           style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold),
+                                              fontSize: 19, fontWeight: FontWeight.bold),
                                         ),
                                         flex: 5,
                                       )

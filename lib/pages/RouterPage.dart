@@ -6,6 +6,7 @@ import 'package:yemek_tarifi_odev_mobil/Components/CommentListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CommentList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomButton.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
@@ -47,9 +48,17 @@ class _RouterPageState extends State<RouterPage> {
 
    // CommentComponent(foodID: 1,),
 
-    CategoryList(),
-    // CommentItem(commentModel: new CommentModel()),
-    // CommentList(foodId: 1),
+    //CategoryList(),
+   // CommentItem(commentModel: new CommentModel()),
+   // CommentList(foodId: 1),
+    CustomInputText1(
+      onChanged: (text) {
+        print("malzeme adi: $text");
+      },
+      hint: "Malzeme adı",
+      size: Size(150, 70),
+    ),
+
 
 
 
@@ -75,11 +84,7 @@ class _RouterPageState extends State<RouterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: Scaffold(
+    return Scaffold(
           floatingActionButton: InkWell(
             child: Container(
               decoration: BoxDecoration(
@@ -125,6 +130,6 @@ class _RouterPageState extends State<RouterPage> {
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
-        ));
+        );
   }
 }

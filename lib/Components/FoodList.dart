@@ -33,7 +33,8 @@ class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.95,
+      margin: EdgeInsets.all(5),
+      width: MediaQuery.of(context).size.width * 0.98,
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,

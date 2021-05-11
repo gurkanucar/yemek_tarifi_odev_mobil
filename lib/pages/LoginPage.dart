@@ -10,12 +10,39 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   String loginPassword = "";
   String loginPassword2 = "";
-  String loginUsername="";
+  String loginUsername = "";
+
+  bool showErrorUsername = false;
+  bool showErrorPass1 = false;
+  bool showErrorPass2 = false;
 
   bool isRegister = false;
+
+  String validateUsername(String value) {
+    if ((value.length < 5 || value.length > 25) && value.isNotEmpty) {
+      return "Lütfen geçerli bir kullanıcı adı girin";
+    }
+    return null;
+  }
+
+  String validatePassword(String value) {
+    if (!(value.length > 5) && value.isNotEmpty) {
+      return "Password 5 karakterden büyük olmalı!";
+    }
+    return null;
+  }
+
+  String validatePassword2(String value) {
+    if (!(value.length > 5) && value.isNotEmpty) {
+      return "Password 5 karakterden büyük olmalı!";
+    } else if (loginPassword != loginPassword2) {
+      return "Passwordler eşleşmiyor!";
+    }
+
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       margin: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.03),
                       child: Text(
-                       isRegister==false ? "Giriş Yap": "Kayıt Ol",
+                        isRegister == false ? "Giriş Yap" : "Kayıt Ol",
                         style: TextStyle(
                             fontSize: 50,
                             color: Colors.white,
@@ -57,8 +84,17 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.amber),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.amber,
+                    ),
                     labelText: "Username",
+                    labelStyle: TextStyle(color: Colors.amber),
+                    errorText: validateUsername(loginUsername),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30))),
               ),
@@ -74,8 +110,17 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.amber,
+                    ),
+                    errorText: validatePassword(loginPassword),
                     labelText: "Password",
+                    labelStyle: TextStyle(color: Colors.amber),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.amber),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30))),
               ),
@@ -95,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 20,
                     ),
                     Icon(
-                      Icons.send,
+                      isRegister == false ? Icons.send : Icons.person,
                       color: Colors.white,
                     ),
                   ],
@@ -103,7 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   if (isRegister == false) {
                     print(loginUsername + "  " + loginPassword);
-                    loginPassword="admin123";
+                    loginUsername="admin";
+                    loginPassword = "admin123";
                     await UserService.login(loginUsername, loginPassword).then(
                         (value) => Navigator.push(
                             context,
@@ -141,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       )),
       onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
+        //FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
   }
@@ -159,8 +205,17 @@ class _LoginPageState extends State<LoginPage> {
             });
           },
           decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.amber),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.amber,
+              ),
               labelText: "Password",
+              labelStyle: TextStyle(color: Colors.amber),
+              errorText: validatePassword2(loginPassword2),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
         ),
