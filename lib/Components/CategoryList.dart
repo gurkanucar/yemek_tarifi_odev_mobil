@@ -28,10 +28,11 @@ class _CategoryListState extends State<CategoryList> {
   Widget build(BuildContext context) {
     return Material(
       elevation: 10,
-      borderRadius: BorderRadius.circular(40),
+      borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)),
       child: Container(
         //  color: Colors.amber,
-        height: MediaQuery.of(context).size.height*0.23,
+        height: MediaQuery.of(context).size.height * 0.23,
         width: MediaQuery.of(context).size.width * 0.95,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -42,23 +43,23 @@ class _CategoryListState extends State<CategoryList> {
             itemBuilder: (context, index) {
               return InkWell(
                   child: Column(
-                    children: [
-                      SizedBox(
-                        width: 15,
-                      ),
-                      CategoryListItem(
-                        categoryModel: categories[index],
-                        onPressed: () {
-                          print(categories[index].id.toString() +
-                              " id li category tiklandi");
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => C(foodModel:_foods[index])));
-                        },
-                      ),
-                      SizedBox(
-                        width: 15,
-                      )
-                    ],
-                  ));
+                children: [
+                  SizedBox(
+                    width: 15,
+                  ),
+                  CategoryListItem(
+                    categoryModel: categories[index],
+                    onPressed: () {
+                      print(categories[index].id.toString() +
+                          " id li category tiklandi");
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => C(foodModel:_foods[index])));
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  )
+                ],
+              ));
             }),
       ),
     );

@@ -13,9 +13,7 @@ class UserService {
   static Future<String> login(String username, String password) async {
     try {
       String token;
-      Map<String, String> header = {
-        "Authorization": "Bearer " + "UserData.token",
-      };
+
       final response = await http.post(
         url + "/login",
         headers: <String, String>{
@@ -38,7 +36,7 @@ class UserService {
         });
         Constants.USER=user;
         Constants.USER_ID=user.id;
-        print("User id: "+user.id.toString());
+        print("Login Olan USER!!!!! "+user.id.toString());
         return token;
       } else {
         print("Hata Oluştu!");
@@ -49,6 +47,35 @@ class UserService {
       return null;
     }
   }
+
+
+  static Future<String> register(String username, String password) async {
+    try {
+      String token;
+
+      final response = await http.post(
+        url + "/register",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username': username,
+          'password': password,
+          'email': username,
+        }),
+      ); //headers: header);
+      if (response.statusCode == 200) {
+        return null;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
 
   static Future<UserModel> getSelf(String token) async {
     try{

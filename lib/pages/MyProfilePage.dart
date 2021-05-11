@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/Constans.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/UserService.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
       setState(() {
         userModel = value;
         isLoading = false;
+        print("USER SELF: "+userModel.username);
       });
     });
   }
@@ -33,6 +35,36 @@ class _MyProfilePageState extends State<MyProfilePage> {
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.08,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Material(
+                    child: InkWell(
+                      onTap: (){
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+
+                        Constants.USER_ID=0;
+                        Constants.USER=null;
+                        Constants.BEARER_TOKEN="";
+
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.exit_to_app,size: 30,),
+                          SizedBox(width: 20,),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
@@ -62,7 +94,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
 
-                Text(userModel.username,style: TextStyle(fontSize: 25),),
+                Text(userModel?.username==null ? "":userModel?.username,style: TextStyle(fontSize: 25),),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -71,7 +103,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 FoodListGrid(userId: Constants.USER_ID),
               ],
             )
-          : CircularProgressIndicator(),
+          : null,
     );
   }
 }

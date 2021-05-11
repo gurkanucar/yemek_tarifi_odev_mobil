@@ -40,20 +40,28 @@ class _FoodListState extends State<FoodList> {
           key: UniqueKey(),
           itemCount: null == _foods ? 0 : _foods.length,
           itemBuilder: (context, index) {
-            return InkWell(
-              child: Column(
-                children: [
-                  FoodListItem(
-                    foodModel: _foods[index],
-                    onPressed: () {
-                      print(_foods[index].id.toString() + " id li food tiklandi");
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetail(foodModel:_foods[index])));
-                    },
-                  ),
-                  SizedBox(height: 15,)
-                ],
-              )
-            );
+            return _loading == false
+                ? InkWell(
+                    child: Column(
+                    children: [
+                      FoodListItem(
+                        foodModel: _foods[index],
+                        onPressed: () {
+                          print(_foods[index].id.toString() +
+                              " id li food tiklandi");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FoodDetail(foodModel: _foods[index])));
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      )
+                    ],
+                  ))
+                : null;
           }),
     );
   }

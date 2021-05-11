@@ -40,12 +40,13 @@ class _CommentComponentState extends State<CommentComponent> {
                     Icons.send,
                     color: Colors.white,
                   ),
-                  onPressed: () {
+                  onPressed: ()  {
                     CommentModel comment = new CommentModel();
                     comment.userId = Constants.USER_ID;
                     comment.comment = tcontrol.text;
                     FoodModel food=new FoodModel();
                     food.id=widget.foodID;
+                    print("Yorum yapan user ıd: "+comment.id.toString());
                     CommentService.createComment(food, comment);
                     tcontrol.clear();
                     widget.onClick();

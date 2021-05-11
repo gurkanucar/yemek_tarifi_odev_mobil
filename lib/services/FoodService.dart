@@ -18,7 +18,6 @@ class FoodService {
       final response = await http.get(url, headers: header);
       if (response.statusCode == 200) {
         List<FoodModel> foods = foodModelFromJson(response.body);
-        print(foods[0].foodName.toString());
         return foods;
       } else {
         print("Hata Oluştu!");
