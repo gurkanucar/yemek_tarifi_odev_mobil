@@ -305,9 +305,17 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     food.completedCount=0;
     food.prepTime = _prepTimeKey;
     food.personCount = _personKey;
+
+    String ingredientsData="";
+    _ingredientModelList.forEach((element) {
+      ingredientsData+=element.name +" "+element.count+"\n";
+    });
+
+    food.ingredients=ingredientsData;
+
     food.categoryList = new List();
     UserModel user = new UserModel();
-    user = Constants.USER;
+    user.id = Constants.USER_ID;
     food.user = user;
 
     if (Constants.IMAGE_ID != 0) {
@@ -316,16 +324,20 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       image.id = imageID;
       Constants.IMAGE_ID = 0;
       food.image=image;
+      //food.image=image;
     }
     else {
       return 1;
     }
 
-    var response = FoodService.createFood(food);
-    if (response != null) {
-      print("Süpersin kardeşşş");
-      Navigator.pop(context);
-    }
+    FoodService.createFood(food).then((value) {
+      if (value != null) {
+        print("Süpersin kardeşşş");
+        Navigator.pop(context);
+      }
+
+    });
+
     return 0;
   }
 }

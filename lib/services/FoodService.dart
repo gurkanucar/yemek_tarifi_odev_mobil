@@ -84,7 +84,7 @@ class FoodService {
       final response = await http.post(
           url, headers: header, body: foodToJson(food));
       if (response.statusCode == 200) {
-        return null;
+        return food;
       }
       else {
         print("Hata Oluştu!");

@@ -18,18 +18,24 @@ class FoodDetail extends StatefulWidget {
 
 class _FoodDetailState extends State<FoodDetail> {
   bool isLoading = true;
-  FoodModel foodModel;
+  FoodModel foodModel=new FoodModel();
+
+  void getFood() {
+    isLoading = true;
+    FoodService.getFoodByID(widget?.foodModel?.id).then((value)  {
+      setState(()  {
+        foodModel = value;
+        isLoading = false;
+      });
+    });
+  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FoodService.getFoodByID(widget.foodModel.id).then((value) {
-      setState(() {
-        foodModel = value;
-        isLoading = false;
-      });
-    });
+    getFood();
   }
 
   @override
@@ -37,12 +43,12 @@ class _FoodDetailState extends State<FoodDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: Text(
+        title:  Text(
           widget.foodModel.foodName != null
               ? widget.foodModel.foodName[0].toUpperCase() +
-                  widget.foodModel.foodName
-                      .toLowerCase()
-                      .substring(1, widget.foodModel.foodName.length)
+              widget.foodModel.foodName
+                  .toLowerCase()
+                  .substring(1, widget.foodModel.foodName.length)
               : "",
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
@@ -73,34 +79,38 @@ class _FoodDetailState extends State<FoodDetail> {
                                   print("kullaniciya tıklandi");
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(
+                                    MaterialPageRoute(
                                           builder: (context) => ProfilePage(
-                                            userID: foodModel.user.id,
-                                          )));
+                                                userID: foodModel?.user?.id,
+                                              )));
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.only(bottom: 10,top: 10,left: 10),
+                                  padding: EdgeInsets.only(
+                                      bottom: 10, top: 10, left: 10),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Expanded(
+                                     Expanded(
                                         child: SizedBox(
                                           height: 60,
                                           child: Container(
                                             child: ClipRRect(
                                               borderRadius:
-                                              BorderRadius.circular(200),
+                                                  BorderRadius.circular(200),
                                               child: FadeInImage.assetNetwork(
                                                 fit: BoxFit.cover,
-                                                placeholder: 'assets/loading.gif',
+                                                placeholder:
+                                                    'assets/loading.gif',
                                                 image: widget.foodModel.user
-                                                    ?.profilePhoto !=
-                                                    null
+                                                            ?.profilePhoto !=
+                                                        null
                                                     ? Constants.BASE_URL +
-                                                    Constants.IMAGE_BASE_URL +
-                                                    widget.foodModel.user
-                                                        .profilePhoto.name
+                                                        Constants
+                                                            .IMAGE_BASE_URL +
+                                                        widget.foodModel.user
+                                                            .profilePhoto.name
                                                     : 'assets/loading.gif',
                                               ),
                                             ),
@@ -110,10 +120,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          widget?.foodModel?.user != null
-                                              ? "   " +
-                                              widget?.foodModel?.user.username
-                                              : "UserName",
+                                          widget?.foodModel?.user.username,
                                           style: TextStyle(
                                               fontSize: 19,
                                               fontWeight: FontWeight.bold),
@@ -124,7 +131,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                   ),
                                 )),
                           ),
-                          ClipRRect(
+                        ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: FadeInImage.assetNetwork(
                               fit: BoxFit.cover,
@@ -145,7 +152,8 @@ class _FoodDetailState extends State<FoodDetail> {
                                       ? foodModel.foodName[0].toUpperCase() +
                                       foodModel.foodName
                                           .toLowerCase()
-                                          .substring(1, foodModel.foodName.length)
+                                          .substring(
+                                          1, foodModel.foodName.length)
                                       : "Yemek Adı",
                                   style: TextStyle(
                                       fontSize: 28, color: Color(0xff4C4C4C)),
@@ -159,8 +167,8 @@ class _FoodDetailState extends State<FoodDetail> {
                               child: Text(
                                 foodModel?.ingredients,
                                 textAlign: TextAlign.left,
-                                style:
-                                TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
+                                style: TextStyle(
+                                    fontSize: 22, color: Color(0xff4C4C4C)),
                               ),
                             ),
                           ),
@@ -172,8 +180,8 @@ class _FoodDetailState extends State<FoodDetail> {
                               child: Text(
                                 foodModel?.recipe,
                                 textAlign: TextAlign.left,
-                                style:
-                                TextStyle(fontSize: 22, color: Color(0xff4C4C4C)),
+                                style: TextStyle(
+                                    fontSize: 22, color: Color(0xff4C4C4C)),
                               ),
                             ),
                           ),
@@ -190,10 +198,6 @@ class _FoodDetailState extends State<FoodDetail> {
                                   ),
                                   Text(foodModel?.prepTime?.toString() + " dk",
                                       style: TextStyle(fontSize: 18))
-                                  /* Text(
-                    "20 dk",
-                    style: TextStyle(fontSize: 18),
-                  )*/
                                 ],
                               ),
                               SizedBox(
@@ -208,7 +212,8 @@ class _FoodDetailState extends State<FoodDetail> {
                                   ),
                                   foodModel?.prepTime > 1
                                       ? Text(
-                                      (foodModel?.personCount - 1).toString() +
+                                      (foodModel?.personCount - 1)
+                                          .toString() +
                                           " - " +
                                           (foodModel?.personCount + 1)
                                               .toString() +
@@ -218,10 +223,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                       (foodModel?.personCount).toString() +
                                           " kişilik",
                                       style: TextStyle(fontSize: 18)),
-                                  /*  Text(
-                    "2-4 kişilik",
-                    style: TextStyle(fontSize: 18),
-                  ),*/
+
                                   SizedBox(
                                     width: 20,
                                   ),
@@ -238,7 +240,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     SizedBox(
                       height: 50,
                     ),
-                    CommentList(foodId: foodModel.id),
+                    CommentList(foodId: widget?.foodModel?.id),
                     SizedBox(
                       height: 50,
                     ),
@@ -262,7 +264,7 @@ class _FoodDetailState extends State<FoodDetail> {
                 ),
               ),
             )
-          : CircularProgressIndicator(),
+          : null//CircularProgressIndicator(),
     );
   }
 }

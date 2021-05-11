@@ -26,37 +26,37 @@ class UserModel {
   int created;
   int modified;
   String name;
-  String surname;
+  dynamic surname;
   String username;
-  String email;
+  dynamic email;
   bool resetPassword;
-  String role;
+  dynamic role;
   ProfilePhoto profilePhoto;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    name: json["name"],
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    name: json["name"] == null ? null : json["name"],
     surname: json["surname"],
-    username: json["username"],
+    username: json["username"] == null ? null : json["username"],
     email: json["email"],
-    resetPassword: json["resetPassword"],
+    resetPassword: json["resetPassword"] == null ? null : json["resetPassword"],
     role: json["role"],
-    profilePhoto: ProfilePhoto.fromJson(json["profilePhoto"]),
+    profilePhoto: json["profilePhoto"] == null ? null : ProfilePhoto.fromJson(json["profilePhoto"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "name": name,
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "name": name == null ? null : name,
     "surname": surname,
-    "username": username,
+    "username": username == null ? null : username,
     "email": email,
-    "resetPassword": resetPassword,
+    "resetPassword": resetPassword == null ? null : resetPassword,
     "role": role,
-    "profilePhoto": profilePhoto.toJson(),
+    "profilePhoto": profilePhoto == null ? null : profilePhoto.toJson(),
   };
 }
 
@@ -76,18 +76,18 @@ class ProfilePhoto {
   String url;
 
   factory ProfilePhoto.fromJson(Map<String, dynamic> json) => ProfilePhoto(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    name: json["name"],
-    url: json["url"],
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    name: json["name"] == null ? null : json["name"],
+    url: json["url"] == null ? null : json["url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "name": name,
-    "url": url,
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "name": name == null ? null : name,
+    "url": url == null ? null : url,
   };
 }

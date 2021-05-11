@@ -9,14 +9,12 @@ import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 
 List<FoodModel> foodModelFromJson(String str) => List<FoodModel>.from(json.decode(str).map((x) => FoodModel.fromJson(x)));
 
-//String foodModelToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-//String foodToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-//String foodToJson(List<Food> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+//FoodModel foodModelFromJson(String str) => FoodModel.fromJson(json.decode(str));
 String foodToJson(FoodModel data) {
   final dyn = data.toJson();
   return json.encode(dyn);
 }
-
+//String foodModelToJson(FoodModel data) => json.encode(data.toJson());
 
 class FoodModel {
   FoodModel({
@@ -52,37 +50,37 @@ class FoodModel {
   UserModel user;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) => FoodModel(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    foodName: json["foodName"],
-    recipe: json["recipe"],
-    ingredients: json["ingredients"],
-    categoryList: List<dynamic>.from(json["categoryList"].map((x) => x)),
-    image: FileModel.fromJson(json["image"]),
-    completedCount: json["completedCount"],
-    rankStar: json["rankStar"],
-    hardness: json["hardness"],
-    prepTime: json["prepTime"],
-    personCount: json["personCount"],
-    user: UserModel.fromJson(json["user"]),
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    foodName: json["foodName"] == null ? null : json["foodName"],
+    recipe: json["recipe"] == null ? null : json["recipe"],
+    ingredients: json["ingredients"] == null ? null : json["ingredients"],
+    categoryList: json["categoryList"] == null ? null : List<dynamic>.from(json["categoryList"].map((x) => x)),
+    image: json["image"] == null ? null : FileModel.fromJson(json["image"]),
+    completedCount: json["completedCount"] == null ? null : json["completedCount"],
+    rankStar: json["rankStar"] == null ? null : json["rankStar"],
+    hardness: json["hardness"] == null ? null : json["hardness"],
+    prepTime: json["prepTime"] == null ? null : json["prepTime"],
+    personCount: json["personCount"] == null ? null : json["personCount"],
+    user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "foodName": foodName,
-    "recipe": recipe,
-    "ingredients": ingredients,
-    "categoryList": List<dynamic>.from(categoryList.map((x) => x)),
-    "image": image.toJson(),
-    "completedCount": completedCount,
-    "rankStar": rankStar,
-    "hardness": hardness,
-    "prepTime": prepTime,
-    "personCount": personCount,
-    "user": user.toJson(),
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "foodName": foodName == null ? null : foodName,
+    "recipe": recipe == null ? null : recipe,
+    "ingredients": ingredients == null ? null : ingredients,
+    "categoryList": categoryList == null ? null : List<dynamic>.from(categoryList.map((x) => x)),
+    "image": image == null ? null : image.toJson(),
+    "completedCount": completedCount == null ? null : completedCount,
+    "rankStar": rankStar == null ? null : rankStar,
+    "hardness": hardness == null ? null : hardness,
+    "prepTime": prepTime == null ? null : prepTime,
+    "personCount": personCount == null ? null : personCount,
+    "user": user == null ? null : user.toJson(),
   };
 }
 
@@ -102,19 +100,19 @@ class Image {
   String url;
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    name: json["name"],
-    url: json["url"],
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    name: json["name"] == null ? null : json["name"],
+    url: json["url"] == null ? null : json["url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "name": name,
-    "url": url,
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "name": name == null ? null : name,
+    "url": url == null ? null : url,
   };
 }
 
@@ -144,28 +142,28 @@ class User {
   Image profilePhoto;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    name: json["name"],
-    surname: json["surname"],
-    username: json["username"],
-    email: json["email"],
-    resetPassword: json["resetPassword"],
-    role: json["role"],
-    profilePhoto: Image.fromJson(json["profilePhoto"]),
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    name: json["name"] == null ? null : json["name"],
+    surname: json["surname"] == null ? null : json["surname"],
+    username: json["username"] == null ? null : json["username"],
+    email: json["email"] == null ? null : json["email"],
+    resetPassword: json["resetPassword"] == null ? null : json["resetPassword"],
+    role: json["role"] == null ? null : json["role"],
+    profilePhoto: json["profilePhoto"] == null ? null : Image.fromJson(json["profilePhoto"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "name": name,
-    "surname": surname,
-    "username": username,
-    "email": email,
-    "resetPassword": resetPassword,
-    "role": role,
-    "profilePhoto": profilePhoto.toJson(),
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "name": name == null ? null : name,
+    "surname": surname == null ? null : surname,
+    "username": username == null ? null : username,
+    "email": email == null ? null : email,
+    "resetPassword": resetPassword == null ? null : resetPassword,
+    "role": role == null ? null : role,
+    "profilePhoto": profilePhoto == null ? null : profilePhoto.toJson(),
   };
 }
