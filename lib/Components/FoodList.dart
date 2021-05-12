@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodDetail.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
+import 'package:yemek_tarifi_odev_mobil/Constans.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 class FoodList extends StatefulWidget {
 
   int categoryID=-1;
+  String searched="";
 
-  FoodList({this.categoryID});
+  FoodList({this.categoryID,this.searched});
 
   @override
   _FoodListState createState() => _FoodListState();
@@ -38,13 +40,28 @@ class _FoodListState extends State<FoodList> {
     });
   }
 
+  void getFoodsByName(String name) {
+    Constants.SEARCHED="";
+    _loading = true;
+    FoodService.getFoodByName(name).then((value) {
+      setState(() {
+        _foods = value;
+        _loading = false;
+      });
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
    if(widget.categoryID==-1){
      getFoods();
-   }else{
+   }
+   else if(widget.categoryID==-2){
+     getFoodsByName(widget.searched);
+   }
+   else{
      getFoodsByCategory();
    }
   }

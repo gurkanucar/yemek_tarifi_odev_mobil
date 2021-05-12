@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategoryListComponent.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
 
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/SearchFoodComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/MyProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/SavedRecipes.dart';
@@ -31,12 +33,14 @@ class _RouterPageState extends State<RouterPage> {
             height: 25,
           ),
           CategoryListComponent(),
-          FoodList(categoryID: -1,),
+          FoodList(
+            categoryID: -1,
+          ),
         ],
       ),
     ),
 
-    Text("2"),
+   SearchFoodComponent(true),
     SavedRecipesPage(),
     // CommentComponent(foodID: 1,),
 
