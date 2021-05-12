@@ -100,7 +100,14 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
                   categoryID: -2,
                   searched: Constants.SEARCHED,
                 )
-              : CategoryListGrid(),
+              : SingleChildScrollView(
+            child: Column(
+              children: [
+                CategoryListGrid(),
+                SizedBox(height: 30,)
+              ],
+            ),
+          ),
         ));
   }
 }
