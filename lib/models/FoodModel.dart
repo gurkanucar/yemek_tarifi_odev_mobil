@@ -4,17 +4,18 @@
 
 import 'dart:convert';
 
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 
 List<FoodModel> foodModelFromJson(String str) => List<FoodModel>.from(json.decode(str).map((x) => FoodModel.fromJson(x)));
 
-//FoodModel foodModelFromJson(String str) => FoodModel.fromJson(json.decode(str));
+//String foodModelToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 String foodToJson(FoodModel data) {
   final dyn = data.toJson();
   return json.encode(dyn);
 }
-//String foodModelToJson(FoodModel data) => json.encode(data.toJson());
 
 class FoodModel {
   FoodModel({
@@ -40,7 +41,7 @@ class FoodModel {
   String foodName;
   String recipe;
   String ingredients;
-  List<dynamic> categoryList;
+  List<CategoryList> categoryList;
   FileModel image;
   int completedCount;
   int rankStar;
@@ -56,7 +57,7 @@ class FoodModel {
     foodName: json["foodName"] == null ? null : json["foodName"],
     recipe: json["recipe"] == null ? null : json["recipe"],
     ingredients: json["ingredients"] == null ? null : json["ingredients"],
-    categoryList: json["categoryList"] == null ? null : List<dynamic>.from(json["categoryList"].map((x) => x)),
+    categoryList: json["categoryList"] == null ? null : List<CategoryList>.from(json["categoryList"].map((x) => CategoryList.fromJson(x))),
     image: json["image"] == null ? null : FileModel.fromJson(json["image"]),
     completedCount: json["completedCount"] == null ? null : json["completedCount"],
     rankStar: json["rankStar"] == null ? null : json["rankStar"],
@@ -73,7 +74,7 @@ class FoodModel {
     "foodName": foodName == null ? null : foodName,
     "recipe": recipe == null ? null : recipe,
     "ingredients": ingredients == null ? null : ingredients,
-    "categoryList": categoryList == null ? null : List<dynamic>.from(categoryList.map((x) => x)),
+    "categoryList": categoryList == null ? null : List<dynamic>.from(categoryList.map((x) => x.toJson())),
     "image": image == null ? null : image.toJson(),
     "completedCount": completedCount == null ? null : completedCount,
     "rankStar": rankStar == null ? null : rankStar,
@@ -81,6 +82,42 @@ class FoodModel {
     "prepTime": prepTime == null ? null : prepTime,
     "personCount": personCount == null ? null : personCount,
     "user": user == null ? null : user.toJson(),
+  };
+}
+
+class CategoryList {
+  CategoryList({
+    this.id,
+    this.created,
+    this.modified,
+    this.nameTurkish,
+    this.nameEnglish,
+    this.categoryImage,
+  });
+
+  int id;
+  int created;
+  int modified;
+  String nameTurkish;
+  String nameEnglish;
+  Image categoryImage;
+
+  factory CategoryList.fromJson(Map<String, dynamic> json) => CategoryList(
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    nameTurkish: json["nameTurkish"] == null ? null : json["nameTurkish"],
+    nameEnglish: json["nameEnglish"] == null ? null : json["nameEnglish"],
+    categoryImage: json["categoryImage"] == null ? null : Image.fromJson(json["categoryImage"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "nameTurkish": nameTurkish == null ? null : nameTurkish,
+    "nameEnglish": nameEnglish == null ? null : nameEnglish,
+    "categoryImage": categoryImage == null ? null : categoryImage.toJson(),
   };
 }
 
@@ -138,7 +175,7 @@ class User {
   String username;
   String email;
   bool resetPassword;
-  String role;
+  Role role;
   Image profilePhoto;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -150,7 +187,7 @@ class User {
     username: json["username"] == null ? null : json["username"],
     email: json["email"] == null ? null : json["email"],
     resetPassword: json["resetPassword"] == null ? null : json["resetPassword"],
-    role: json["role"] == null ? null : json["role"],
+    role: json["role"] == null ? null : roleValues.map[json["role"]],
     profilePhoto: json["profilePhoto"] == null ? null : Image.fromJson(json["profilePhoto"]),
   );
 
@@ -163,7 +200,28 @@ class User {
     "username": username == null ? null : username,
     "email": email == null ? null : email,
     "resetPassword": resetPassword == null ? null : resetPassword,
-    "role": role == null ? null : role,
+    "role": role == null ? null : roleValues.reverse[role],
     "profilePhoto": profilePhoto == null ? null : profilePhoto.toJson(),
   };
+}
+
+enum Role { USER, ADMIN }
+
+final roleValues = EnumValues({
+  "ADMIN": Role.ADMIN,
+  "USER": Role.USER
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

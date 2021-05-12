@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategoryListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 
-class CategoryList extends StatefulWidget {
+class CategoryListComponent extends StatefulWidget {
   @override
-  _CategoryListState createState() => _CategoryListState();
+  _CategoryListComponentState createState() => _CategoryListComponentState();
 }
 
-class _CategoryListState extends State<CategoryList> {
+class _CategoryListComponentState extends State<CategoryListComponent> {
   List<CategoryModel> categories;
   bool isLoading = true;
 
@@ -17,16 +18,19 @@ class _CategoryListState extends State<CategoryList> {
     // TODO: implement initState
     super.initState();
     CategoryService.getCategories().then((value) {
-      setState(() {
-        categories = value;
-        isLoading = false;
+      Future.delayed(const Duration(milliseconds: 700), () {
+        setState(() {
+          categories = value;
+          isLoading = false;
+        });
       });
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return isLoading==false ? Material(
       elevation: 10,
       borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)),
@@ -42,6 +46,9 @@ class _CategoryListState extends State<CategoryList> {
             itemCount: null == categories ? 0 : categories.length,
             itemBuilder: (context, index) {
               return InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FilterByCategoryPage(categoryModel:categories[index])));
+                },
                   child: Column(
                 children: [
                   SizedBox(
@@ -62,6 +69,6 @@ class _CategoryListState extends State<CategoryList> {
               ));
             }),
       ),
-    );
+    ):CircularProgressIndicator();
   }
 }

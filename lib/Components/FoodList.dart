@@ -5,6 +5,11 @@ import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 class FoodList extends StatefulWidget {
+
+  int categoryID=-1;
+
+  FoodList({this.categoryID});
+
   @override
   _FoodListState createState() => _FoodListState();
 }
@@ -23,11 +28,25 @@ class _FoodListState extends State<FoodList> {
     });
   }
 
+  void getFoodsByCategory() {
+    _loading = true;
+    FoodService.getFoodByCategoryID(widget.categoryID).then((value) {
+      setState(() {
+        _foods = value;
+        _loading = false;
+      });
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getFoods();
+   if(widget.categoryID==-1){
+     getFoods();
+   }else{
+     getFoodsByCategory();
+   }
   }
 
   @override
@@ -45,6 +64,7 @@ class _FoodListState extends State<FoodList> {
                 ? InkWell(
                     child: Column(
                     children: [
+                      SizedBox(height: 15,),
                       FoodListItem(
                         foodModel: _foods[index],
                         onPressed: () {

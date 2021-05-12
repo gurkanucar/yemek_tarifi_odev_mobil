@@ -74,6 +74,28 @@ class FoodService {
     }
   }
 
+  static Future<List<FoodModel>> getFoodByCategoryID(int id) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response =
+      await http.get(url + "/category/" + id.toString(), headers: header);
+      if (response.statusCode == 200) {
+        List<FoodModel> foods = foodModelFromJson(response.body);
+        print(foods[0].foodName.toString());
+        return foods;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
   static Future<FoodModel> createFood(FoodModel food) async {
     try {
       Map<String, String> header = {
