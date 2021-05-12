@@ -7,8 +7,9 @@ import 'FoodDetail.dart';
 
 class FoodListGrid extends StatefulWidget {
   int userId;
+  bool savedRecipes = false;
 
-  FoodListGrid({@required this.userId});
+  FoodListGrid({@required this.userId, this.savedRecipes});
 
   @override
   _FoodListGridState createState() => _FoodListGridState();
@@ -23,6 +24,30 @@ class _FoodListGridState extends State<FoodListGrid> {
     FoodService.getFoodByUserID(widget.userId).then((value) {
       setState(() {
         _foods = value;
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        // _foods.add(_foods[0]);
+        _loading = false;
+      });
+    });
+  }
+
+  void getSavedRecipes() {
+    _loading = true;
+    FoodService.getSavedFoodByUserId(widget.userId).then((value) {
+      setState(() {
+        _foods = value;
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
+        _foods.add(_foods[0]);
         _loading = false;
       });
     });
@@ -32,7 +57,11 @@ class _FoodListGridState extends State<FoodListGrid> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getFoods();
+    if (widget?.savedRecipes == true) {
+      getSavedRecipes();
+    } else {
+      getFoods();
+    }
   }
 
   @override

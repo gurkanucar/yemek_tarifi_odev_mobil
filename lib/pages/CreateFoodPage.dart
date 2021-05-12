@@ -64,15 +64,19 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
   };
 
   String _hardnessValue;
-  int _hardnessKey;
+  int _hardnessKey = -1;
   String _personCountValue;
-  int _personKey;
+  int _personKey = -1;
   String _prepTimeValue;
-  int _prepTimeKey;
+  int _prepTimeKey = -1;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
               backgroundColor: Color(0xFFFFC204),
@@ -217,7 +221,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                       ))),*/
               ],
             ),
-          )
+          )),
     );
   }
 
@@ -257,6 +261,22 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
   }
 
   int createPost() {
+    if (foodNameController.text.isEmpty ||
+        foodNameController.text.length < 3 ||
+        foodRecipeController.text.isEmpty ||
+        foodRecipeController.text.length < 3 ||
+        _hardnessKey == -1 ||
+        _personKey == -1 ||
+        _prepTimeKey == -1) {
+      showErrorDialog("Lütfen boş alan bırakmayın!");
+      return 1;
+    } else if (Constants.INGREDIENT_LIST.length < 3) {
+      showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
+      return 1;
+    } else if (Constants.IMAGE_ID == 0) {
+      showErrorDialog("Lütfen resim seçin!");
+      return 1;
+    }
     FoodModel food = new FoodModel();
     food.foodName = foodNameController.text.toString();
     food.recipe = foodRecipeController.text.toString();
@@ -292,11 +312,51 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 
     FoodService.createFood(food).then((value) {
       if (value != null) {
-        print("Süpersin kardeşşş");
         Navigator.pop(context);
+        _showToast(context, "Yemek paylaşıldı");
+      } else {
+        showErrorDialog("Bir hata oldu :(");
       }
     });
 
     return 0;
+  }
+
+  Future<void> showErrorDialog(String error) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Uyarı!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(error),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Tamam'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showToast(BuildContext context, String str) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(str),
+        action: SnackBarAction(
+            label: 'Tamam', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }

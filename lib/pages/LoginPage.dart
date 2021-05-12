@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       )),
       onTap: () {
-        //FocusScope.of(context).requestFocus(new FocusNode());
+        FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
   }

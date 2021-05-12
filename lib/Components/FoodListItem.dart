@@ -15,6 +15,9 @@ class FoodListItem extends StatefulWidget {
 }
 
 class _FoodListItemState extends State<FoodListItem> {
+
+  bool isSaved=false;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -170,10 +173,21 @@ class _FoodListItemState extends State<FoodListItem> {
                                 (widget?.foodModel?.personCount).toString() +
                                     " kişilik",
                                 style: TextStyle(fontSize: 18)),
-                        /*  Text(
-                    "2-4 kişilik",
-                    style: TextStyle(fontSize: 18),
-                  ),*/
+
+                        SizedBox(width: 25,),
+
+                       Material(
+                         child: InkWell(
+                           onTap: (){
+                             setState(() {
+                               isSaved=!isSaved;
+                               print("saved: "+isSaved.toString());
+                             });
+                           },
+                           child:  Icon(Icons.save_alt),
+                         ),
+                       ),
+
                         SizedBox(
                           width: 20,
                         ),
