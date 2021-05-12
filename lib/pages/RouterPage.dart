@@ -41,19 +41,21 @@ class _RouterPageState extends State<RouterPage> {
     ),
 
    SearchFoodComponent(true),
-    SavedRecipesPage(),
-    // CommentComponent(foodID: 1,),
 
-    //CategoryList(),
-    // CommentItem(commentModel: new CommentModel()),
-    // CommentList(foodId: 1),
-    /*CustomInputText1(
-      onChanged: (text) {
-        print("malzeme adi: $text");
-      },
-      hint: "Malzeme adı",
-      size: Size(150, 70),
-    ),*/
+    SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text("Kayıtlı Yemeklerim",style: TextStyle(fontSize: 25),),
+          SizedBox(
+            height: 25,
+          ),
+          SavedRecipesPage(),
+        ],
+      ),
+    ),
+
+
 
     MyProfilePage(),
   ];

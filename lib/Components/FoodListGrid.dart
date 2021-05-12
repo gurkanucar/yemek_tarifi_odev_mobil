@@ -16,22 +16,21 @@ class FoodListGrid extends StatefulWidget {
 }
 
 class _FoodListGridState extends State<FoodListGrid> {
-  List<FoodModel> _foods;
+  List<FoodModel> _foods=[];
   bool _loading = true;
 
   void getFoods() {
     _loading = true;
     FoodService.getFoodByUserID(widget.userId).then((value) {
       setState(() {
-        _foods = value;
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        // _foods.add(_foods[0]);
-        _loading = false;
+
+          if(value==null){
+            _loading=true;
+          }else{
+            _foods = value;
+            _loading = false;
+          }
+
       });
     });
   }
@@ -40,15 +39,12 @@ class _FoodListGridState extends State<FoodListGrid> {
     _loading = true;
     FoodService.getSavedFoodByUserId(widget.userId).then((value) {
       setState(() {
-        _foods = value;
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _foods.add(_foods[0]);
-        _loading = false;
+        if(value==null){
+          _loading=true;
+        }else{
+          _foods = value;
+          _loading = false;
+        }
       });
     });
   }
@@ -60,7 +56,7 @@ class _FoodListGridState extends State<FoodListGrid> {
     if (widget?.savedRecipes == true) {
       getSavedRecipes();
     } else {
-      getFoods();
+     getFoods();
     }
   }
 
@@ -71,9 +67,9 @@ class _FoodListGridState extends State<FoodListGrid> {
             ? GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: _foods.length,
+                itemCount: _foods?.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount: 2,
                   crossAxisSpacing: 5.0,
                   mainAxisSpacing: 5.0,
                 ),
@@ -87,22 +83,25 @@ class _FoodListGridState extends State<FoodListGrid> {
                                 builder: (context) =>
                                     FoodDetail(foodModel: _foods[index])));
                       },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: 'assets/loading.gif',
-                          image: _foods[index]?.image?.url != null
-                              ? Constants.BASE_URL +
-                                  Constants.IMAGE_BASE_URL +
-                                  _foods[index]?.image?.name
-                              : 'assets/loading.gif',
+                      child: Container(
+                        margin: EdgeInsets.all(20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: 'assets/loading.gif',
+                            image: _foods[index]?.image?.url != null
+                                ? Constants.BASE_URL +
+                                Constants.IMAGE_BASE_URL +
+                                _foods[index]?.image?.name
+                                : 'assets/loading.gif',
+                          ),
                         ),
-                      ),
+                      )
                     ),
                   );
                 },
               )
-            : CircularProgressIndicator());
+            : Container());
   }
 }

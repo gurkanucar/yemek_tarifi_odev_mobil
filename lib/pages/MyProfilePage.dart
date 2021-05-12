@@ -100,7 +100,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
 
-                FoodListGrid(userId: Constants.USER_ID),
+                FoodListGrid(userId: Constants.USER_ID,savedRecipes: false,),
               ],
             )
           : null,

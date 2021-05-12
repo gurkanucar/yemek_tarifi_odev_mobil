@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   if (isRegister == false) {
                     print(loginUsername + "  " + loginPassword);
-                    loginUsername="admin";
+                    //loginUsername="admin";
                     loginPassword = "admin123";
                     await UserService.login(loginUsername, loginPassword).then(
                         (value) => Navigator.push(
