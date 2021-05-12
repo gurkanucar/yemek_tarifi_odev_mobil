@@ -150,20 +150,30 @@ class _LoginPageState extends State<LoginPage> {
                     print(loginUsername + "  " + loginPassword);
                     //loginUsername="admin";
                     loginPassword = "admin123";
-                    await UserService.login(loginUsername, loginPassword).then(
-                        (value) => Navigator.push(
+                    await UserService.login(loginUsername, loginPassword)
+                        .then((value) {
+                      if (value != null) {
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RouterPage())));
+                                builder: (context) => RouterPage()));
+                      } else {
+                        showErrorDialog("Kullanıcı bilgisi bulunamadı!");
+                      }
+                    });
                   } else {
                     if (loginPassword == loginPassword2) {
-                      print(loginUsername + "  " + loginPassword);
-                      print("register olundu");
                       UserService.register(loginUsername, loginPassword)
                           .then((value) {
-                        setState(() {
-                          isRegister = false;
-                        });
+                        if (value != null) {
+                          setState(() {
+                            isRegister = false;
+                            _showToast(context,"Kayıt olundu");
+                          });
+                        } else {
+                          showErrorDialog(
+                              "Lütfen farklı bir kullanıcı adı deneyin!");
+                        }
                       });
                     }
                   }
@@ -223,5 +233,43 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       return SizedBox(height: MediaQuery.of(context).size.height * 0.01);
     }
+  }
+
+  Future<void> showErrorDialog(String error) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Uyarı!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(error),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Tamam'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showToast(BuildContext context, String str) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(str),
+        action: SnackBarAction(
+            label: 'Tamam', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }

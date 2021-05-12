@@ -49,7 +49,7 @@ class UserService {
   }
 
 
-  static Future<String> register(String username, String password) async {
+  static Future<UserModel> register(String username, String password) async {
     try {
       String token;
 
@@ -65,7 +65,7 @@ class UserService {
         }),
       ); //headers: header);
       if (response.statusCode == 200) {
-        return null;
+        return new UserModel();
       } else {
         print("Hata Oluştu!");
         return null;

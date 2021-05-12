@@ -6,11 +6,10 @@ import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 class FoodList extends StatefulWidget {
+  int categoryID = -1;
+  String searched = "";
 
-  int categoryID=-1;
-  String searched="";
-
-  FoodList({this.categoryID,this.searched});
+  FoodList({this.categoryID, this.searched});
 
   @override
   _FoodListState createState() => _FoodListState();
@@ -41,7 +40,7 @@ class _FoodListState extends State<FoodList> {
   }
 
   void getFoodsByName(String name) {
-    Constants.SEARCHED="";
+    Constants.SEARCHED = "";
     _loading = true;
     FoodService.getFoodByName(name).then((value) {
       setState(() {
@@ -55,15 +54,13 @@ class _FoodListState extends State<FoodList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   if(widget.categoryID==-1){
-     getFoods();
-   }
-   else if(widget.categoryID==-2){
-     getFoodsByName(widget.searched);
-   }
-   else{
-     getFoodsByCategory();
-   }
+    if (widget.categoryID == -1) {
+      getFoods();
+    } else if (widget.categoryID == -2) {
+      getFoodsByName(widget.searched);
+    } else {
+      getFoodsByCategory();
+    }
   }
 
   @override
@@ -81,7 +78,9 @@ class _FoodListState extends State<FoodList> {
                 ? InkWell(
                     child: Column(
                     children: [
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       FoodListItem(
                         foodModel: _foods[index],
                         onPressed: () {
@@ -99,7 +98,9 @@ class _FoodListState extends State<FoodList> {
                       )
                     ],
                   ))
-                : null;
+                : _foods == null
+                    ? null
+                    : CircularProgressIndicator();
           }),
     );
   }
