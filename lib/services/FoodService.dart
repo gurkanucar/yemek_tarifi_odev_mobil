@@ -81,7 +81,7 @@ class FoodService {
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
-      await http.get(url + "/category/" + id.toString(), headers: header);
+          await http.get(url + "/category/" + id.toString(), headers: header);
       if (response.statusCode == 200) {
         List<FoodModel> foods = foodModelFromJson(response.body);
         print(foods[0].foodName.toString());
@@ -102,8 +102,7 @@ class FoodService {
         "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final response =
-      await http.get(url + "/search/" +name, headers: header);
+      final response = await http.get(url + "/search/" + name, headers: header);
       if (response.statusCode == 200) {
         List<FoodModel> foods = foodModelFromJson(response.body);
         print(foods[0].foodName.toString());
@@ -117,7 +116,6 @@ class FoodService {
       return null;
     }
   }
-
 
   static Future<FoodModel> createFood(FoodModel food) async {
     try {
@@ -146,7 +144,7 @@ class FoodService {
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
-      await http.put(url, headers: header, body: foodToJson(food));
+          await http.put(url, headers: header, body: foodToJson(food));
       if (response.statusCode == 200) {
         return food;
       } else {
@@ -180,4 +178,30 @@ class FoodService {
       return null;
     }
   }
+
+  static Future<int> updateSavedRecipe(int foodID) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response = await http.get(
+          url +
+              "/savedRecipes/" +
+              GlobalVariables.USER_ID.toString() +
+              "/" +
+              foodID.toString(),
+          headers: header);
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
+import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../GlobalVariables.dart';
 
@@ -17,6 +18,18 @@ class FoodListItem extends StatefulWidget {
 class _FoodListItemState extends State<FoodListItem> {
 
   bool isSaved=false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.foodModel.savedUsers.forEach((element) {
+      if(element.id==GlobalVariables.USER_ID){
+      isSaved=true;
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,10 +194,11 @@ class _FoodListItemState extends State<FoodListItem> {
                            onTap: (){
                              setState(() {
                                isSaved=!isSaved;
+                               FoodService.updateSavedRecipe(widget.foodModel.id);
                                print("saved: "+isSaved.toString());
                              });
                            },
-                           child:  Icon(Icons.save_alt),
+                           child: isSaved == true ? Icon(Icons.save_alt,color: Colors.amber,):Icon(Icons.save_alt),
                          ),
                        ),
 

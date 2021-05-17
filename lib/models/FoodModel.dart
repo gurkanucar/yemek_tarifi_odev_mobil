@@ -4,9 +4,8 @@
 
 import 'dart:convert';
 
-import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
+import 'FileModel.dart';
+import 'UserModel.dart';
 
 List<FoodModel> foodModelFromJson(String str) => List<FoodModel>.from(json.decode(str).map((x) => FoodModel.fromJson(x)));
 
@@ -33,6 +32,7 @@ class FoodModel {
     this.prepTime,
     this.personCount,
     this.user,
+    this.savedUsers,
   });
 
   int id;
@@ -49,6 +49,7 @@ class FoodModel {
   int prepTime;
   int personCount;
   UserModel user;
+  List<UserModel> savedUsers;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) => FoodModel(
     id: json["id"] == null ? null : json["id"],
@@ -65,6 +66,7 @@ class FoodModel {
     prepTime: json["prepTime"] == null ? null : json["prepTime"],
     personCount: json["personCount"] == null ? null : json["personCount"],
     user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
+    savedUsers: json["savedUsers"] == null ? null : List<UserModel>.from(json["savedUsers"].map((x) => UserModel.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -82,6 +84,7 @@ class FoodModel {
     "prepTime": prepTime == null ? null : prepTime,
     "personCount": personCount == null ? null : personCount,
     "user": user == null ? null : user.toJson(),
+    "savedUsers": savedUsers == null ? null : List<dynamic>.from(savedUsers.map((x) => x.toJson())),
   };
 }
 
@@ -205,7 +208,7 @@ class User {
   };
 }
 
-enum Role { USER, ADMIN }
+enum Role { ADMIN, USER }
 
 final roleValues = EnumValues({
   "ADMIN": Role.ADMIN,
