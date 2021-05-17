@@ -4,7 +4,6 @@ import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 
-
 class IngredientsPage extends StatefulWidget {
   @override
   _IngredientsPageState createState() => _IngredientsPageState();
@@ -19,12 +18,20 @@ class _IngredientsPageState extends State<IngredientsPage> {
     // TODO: implement initState
     super.initState();
 
-    if (GlobalVariables?.INGREDIENT_LIST!=null && GlobalVariables?.INGREDIENT_LIST?.length > 0) {
+    if (GlobalVariables?.INGREDIENT_LIST != null &&
+        GlobalVariables?.INGREDIENT_LIST?.length > 0) {
       ingredientModels = GlobalVariables.INGREDIENT_LIST;
     } else {
-      IngredientsJsonModel temp = new IngredientsJsonModel(name:"", count:"");
+      IngredientsJsonModel temp = new IngredientsJsonModel(name: "", count: "");
       ingredientModels.add(temp);
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    GlobalVariables.INGREDIENT_LIST = ingredientModels;
   }
 
   @override
@@ -39,7 +46,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      ingredientModels.add(new IngredientsJsonModel(name:"", count:""));
+                      ingredientModels
+                          .add(new IngredientsJsonModel(name: "", count: ""));
                       GlobalVariables.INGREDIENT_LIST = ingredientModels;
                     });
                   },
@@ -73,7 +81,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           onTap: () {
                             setState(() {
                               ingredientModels.removeAt(index);
-                              GlobalVariables.INGREDIENT_LIST = ingredientModels;
+                              GlobalVariables.INGREDIENT_LIST =
+                                  ingredientModels;
                             });
                           },
                           child: Container(
@@ -93,10 +102,11 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           children: [
                             CustomInputText1(
                               initialVal: ingredientModels[index].name,
-                             onChanged: (text) {
+                              onChanged: (text) {
                                 print("malzeme adi: $text");
-                                ingredientModels[index].name=text;
-                                GlobalVariables.INGREDIENT_LIST = ingredientModels;
+                                ingredientModels[index].name = text;
+                                GlobalVariables.INGREDIENT_LIST =
+                                    ingredientModels;
                               },
                               hint: "Malzeme adı",
                               size: Size(
@@ -109,9 +119,9 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             CustomInputText1(
                               initialVal: ingredientModels[index].count,
                               onChanged: (text) {
-
-                                ingredientModels[index].count=text;
-                                GlobalVariables.INGREDIENT_LIST = ingredientModels;
+                                ingredientModels[index].count = text;
+                                GlobalVariables.INGREDIENT_LIST =
+                                    ingredientModels;
                               },
                               hint: "Adet / Miktar",
                               size: Size(

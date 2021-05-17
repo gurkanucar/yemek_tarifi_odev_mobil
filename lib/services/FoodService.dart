@@ -139,6 +139,26 @@ class FoodService {
     }
   }
 
+  static Future<FoodModel> updateFood(FoodModel food) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response =
+      await http.put(url, headers: header, body: foodToJson(food));
+      if (response.statusCode == 200) {
+        return food;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
   static Future<List<FoodModel>> getSavedFoodByUserId(int id) async {
     try {
       Map<String, String> header = {

@@ -77,6 +77,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     GlobalVariables.INGREDIENT_LIST = [];
   }
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

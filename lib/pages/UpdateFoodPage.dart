@@ -16,6 +16,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../GlobalVariables.dart';
+import 'RouterPage.dart';
 
 class UpdateFoodPage extends StatefulWidget {
   FoodModel foodModel;
@@ -80,6 +81,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     // TODO: implement dispose
     super.dispose();
     GlobalVariables.FOOD_IMAGE_URL = null;
+    GlobalVariables.INGREDIENT_LIST = [];
   }
 
   @override
@@ -87,6 +89,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     // TODO: implement initState
     super.initState();
 
+    //GlobalVariables.IMAGE_ID == widget.foodModel.image.name;
     foodNameController.text = widget.foodModel.foodName;
     foodRecipeController.text = widget.foodModel.recipe;
     GlobalVariables.FOOD_IMAGE_URL = GlobalVariables.BASE_URL +
@@ -104,11 +107,16 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
         .toString();
 
     _prepTimeKey = widget.foodModel.prepTime;
-    _prepTimeValue =_prepTime.firstWhere((item) => item.key == _prepTimeKey).getValue().toString();
+    _prepTimeValue = _prepTime
+        .firstWhere((item) => item.key == _prepTimeKey)
+        .getValue()
+        .toString();
 
     _personKey = widget.foodModel.personCount;
-    _personCountValue =_personCounts.firstWhere((item) => item.key == _personKey).getValue().toString();
-
+    _personCountValue = _personCounts
+        .firstWhere((item) => item.key == _personKey)
+        .getValue()
+        .toString();
   }
 
   @override
@@ -314,11 +322,12 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     } else if (GlobalVariables.INGREDIENT_LIST.length < 3) {
       showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
       return 1;
-    } else if (GlobalVariables.IMAGE_ID == 0) {
+    } else if (widget.foodModel.image.id == 0) {
       showErrorDialog("Lütfen resim seçin!");
       return 1;
     }
     FoodModel food = new FoodModel();
+    food.id = widget.foodModel.id;
     food.foodName = foodNameController.text.toString();
     food.recipe = foodRecipeController.text.toString();
     food.hardness = _hardnessKey;
@@ -326,35 +335,43 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     food.prepTime = _prepTimeKey;
     food.personCount = _personKey;
 
-    String ingredientsData = "";
-    GlobalVariables.INGREDIENT_LIST.forEach((element) {
-      ingredientsData += element.name + " " + element.count + "\n";
-    });
+    /* List<IngredientsJsonModel> ingredientsList =
+        List<IngredientsJsonModel>.from(GlobalVariables.INGREDIENT_LIST
+            .map((model) =>  ingredientsJsonModelToJson(model)));*/
 
-    GlobalVariables.INGREDIENT_LIST = [];
+    food.ingredients =
+        jsonEncode(GlobalVariables.INGREDIENT_LIST).toString() + "";
 
-    food.ingredients = ingredientsData;
+    print(food.ingredients);
 
     food.categoryList = new List();
     UserModel user = new UserModel();
     user.id = GlobalVariables.USER_ID;
     food.user = user;
-
+    int imageID;
     if (GlobalVariables.IMAGE_ID != 0) {
-      int imageID = GlobalVariables.IMAGE_ID;
-      FileModel image = new FileModel();
-      image.id = imageID;
-      GlobalVariables.IMAGE_ID = 0;
-      food.image = image;
-      //food.image=image;
+      imageID = GlobalVariables.IMAGE_ID;
+    } else if (widget.foodModel.image.id != 0) {
+      imageID = widget.foodModel.image.id;
     } else {
       return 1;
     }
 
-    FoodService.createFood(food).then((value) {
+    FileModel image = new FileModel();
+    image.id = imageID;
+    GlobalVariables.IMAGE_ID = 0;
+    food.image = image;
+    //food.image=image;
+
+    FoodService.updateFood(food).then((value) {
       if (value != null) {
-        Navigator.pop(context);
+        //Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RouterPage()));
         _showToast(context, "Yemek paylaşıldı");
+        GlobalVariables.INGREDIENT_LIST = [];
       } else {
         showErrorDialog("Bir hata oldu :(");
       }

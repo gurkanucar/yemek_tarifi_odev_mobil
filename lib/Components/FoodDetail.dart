@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/UpdateFoodPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
@@ -27,9 +28,11 @@ class _FoodDetailState extends State<FoodDetail> {
     FoodService.getFoodByID(widget?.foodModel?.id).then((value) {
       setState(() {
         foodModel = value;
-        ingredientsParsed = foodModel.ingredients
-            .replaceAll(GlobalVariables.CHAR_IN_LINE, "   ")
-            .replaceAll(GlobalVariables.CHAR_NEW_LINE, "");
+
+        ingredientsJsonModelFromJson(widget.foodModel.ingredients).forEach((element) {
+          ingredientsParsed += element.name+"  "+element.count+"\n";
+        });
+
         isLoading = false;
       });
     });
