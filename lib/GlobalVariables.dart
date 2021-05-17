@@ -3,7 +3,7 @@ import 'package:yemek_tarifi_odev_mobil/models/IngredientModel.dart';
 
 import 'models/UserModel.dart';
 
-class Constants {
+class GlobalVariables {
   static String SEARCHED="";
   static String BASE_URL = "http://192.168.0.21:8080";
   static String IMAGE_BASE_URL = "/api/files/downloadFile/";
