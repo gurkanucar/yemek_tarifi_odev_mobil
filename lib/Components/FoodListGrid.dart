@@ -77,6 +77,9 @@ class _FoodListGridState extends State<FoodListGrid> {
                   return Material(
                     child: InkWell(
                       onTap: () {
+                        print("GRİDDEN PUSHLANDI");
+                        print(_foods[index].id.toString());
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(

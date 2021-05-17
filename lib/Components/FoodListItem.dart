@@ -16,30 +16,35 @@ class FoodListItem extends StatefulWidget {
 }
 
 class _FoodListItemState extends State<FoodListItem> {
+  bool isSaved = false;
 
-  bool isSaved=false;
+  void checkSaved() {
+    widget.foodModel.savedUsers.forEach((element) {
+      if (element.id == GlobalVariables.USER_ID) {
+        setState(() {
+          isSaved = true;
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.foodModel.savedUsers.forEach((element) {
-      if(element.id==GlobalVariables.USER_ID){
-      isSaved=true;
-      }
-    });
 
+    checkSaved();
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
         borderRadius: BorderRadius.circular(20),
-       elevation: 5,
+        elevation: 5,
         child: InkWell(
           onTap: widget.onPressed,
           child: Container(
-            margin: EdgeInsets.only(left: 10,right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10),
             // height: MediaQuery.of(context).size.height * 0.62,
             width: MediaQuery.of(context).size.width * 0.96,
             decoration: BoxDecoration(
@@ -61,7 +66,7 @@ class _FoodListItemState extends State<FoodListItem> {
                                     userID: widget.foodModel.user.id)));
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
+                        padding: EdgeInsets.only(bottom: 10, left: 10, top: 10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,14 +80,14 @@ class _FoodListItemState extends State<FoodListItem> {
                                     child: FadeInImage.assetNetwork(
                                       fit: BoxFit.cover,
                                       placeholder: 'assets/user.png',
-                                      image:
-                                          widget.foodModel.user?.profilePhoto !=
-                                                  null
-                                              ? GlobalVariables.BASE_URL +
-                                                  GlobalVariables.IMAGE_BASE_URL +
-                                                  widget.foodModel.user
-                                                      .profilePhoto.name
-                                              : 'assets/user.png',
+                                      image: widget.foodModel.user
+                                                  ?.profilePhoto !=
+                                              null
+                                          ? GlobalVariables.BASE_URL +
+                                              GlobalVariables.IMAGE_BASE_URL +
+                                              widget.foodModel.user.profilePhoto
+                                                  .name
+                                          : 'assets/user.png',
                                     ),
                                   ),
                                 ),
@@ -186,22 +191,27 @@ class _FoodListItemState extends State<FoodListItem> {
                                 (widget?.foodModel?.personCount).toString() +
                                     " kişilik",
                                 style: TextStyle(fontSize: 18)),
-
-                        SizedBox(width: 25,),
-
-                       Material(
-                         child: InkWell(
-                           onTap: (){
-                             setState(() {
-                               isSaved=!isSaved;
-                               FoodService.updateSavedRecipe(widget.foodModel.id);
-                               print("saved: "+isSaved.toString());
-                             });
-                           },
-                           child: isSaved == true ? Icon(Icons.save_alt,color: Colors.amber,):Icon(Icons.save_alt),
-                         ),
-                       ),
-
+                        SizedBox(
+                          width: 25,
+                        ),
+                        Material(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                isSaved = !isSaved;
+                                FoodService.updateSavedRecipe(
+                                    widget.foodModel.id);
+                                print("saved: " + isSaved.toString());
+                              });
+                            },
+                            child: isSaved == true
+                                ? Icon(
+                                    Icons.save_alt,
+                                    color: Colors.amber,
+                                  )
+                                : Icon(Icons.save_alt),
+                          ),
+                        ),
                         SizedBox(
                           width: 20,
                         ),
