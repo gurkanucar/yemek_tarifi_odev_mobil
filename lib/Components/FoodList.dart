@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodDetail.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListItem.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
@@ -40,7 +40,7 @@ class _FoodListState extends State<FoodList> {
   }
 
   void getFoodsByName(String name) {
-    Constants.SEARCHED = "";
+    GlobalVariables.SEARCHED = "";
     _loading = true;
     FoodService.getFoodByName(name).then((value) {
       setState(() {

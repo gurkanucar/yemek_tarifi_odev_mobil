@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientModel.dart';
 
 class IngredientsPage extends StatefulWidget {
@@ -18,8 +18,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
     // TODO: implement initState
     super.initState();
 
-    if (Constants?.INGREDIENT_LIST!=null && Constants?.INGREDIENT_LIST?.length > 0) {
-      ingredientModels = Constants.INGREDIENT_LIST;
+    if (GlobalVariables?.INGREDIENT_LIST!=null && GlobalVariables?.INGREDIENT_LIST?.length > 0) {
+      ingredientModels = GlobalVariables.INGREDIENT_LIST;
     } else {
       IngredientModel temp = new IngredientModel("", "");
       ingredientModels.add(temp);
@@ -39,7 +39,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                   onTap: () {
                     setState(() {
                       ingredientModels.add(new IngredientModel("", ""));
-                      Constants.INGREDIENT_LIST = ingredientModels;
+                      GlobalVariables.INGREDIENT_LIST = ingredientModels;
                     });
                   },
                   child: Container(
@@ -72,7 +72,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           onTap: () {
                             setState(() {
                               ingredientModels.removeAt(index);
-                              Constants.INGREDIENT_LIST = ingredientModels;
+                              GlobalVariables.INGREDIENT_LIST = ingredientModels;
                             });
                           },
                           child: Container(
@@ -95,7 +95,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                              onChanged: (text) {
                                 print("malzeme adi: $text");
                                 ingredientModels[index].name=text;
-                                Constants.INGREDIENT_LIST = ingredientModels;
+                                GlobalVariables.INGREDIENT_LIST = ingredientModels;
                               },
                               hint: "Malzeme adı",
                               size: Size(
@@ -110,7 +110,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                               onChanged: (text) {
                                 print("malzeme adi: $text");
                                 ingredientModels[index].count=text;
-                                Constants.INGREDIENT_LIST = ingredientModels;
+                                GlobalVariables.INGREDIENT_LIST = ingredientModels;
                               },
                               hint: "Adet",
                               size: Size(

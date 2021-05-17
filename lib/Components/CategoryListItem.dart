@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 
 class CategoryListItem extends StatefulWidget {
 
@@ -38,8 +38,8 @@ class _CategoryListItemState extends State<CategoryListItem> {
                 fit: BoxFit.cover,
                 placeholder: 'assets/loading.gif',
                 image: widget.categoryModel.categoryImage != null
-                    ? Constants.BASE_URL +
-                    Constants.IMAGE_BASE_URL +
+                    ? GlobalVariables.BASE_URL +
+                    GlobalVariables.IMAGE_BASE_URL +
                     widget?.categoryModel.categoryImage.name
                     : 'assets/loading.gif',
               ),

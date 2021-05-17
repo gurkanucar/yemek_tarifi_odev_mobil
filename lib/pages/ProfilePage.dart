@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/UserService.dart';
 
@@ -56,8 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         fit: BoxFit.cover,
                         placeholder: 'assets/user.png',
                         image: userModel?.profilePhoto != null
-                            ? Constants.BASE_URL +
-                                Constants.IMAGE_BASE_URL +
+                            ? GlobalVariables.BASE_URL +
+                                GlobalVariables.IMAGE_BASE_URL +
                                 userModel?.profilePhoto.name
                             : 'assets/user.png',
                       ),

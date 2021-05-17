@@ -4,11 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 
 
 class UserService {
-  static String url = Constants.BASE_URL + "/api/user";
+  static String url = GlobalVariables.BASE_URL + "/api/user";
 
   static Future<String> login(String username, String password) async {
     try {
@@ -29,13 +29,13 @@ class UserService {
         print("Token:  " + token);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", token);
-        Constants.BEARER_TOKEN = token;
+        GlobalVariables.BEARER_TOKEN = token;
         UserModel user;
        await getSelf(token).then((value) {
         user=value;
         });
-        Constants.USER=user;
-        Constants.USER_ID=user.id;
+        GlobalVariables.USER=user;
+        GlobalVariables.USER_ID=user.id;
         print("Login Olan USER!!!!! "+user.id.toString());
         return token;
       } else {
@@ -102,7 +102,7 @@ class UserService {
   static Future<UserModel> getPublic(int id) async {
     try{
       Map<String,String> header={
-        "Authorization":"Bearer "+Constants.BEARER_TOKEN,
+        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response = await http.get(url+"/public/"+id.toString(),headers: header);

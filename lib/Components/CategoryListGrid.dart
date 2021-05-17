@@ -5,7 +5,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 import 'FoodDetail.dart';
 
 class CategoryListGrid extends StatefulWidget {
@@ -74,8 +74,8 @@ class _CategoryListGridState extends State<CategoryListGrid> {
                                    fit: BoxFit.cover,
                                    placeholder: 'assets/loading.gif',
                                    image: _categories[index]?.categoryImage?.url != null
-                                       ? Constants.BASE_URL +
-                                       Constants.IMAGE_BASE_URL +
+                                       ? GlobalVariables.BASE_URL +
+                                       GlobalVariables.IMAGE_BASE_URL +
                                        _categories[index]?.categoryImage?.name
                                        : 'assets/loading.gif',
                                  ),

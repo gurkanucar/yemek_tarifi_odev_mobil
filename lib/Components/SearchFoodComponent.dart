@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategoryListGrid.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
@@ -29,7 +29,7 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    textEditingController.text = Constants.SEARCHED;
+    textEditingController.text = GlobalVariables.SEARCHED;
   }
 
   @override
@@ -64,8 +64,8 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
                           onTap: () {
                             setState(() {
                               _loading = true;
-                              Constants.SEARCHED = textEditingController.text;
-                              textEditingController.text = Constants.SEARCHED;
+                              GlobalVariables.SEARCHED = textEditingController.text;
+                              textEditingController.text = GlobalVariables.SEARCHED;
 
                               Navigator.push(
                                   context,
@@ -98,7 +98,7 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
           child: widget.isFirst == false
               ? FoodList(
                   categoryID: -2,
-                  searched: Constants.SEARCHED,
+                  searched: GlobalVariables.SEARCHED,
                 )
               : SingleChildScrollView(
             child: Column(

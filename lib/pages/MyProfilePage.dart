@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/UserService.dart';
@@ -18,7 +18,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    UserService.getPublic(Constants.USER_ID).then((value) {
+    UserService.getPublic(GlobalVariables.USER_ID).then((value) {
       setState(() {
         userModel = value;
         isLoading = false;
@@ -47,9 +47,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             MaterialPageRoute(
                                 builder: (context) => LoginPage()));
 
-                        Constants.USER_ID=0;
-                        Constants.USER=null;
-                        Constants.BEARER_TOKEN="";
+                        GlobalVariables.USER_ID=0;
+                        GlobalVariables.USER=null;
+                        GlobalVariables.BEARER_TOKEN="";
 
                       },
                       child: Row(
@@ -82,8 +82,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       fit: BoxFit.cover,
                       placeholder:'assets/user.png',
                       image: userModel?.profilePhoto != null
-                          ? Constants.BASE_URL +
-                              Constants.IMAGE_BASE_URL +
+                          ? GlobalVariables.BASE_URL +
+                              GlobalVariables.IMAGE_BASE_URL +
                               userModel?.profilePhoto.name
                           : 'assets/user.png',
                     ),
@@ -100,7 +100,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
 
-                FoodListGrid(userId: Constants.USER_ID,savedRecipes: false,),
+                FoodListGrid(userId: GlobalVariables.USER_ID,savedRecipes: false,),
               ],
             )
           : null,

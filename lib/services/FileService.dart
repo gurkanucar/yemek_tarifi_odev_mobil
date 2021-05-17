@@ -2,16 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 
 
 class FileService {
-  static String url = Constants.BASE_URL + "/api/files";
+  static String url = GlobalVariables.BASE_URL + "/api/files";
 
   static Future<File> uploadFile(File file) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'multipart/form-data; charset=UTF-8',
       };
 
@@ -24,7 +24,7 @@ class FileService {
       if (res.statusCode == 200) {
             print(res);
             Map<String, dynamic> resData = jsonDecode(res.body);
-            Constants.IMAGE_ID=resData["id"];
+            GlobalVariables.IMAGE_ID=resData["id"];
             print(resData["id"].toString());
           return null;
           } else {

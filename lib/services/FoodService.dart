@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 
 import 'dart:async';
 import 'dart:convert';
@@ -7,12 +7,12 @@ import 'dart:convert';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 
 class FoodService {
-  static String url = Constants.BASE_URL + "/api/food";
+  static String url = GlobalVariables.BASE_URL + "/api/food";
 
   static Future<List<FoodModel>> getFoods() async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response = await http.get(url, headers: header);
@@ -32,7 +32,7 @@ class FoodService {
   static Future<FoodModel> getFoodByID(int id) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
@@ -55,7 +55,7 @@ class FoodService {
   static Future<List<FoodModel>> getFoodByUserID(int id) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
@@ -77,7 +77,7 @@ class FoodService {
   static Future<List<FoodModel>> getFoodByCategoryID(int id) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
@@ -99,7 +99,7 @@ class FoodService {
   static Future<List<FoodModel>> getFoodByName(String name) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
@@ -122,7 +122,7 @@ class FoodService {
   static Future<FoodModel> createFood(FoodModel food) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
@@ -142,7 +142,7 @@ class FoodService {
   static Future<List<FoodModel>> getSavedFoodByUserId(int id) async {
     try {
       Map<String, String> header = {
-        "Authorization": "Bearer " + Constants.BEARER_TOKEN,
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response = await http.get(url + "/savedRecipes/" + id.toString(),

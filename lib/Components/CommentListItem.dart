@@ -5,7 +5,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CommentService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 import 'BlurryDialog.dart';
 import 'FoodDetail.dart';
 
@@ -81,7 +81,7 @@ class _CommentListItemState extends State<CommentListItem> {
                                       fit: BoxFit.cover,
                                       placeholder: 'assets/loading.gif',
                                       image: data?.userPhotoUrl != null
-                                          ? Constants.BASE_URL +
+                                          ? GlobalVariables.BASE_URL +
                                               data?.userPhotoUrl
                                           : 'assets/loading.gif',
                                     ),
@@ -129,7 +129,7 @@ class _CommentListItemState extends State<CommentListItem> {
     VoidCallback continueCallBack = () {
        Navigator.of(context).pop();
       // code on continue comes here
-      if(widget.commentModel.userId==Constants.USER_ID) {
+      if(widget.commentModel.userId==GlobalVariables.USER_ID) {
         CommentService.deleteCommentByID(widget.commentModel.id);
         print("Sildiniz beyfendi!");
         FoodService.getFoodByID(widget.commentModel.foodId).then((value) {
@@ -151,7 +151,7 @@ class _CommentListItemState extends State<CommentListItem> {
 
     BlurryDialog  alert;
 
-    if(widget.commentModel.userId==Constants.USER_ID){
+    if(widget.commentModel.userId==GlobalVariables.USER_ID){
       alert = BlurryDialog("Uyarı!","Yorumu Silmek İstiyor musunuz?",continueCallBack);
     }
     else{

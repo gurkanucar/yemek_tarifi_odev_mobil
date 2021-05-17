@@ -4,19 +4,19 @@ import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 
 
 class CategoryService {
 
-  static String url = Constants.BASE_URL + "/api/category";
+  static String url = GlobalVariables.BASE_URL + "/api/category";
 
 
 
   static Future<List<CategoryModel>> getCategories() async{
     try{
       Map<String,String> header={
-        "Authorization":"Bearer "+Constants.BEARER_TOKEN,
+        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response = await http.get(url,headers: header);
@@ -39,7 +39,7 @@ class CategoryService {
   static Future<CategoryModel> getCategoryByID(int id) async{
     try{
       Map<String,String> header={
-        "Authorization":"Bearer "+Constants.BEARER_TOKEN,
+        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response = await http.get(url+"/"+id.toString(),headers: header);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yemek_tarifi_odev_mobil/Constans.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CommentModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CommentService.dart';
@@ -42,7 +42,7 @@ class _CommentComponentState extends State<CommentComponent> {
                   ),
                   onPressed: ()  {
                     CommentModel comment = new CommentModel();
-                    comment.userId = Constants.USER_ID;
+                    comment.userId = GlobalVariables.USER_ID;
                     comment.comment = tcontrol.text;
                     FoodModel food=new FoodModel();
                     food.id=widget.foodID;

@@ -16,14 +16,20 @@ import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../GlobalVariables.dart';
 
-class CreateFoodPage extends StatefulWidget {
+class UpdateFoodPage extends StatefulWidget {
+
+  FoodModel foodModel;
+
+  UpdateFoodPage({@required this.foodModel});
+
   @override
-  _CreateFoodPageState createState() => _CreateFoodPageState();
+  _UpdateFoodPageState createState() => _UpdateFoodPageState();
 }
 
-class _CreateFoodPageState extends State<CreateFoodPage> {
+class _UpdateFoodPageState extends State<UpdateFoodPage> {
   TextEditingController foodNameController = new TextEditingController();
   TextEditingController foodRecipeController = new TextEditingController();
+
 
   Set<DropDownItemModel> _hardnessValues = {
     new DropDownItemModel(1, "Zor"),
@@ -69,6 +75,17 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
   int _personKey = -1;
   String _prepTimeValue;
   int _prepTimeKey = -1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    foodNameController.text=widget.foodModel.foodName;
+    foodRecipeController.text=widget.foodModel.recipe;
+
+
+  }
 
   @override
   Widget build(BuildContext context) {

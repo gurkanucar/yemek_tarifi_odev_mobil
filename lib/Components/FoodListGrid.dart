@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 import 'FoodDetail.dart';
 
 class FoodListGrid extends StatefulWidget {
@@ -91,8 +91,8 @@ class _FoodListGridState extends State<FoodListGrid> {
                             fit: BoxFit.cover,
                             placeholder: 'assets/loading.gif',
                             image: _foods[index]?.image?.url != null
-                                ? Constants.BASE_URL +
-                                Constants.IMAGE_BASE_URL +
+                                ? GlobalVariables.BASE_URL +
+                                GlobalVariables.IMAGE_BASE_URL +
                                 _foods[index]?.image?.name
                                 : 'assets/loading.gif',
                           ),

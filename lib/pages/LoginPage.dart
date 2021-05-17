@@ -147,20 +147,25 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () async {
                   if (isRegister == false) {
-                    print(loginUsername + "  " + loginPassword);
-                    //loginUsername="admin";
-                    loginPassword = "admin123";
-                    await UserService.login(loginUsername, loginPassword)
-                        .then((value) {
-                      if (value != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RouterPage()));
-                      } else {
-                        showErrorDialog("Kullanıcı bilgisi bulunamadı!");
-                      }
-                    });
+                    if (loginUsername.isEmpty || loginPassword.isEmpty) {
+                      showErrorDialog(
+                          "Lütfen boş alan bırakmayın!");
+                    } else {
+                      print(loginUsername + "  " + loginPassword);
+                      //loginUsername="admin";
+                      loginPassword = "admin123";
+                      await UserService.login(loginUsername, loginPassword)
+                          .then((value) {
+                        if (value != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RouterPage()));
+                        } else {
+                          showErrorDialog("Kullanıcı bilgisi bulunamadı!");
+                        }
+                      });
+                    }
                   } else {
                     if (loginPassword == loginPassword2) {
                       UserService.register(loginUsername, loginPassword)
@@ -168,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (value != null) {
                           setState(() {
                             isRegister = false;
-                            _showToast(context,"Kayıt olundu");
+                            _showToast(context, "Kayıt olundu");
                           });
                         } else {
                           showErrorDialog(

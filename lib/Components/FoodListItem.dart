@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 
-import '../Constans.dart';
+import '../GlobalVariables.dart';
 
 class FoodListItem extends StatefulWidget {
   FoodModel foodModel;
@@ -65,8 +65,8 @@ class _FoodListItemState extends State<FoodListItem> {
                                       image:
                                           widget.foodModel.user?.profilePhoto !=
                                                   null
-                                              ? Constants.BASE_URL +
-                                                  Constants.IMAGE_BASE_URL +
+                                              ? GlobalVariables.BASE_URL +
+                                                  GlobalVariables.IMAGE_BASE_URL +
                                                   widget.foodModel.user
                                                       .profilePhoto.name
                                               : 'assets/user.png',
@@ -96,8 +96,8 @@ class _FoodListItemState extends State<FoodListItem> {
                     fit: BoxFit.cover,
                     placeholder: 'assets/loading.gif',
                     image: widget?.foodModel?.image?.url != null
-                        ? Constants.BASE_URL +
-                            Constants.IMAGE_BASE_URL +
+                        ? GlobalVariables.BASE_URL +
+                            GlobalVariables.IMAGE_BASE_URL +
                             widget.foodModel?.image?.name
                         : 'assets/loading.gif',
                   ),
