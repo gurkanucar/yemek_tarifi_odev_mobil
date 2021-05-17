@@ -46,6 +46,9 @@ class _RouterPageState extends State<RouterPage> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          SizedBox(
+          height: 50,
+        ),
           Text("Kayıtlı Yemeklerim",style: TextStyle(fontSize: 25),),
           SizedBox(
             height: 25,
