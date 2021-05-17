@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
-import 'package:yemek_tarifi_odev_mobil/models/IngredientModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
+
 
 class IngredientsPage extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class IngredientsPage extends StatefulWidget {
 }
 
 class _IngredientsPageState extends State<IngredientsPage> {
-  List<IngredientModel> ingredientModels = new List();
+  List<IngredientsJsonModel> ingredientModels = new List();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -21,7 +22,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
     if (GlobalVariables?.INGREDIENT_LIST!=null && GlobalVariables?.INGREDIENT_LIST?.length > 0) {
       ingredientModels = GlobalVariables.INGREDIENT_LIST;
     } else {
-      IngredientModel temp = new IngredientModel("", "");
+      IngredientsJsonModel temp = new IngredientsJsonModel(name:"", count:"");
       ingredientModels.add(temp);
     }
   }
@@ -38,7 +39,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      ingredientModels.add(new IngredientModel("", ""));
+                      ingredientModels.add(new IngredientsJsonModel(name:"", count:""));
                       GlobalVariables.INGREDIENT_LIST = ingredientModels;
                     });
                   },
@@ -108,11 +109,11 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             CustomInputText1(
                               initialVal: ingredientModels[index].count,
                               onChanged: (text) {
-                                print("malzeme adi: $text");
+
                                 ingredientModels[index].count=text;
                                 GlobalVariables.INGREDIENT_LIST = ingredientModels;
                               },
-                              hint: "Adet",
+                              hint: "Adet / Miktar",
                               size: Size(
                                   MediaQuery.of(context).size.width * 0.4, 70),
                             )

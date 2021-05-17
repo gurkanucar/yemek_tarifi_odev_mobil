@@ -9,7 +9,7 @@ import 'package:yemek_tarifi_odev_mobil/Components/ImagePickerComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/models/DropDownItemModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/IngredientModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
@@ -69,6 +69,13 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
   int _personKey = -1;
   String _prepTimeValue;
   int _prepTimeKey = -1;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    GlobalVariables.INGREDIENT_LIST = [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,13 +293,23 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     food.personCount = _personKey;
 
     String ingredientsData = "";
-    GlobalVariables.INGREDIENT_LIST.forEach((element) {
-      ingredientsData += element.name + " " + element.count + "\n";
-    });
+    /* GlobalVariables.INGREDIENT_LIST.forEach((element) {
+      ingredientsData += element.name +
+          GlobalVariables.CHAR_IN_LINE +
+          element.count +
+          GlobalVariables.CHAR_NEW_LINE +
+          "\n";
+    });*/
+
+
+    List<IngredientsJsonModel> ingredientsList = List<IngredientsJsonModel>.from(GlobalVariables.INGREDIENT_LIST.map((model)=> ingredientsJsonModelToJson(model)));
+
+
+    //ingredientsDynamicList.add(name: element.name,element.count)
 
     GlobalVariables.INGREDIENT_LIST = [];
 
-    food.ingredients = ingredientsData;
+    food.ingredients = ingredientsList.toString();
 
     food.categoryList = new List();
     UserModel user = new UserModel();

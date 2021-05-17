@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,7 @@ import 'package:yemek_tarifi_odev_mobil/Components/ImagePickerComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/models/DropDownItemModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/IngredientModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
@@ -17,7 +18,6 @@ import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 import '../GlobalVariables.dart';
 
 class UpdateFoodPage extends StatefulWidget {
-
   FoodModel foodModel;
 
   UpdateFoodPage({@required this.foodModel});
@@ -29,7 +29,6 @@ class UpdateFoodPage extends StatefulWidget {
 class _UpdateFoodPageState extends State<UpdateFoodPage> {
   TextEditingController foodNameController = new TextEditingController();
   TextEditingController foodRecipeController = new TextEditingController();
-
 
   Set<DropDownItemModel> _hardnessValues = {
     new DropDownItemModel(1, "Zor"),
@@ -77,13 +76,38 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
   int _prepTimeKey = -1;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    GlobalVariables.FOOD_IMAGE_URL = null;
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    foodNameController.text=widget.foodModel.foodName;
-    foodRecipeController.text=widget.foodModel.recipe;
+    foodNameController.text = widget.foodModel.foodName;
+    foodRecipeController.text = widget.foodModel.recipe;
+    GlobalVariables.FOOD_IMAGE_URL = GlobalVariables.BASE_URL +
+        GlobalVariables.IMAGE_BASE_URL +
+        widget.foodModel.image.name;
 
+    //print(ingredientsJsonModelFromJson(widget.foodModel.ingredients)[0].name);
+    GlobalVariables.INGREDIENT_LIST =
+        ingredientsJsonModelFromJson(widget.foodModel.ingredients);
+
+    _hardnessKey = widget.foodModel.hardness;
+    _hardnessValue = _hardnessValues
+        .toList()[int.parse(widget.foodModel.hardness.toString()) - 1]
+        .getValue()
+        .toString();
+
+    _prepTimeKey = widget.foodModel.prepTime;
+    _prepTimeValue =_prepTime.firstWhere((item) => item.key == _prepTimeKey).getValue().toString();
+
+    _personKey = widget.foodModel.personCount;
+    _personCountValue =_personCounts.firstWhere((item) => item.key == _personKey).getValue().toString();
 
   }
 

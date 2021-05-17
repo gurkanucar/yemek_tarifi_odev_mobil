@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/UpdateFoodPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../GlobalVariables.dart';
@@ -19,12 +20,16 @@ class FoodDetail extends StatefulWidget {
 class _FoodDetailState extends State<FoodDetail> {
   bool isLoading = true;
   FoodModel foodModel = new FoodModel();
+  String ingredientsParsed = "";
 
   void getFood() {
     isLoading = true;
     FoodService.getFoodByID(widget?.foodModel?.id).then((value) {
       setState(() {
         foodModel = value;
+        ingredientsParsed = foodModel.ingredients
+            .replaceAll(GlobalVariables.CHAR_IN_LINE, "   ")
+            .replaceAll(GlobalVariables.CHAR_NEW_LINE, "");
         isLoading = false;
       });
     });
@@ -102,7 +107,8 @@ class _FoodDetailState extends State<FoodDetail> {
                                                         ?.profilePhoto !=
                                                     null
                                                 ? GlobalVariables.BASE_URL +
-                                                    GlobalVariables.IMAGE_BASE_URL +
+                                                    GlobalVariables
+                                                        .IMAGE_BASE_URL +
                                                     widget.foodModel.user
                                                         .profilePhoto.name
                                                 : 'assets/user.png',
@@ -133,6 +139,15 @@ class _FoodDetailState extends State<FoodDetail> {
                                                     child: InkWell(
                                                       onTap: () {
                                                         print("edit clicked");
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        UpdateFoodPage(
+                                                                          foodModel:
+                                                                              foodModel,
+                                                                        )));
                                                       },
                                                       child: Icon(Icons.edit),
                                                     ),
@@ -177,7 +192,7 @@ class _FoodDetailState extends State<FoodDetail> {
                               child: Container(
                                 margin: EdgeInsets.all(15),
                                 child: Text(
-                                  foodModel?.ingredients,
+                                  ingredientsParsed,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: 22, color: Color(0xff4C4C4C)),

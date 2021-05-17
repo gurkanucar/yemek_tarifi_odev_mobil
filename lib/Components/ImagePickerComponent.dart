@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FileService.dart';
-
 
 class ImagePickerComponent extends StatefulWidget {
   @override
@@ -59,17 +59,25 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
                           fit: BoxFit.cover,
                         ),
                       )
-                    : Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xffFFD050),
-                            borderRadius: BorderRadius.circular(20)),
-                        width: 350,
-                        height: 200,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.grey[800],
-                        ),
-                      ),
+                    : GlobalVariables.FOOD_IMAGE_URL == null
+                        ? Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffFFD050),
+                                borderRadius: BorderRadius.circular(20)),
+                            width: 350,
+                            height: 200,
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.grey[800],
+                            ),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            width: 350,
+                            height: 200,
+                            child:Image.network(GlobalVariables.FOOD_IMAGE_URL)
+                          ),
               ),
             ),
           )
