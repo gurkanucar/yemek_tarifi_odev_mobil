@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomButton.dart';
+import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/UserService.dart';
 
 class LoginPage extends StatefulWidget {
@@ -146,18 +148,21 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () async {
-
-                  loginPassword="admin123";
+                  loginPassword = "admin123";
                   if (isRegister == false) {
                     if (loginUsername.isEmpty || loginPassword.isEmpty) {
-                      showErrorDialog(
-                          "Lütfen boş alan bırakmayın!");
+                      showErrorDialog("Lütfen boş alan bırakmayın!");
                     } else {
                       print(loginUsername + "  " + loginPassword);
                       loginPassword = "admin123";
                       await UserService.login(loginUsername, loginPassword)
                           .then((value) {
                         if (value != null) {
+                          if (GlobalVariables.ROLE != "USER") {
+                            ToastService.showToast(
+                                context, "Hoşgeldiniz," + GlobalVariables.ROLE);
+                          }
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

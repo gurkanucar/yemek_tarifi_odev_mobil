@@ -52,6 +52,29 @@ class FoodService {
     }
   }
 
+  static Future<FoodModel> deleteFoodByID(int id) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response =
+      await http.delete(url + "/" + id.toString(), headers: header);
+      if (response.statusCode == 200) {
+        // print(response.body);
+        var jsonResponse = json.decode(response.body);
+        FoodModel food = FoodModel.fromJson(jsonResponse);
+        return food;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
+    }
+  }
+
   static Future<List<FoodModel>> getFoodByUserID(int id) async {
     try {
       Map<String, String> header = {

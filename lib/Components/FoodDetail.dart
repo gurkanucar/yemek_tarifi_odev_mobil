@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/UpdateFoodPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
@@ -23,6 +24,18 @@ class _FoodDetailState extends State<FoodDetail> {
   bool isLoading = true;
   FoodModel foodModel = new FoodModel();
   String ingredientsParsed = "";
+  bool isSaved = false;
+
+  void checkSaved() {
+    widget.foodModel.savedUsers.forEach((element) {
+      if (element.id == GlobalVariables.USER_ID) {
+        setState(() {
+          isSaved = true;
+        });
+      }
+    });
+  }
+
 
   void getFood() {
     isLoading = true;
@@ -30,7 +43,7 @@ class _FoodDetailState extends State<FoodDetail> {
       setState(() {
         if(value!=null){
           foodModel = value;
-
+          checkSaved();
           ingredientsJsonModelFromJson(widget.foodModel.ingredients).forEach((element) {
             ingredientsParsed += element.name+"  "+element.count+"\n";
           });
@@ -137,6 +150,31 @@ class _FoodDetailState extends State<FoodDetail> {
                                           ),
                                           flex: 3,
                                         ),
+
+                                        Expanded(child: Material(
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                isSaved = !isSaved;
+                                                FoodService.updateSavedRecipe(
+                                                    widget.foodModel.id);
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => RouterPage()));
+                                                print("saved: " + isSaved.toString());
+                                              });
+                                            },
+                                            child: isSaved == true
+                                                ? Icon(
+                                              Icons.save_alt,
+                                              color: Colors.amber,
+                                            )
+                                                : Icon(Icons.save_alt),
+                                          ),
+                                        ),
+                                        flex: 1,),
+
                                         widget.foodModel.user.id ==
                                                 GlobalVariables.USER_ID
                                             ? Expanded(

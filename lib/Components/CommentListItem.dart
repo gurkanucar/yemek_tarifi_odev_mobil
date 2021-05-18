@@ -129,7 +129,7 @@ class _CommentListItemState extends State<CommentListItem> {
     VoidCallback continueCallBack = () {
        Navigator.of(context).pop();
       // code on continue comes here
-      if(widget.commentModel.userId==GlobalVariables.USER_ID) {
+      if(widget.commentModel.userId==GlobalVariables.USER_ID || GlobalVariables.ROLE != "USER") {
         CommentService.deleteCommentByID(widget.commentModel.id);
         print("Sildiniz beyfendi!");
         FoodService.getFoodByID(widget.commentModel.foodId).then((value) {
@@ -145,13 +145,14 @@ class _CommentListItemState extends State<CommentListItem> {
       }
       else{
         print("Şikayet Ettiniz beyfendi!");
+        CommentService.deleteCommentByID(widget.commentModel.id);
       }
 
     };
 
     BlurryDialog  alert;
 
-    if(widget.commentModel.userId==GlobalVariables.USER_ID){
+    if(widget.commentModel.userId==GlobalVariables.USER_ID || GlobalVariables.ROLE != "USER"){
       alert = BlurryDialog("Uyarı!","Yorumu Silmek İstiyor musunuz?",continueCallBack);
     }
     else{

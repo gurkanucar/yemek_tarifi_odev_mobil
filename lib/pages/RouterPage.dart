@@ -42,7 +42,7 @@ class _RouterPageState extends State<RouterPage> {
 
    SearchFoodComponent(true),
 
-    SingleChildScrollView(
+   /* SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -52,11 +52,11 @@ class _RouterPageState extends State<RouterPage> {
           Text("Kayıtlı Yemeklerim",style: TextStyle(fontSize: 25),),
           SizedBox(
             height: 25,
-          ),
+          ),*/
           SavedRecipesPage(),
-        ],
+        /*],
       ),
-    ),
+    ),*/
 
 
 

@@ -35,6 +35,7 @@ class UserService {
         user=value;
         });
         GlobalVariables.USER=user;
+        GlobalVariables.ROLE=user.role.toString();
         GlobalVariables.USER_ID=user.id;
         print("Login Olan USER!!!!! "+user.id.toString());
         return token;

@@ -12,6 +12,7 @@ class GlobalVariables {
   static String BEARER_TOKEN = "";
   static int USER_ID = 1;
   static UserModel USER;
+  static String ROLE="";
   static int IMAGE_ID = 0;
   static List<IngredientsJsonModel> INGREDIENT_LIST = [];
 }
