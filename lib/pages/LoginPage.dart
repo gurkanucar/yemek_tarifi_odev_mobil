@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () async {
-                  loginUsername="admin";
+
                   loginPassword="admin123";
                   if (isRegister == false) {
                     if (loginUsername.isEmpty || loginPassword.isEmpty) {
@@ -154,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                           "Lütfen boş alan bırakmayın!");
                     } else {
                       print(loginUsername + "  " + loginPassword);
-                      //loginUsername="admin";
                       loginPassword = "admin123";
                       await UserService.login(loginUsername, loginPassword)
                           .then((value) {

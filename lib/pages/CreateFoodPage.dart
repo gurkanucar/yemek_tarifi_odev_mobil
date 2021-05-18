@@ -13,6 +13,7 @@ import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 import '../GlobalVariables.dart';
 
@@ -331,7 +332,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     FoodService.createFood(food).then((value) {
       if (value != null) {
         Navigator.pop(context);
-        _showToast(context, "Yemek paylaşıldı");
+        ToastService.showToast(context, "Yemek paylaşıldı");
       } else {
         showErrorDialog("Bir hata oldu :(");
       }
@@ -367,14 +368,5 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     );
   }
 
-  void _showToast(BuildContext context, String str) {
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(str),
-        action: SnackBarAction(
-            label: 'Tamam', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
+
 }

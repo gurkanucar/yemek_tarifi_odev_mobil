@@ -4,6 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/UpdateFoodPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 import '../GlobalVariables.dart';
 import 'CommentComponent.dart';
@@ -27,13 +28,19 @@ class _FoodDetailState extends State<FoodDetail> {
     isLoading = true;
     FoodService.getFoodByID(widget?.foodModel?.id).then((value) {
       setState(() {
-        foodModel = value;
+        if(value!=null){
+          foodModel = value;
 
-        ingredientsJsonModelFromJson(widget.foodModel.ingredients).forEach((element) {
-          ingredientsParsed += element.name+"  "+element.count+"\n";
-        });
+          ingredientsJsonModelFromJson(widget.foodModel.ingredients).forEach((element) {
+            ingredientsParsed += element.name+"  "+element.count+"\n";
+          });
 
-        isLoading = false;
+          isLoading = false;
+        }else{
+          Navigator.of(context).pop();
+          ToastService.showToast(context, "Yemek bulunamadı!");
+        }
+
       });
     });
   }
