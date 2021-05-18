@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategoryListGrid.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategorySelectComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
@@ -103,7 +104,8 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
               : SingleChildScrollView(
             child: Column(
               children: [
-                CategoryListGrid(),
+               // CategoryListGrid(),
+                CategorySelectComponent(),
                 SizedBox(height: 30,)
               ],
             ),

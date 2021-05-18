@@ -26,21 +26,21 @@ class CategoryModel {
   CategoryImage categoryImage;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    nameTurkish: json["nameTurkish"],
-    nameEnglish: json["nameEnglish"],
-    categoryImage: CategoryImage.fromJson(json["categoryImage"]),
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    nameTurkish: json["nameTurkish"] == null ? null : json["nameTurkish"],
+    nameEnglish: json["nameEnglish"] == null ? null : json["nameEnglish"],
+    categoryImage: json["categoryImage"] == null ? null : CategoryImage.fromJson(json["categoryImage"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "nameTurkish": nameTurkish,
-    "nameEnglish": nameEnglish,
-    "categoryImage": categoryImage.toJson(),
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "nameTurkish": nameTurkish == null ? null : nameTurkish,
+    "nameEnglish": nameEnglish == null ? null : nameEnglish,
+    "categoryImage": categoryImage == null ? null : categoryImage.toJson(),
   };
 }
 
@@ -60,18 +60,18 @@ class CategoryImage {
   String url;
 
   factory CategoryImage.fromJson(Map<String, dynamic> json) => CategoryImage(
-    id: json["id"],
-    created: json["created"],
-    modified: json["modified"],
-    name: json["name"],
-    url: json["url"],
+    id: json["id"] == null ? null : json["id"],
+    created: json["created"] == null ? null : json["created"],
+    modified: json["modified"] == null ? null : json["modified"],
+    name: json["name"] == null ? null : json["name"],
+    url: json["url"] == null ? null : json["url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "created": created,
-    "modified": modified,
-    "name": name,
-    "url": url,
+    "id": id == null ? null : id,
+    "created": created == null ? null : created,
+    "modified": modified == null ? null : modified,
+    "name": name == null ? null : name,
+    "url": url == null ? null : url,
   };
 }
