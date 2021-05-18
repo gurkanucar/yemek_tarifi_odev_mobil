@@ -18,6 +18,9 @@ class CategoryModel {
     this.categoryImage,
   });
 
+
+
+
   int id;
   int created;
   int modified;

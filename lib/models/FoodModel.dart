@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
+
 import 'FileModel.dart';
 import 'UserModel.dart';
 
@@ -41,7 +43,7 @@ class FoodModel {
   String foodName;
   String recipe;
   String ingredients;
-  List<CategoryList> categoryList;
+  List<CategoryModel> categoryList;
   FileModel image;
   int completedCount;
   int rankStar;
@@ -58,7 +60,7 @@ class FoodModel {
     foodName: json["foodName"] == null ? null : json["foodName"],
     recipe: json["recipe"] == null ? null : json["recipe"],
     ingredients: json["ingredients"] == null ? null : json["ingredients"],
-    categoryList: json["categoryList"] == null ? null : List<CategoryList>.from(json["categoryList"].map((x) => CategoryList.fromJson(x))),
+    categoryList: json["categoryList"] == null ? null : List<CategoryModel>.from(json["categoryList"].map((x) => CategoryModel.fromJson(x))),
     image: json["image"] == null ? null : FileModel.fromJson(json["image"]),
     completedCount: json["completedCount"] == null ? null : json["completedCount"],
     rankStar: json["rankStar"] == null ? null : json["rankStar"],

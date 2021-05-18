@@ -8,6 +8,7 @@ import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 import '../GlobalVariables.dart';
+import 'CategorySelectComponent.dart';
 import 'CommentComponent.dart';
 import 'CommentList.dart';
 
@@ -303,6 +304,7 @@ class _FoodDetailState extends State<FoodDetail> {
                                     SizedBox(
                                       width: 20,
                                     ),
+
                                   ],
                                 ),
                                 SizedBox(

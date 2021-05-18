@@ -104,8 +104,7 @@ class _SearchFoodComponentState extends State<SearchFoodComponent> {
               : SingleChildScrollView(
             child: Column(
               children: [
-               // CategoryListGrid(),
-                CategorySelectComponent(),
+                CategoryListGrid(),
                 SizedBox(height: 30,)
               ],
             ),

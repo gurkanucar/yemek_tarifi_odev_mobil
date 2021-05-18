@@ -2,17 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategorySelectComponent.dart';
+
+
+
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
 
 import 'package:yemek_tarifi_odev_mobil/Components/DropDownComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/ImagePickerComponent.dart';
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/DropDownItemModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
+import 'package:yemek_tarifi_odev_mobil/models/TempModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
+import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import '../GlobalVariables.dart';
@@ -76,6 +82,12 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
   String _prepTimeValue;
   int _prepTimeKey = -1;
 
+  List<CategoryModel> selectedCategories = null;
+  List<CategoryModel> categoriesAll;
+
+  static List<TempModel> tempSelected = [];
+  static List<TempModel> tempAll = [];
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -89,35 +101,58 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     // TODO: implement initState
     super.initState();
 
-    //GlobalVariables.IMAGE_ID == widget.foodModel.image.name;
-    foodNameController.text = widget.foodModel.foodName;
-    foodRecipeController.text = widget.foodModel.recipe;
-    GlobalVariables.FOOD_IMAGE_URL = GlobalVariables.BASE_URL +
-        GlobalVariables.IMAGE_BASE_URL +
-        widget.foodModel.image.name;
+    CategoryService.getCategories().then((value) {
+      setState(() {
+        categoriesAll = value;
+        selectedCategories = widget.foodModel.categoryList;
 
-    //print(ingredientsJsonModelFromJson(widget.foodModel.ingredients)[0].name);
-    GlobalVariables.INGREDIENT_LIST =
-        ingredientsJsonModelFromJson(widget.foodModel.ingredients);
+        categoriesAll.forEach((element) {
+          tempAll.add(new TempModel(element.id, element.nameTurkish));
+        });
 
-    _hardnessKey = widget.foodModel.hardness;
-    _hardnessValue = _hardnessValues
-        .toList()[int.parse(widget.foodModel.hardness.toString()) - 1]
-        .getValue()
-        .toString();
+        selectedCategories.forEach((element) {
+          tempSelected.add(new TempModel(element.id, element.nameTurkish));
+        });
 
-    _prepTimeKey = widget.foodModel.prepTime;
-    _prepTimeValue = _prepTime
-        .firstWhere((item) => item.key == _prepTimeKey)
-        .getValue()
-        .toString();
+        print("BAŞLANGIÇÇÇ ____________________");
+        selectedCategories.forEach((sel) {
+          print(sel.nameTurkish);
+        });
+        print("____________________");
 
-    _personKey = widget.foodModel.personCount;
-    _personCountValue = _personCounts
-        .firstWhere((item) => item.key == _personKey)
-        .getValue()
-        .toString();
+        //GlobalVariables.IMAGE_ID == widget.foodModel.image.name;
+        foodNameController.text = widget.foodModel.foodName;
+        foodRecipeController.text = widget.foodModel.recipe;
+        GlobalVariables.FOOD_IMAGE_URL = GlobalVariables.BASE_URL +
+            GlobalVariables.IMAGE_BASE_URL +
+            widget.foodModel.image.name;
+
+        //print(ingredientsJsonModelFromJson(widget.foodModel.ingredients)[0].name);
+        GlobalVariables.INGREDIENT_LIST =
+            ingredientsJsonModelFromJson(widget.foodModel.ingredients);
+
+        _hardnessKey = widget.foodModel.hardness;
+        _hardnessValue = _hardnessValues
+            .toList()[int.parse(widget.foodModel.hardness.toString()) - 1]
+            .getValue()
+            .toString();
+
+        _prepTimeKey = widget.foodModel.prepTime;
+        _prepTimeValue = _prepTime
+            .firstWhere((item) => item.key == _prepTimeKey)
+            .getValue()
+            .toString();
+
+        _personKey = widget.foodModel.personCount;
+        _personCountValue = _personCounts
+            .firstWhere((item) => item.key == _personKey)
+            .getValue()
+            .toString();
+      });
+    });
   }
+
+  final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,136 +161,182 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Scaffold(
-          backgroundColor: Colors.grey[100],
-          appBar: AppBar(
-              backgroundColor: Color(0xFFFFC204),
-              title: Text("Yemek Oluştur !")),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                ImagePickerComponent(),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.amber)),
-                  child: CustomInputField1(
-                      filled: false,
-                      maxLines: 2,
-                      fontSize: 21,
-                      hint: "Yemek Adı",
-                      isNumeric: 0,
-                      tcontrol: foodNameController,
-                      size: Size(50, 60)),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.amber)),
-                  child: CustomInputField1(
-                      filled: false,
-                      maxLines: 9,
-                      fontSize: 21,
-                      hint: "Tarifi",
-                      isNumeric: 0,
-                      tcontrol: foodRecipeController,
-                      size: Size(50, 60)),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                DropDownComponent(
-                  options: _hardnessValues,
-                  detail: "Zorluk",
-                  onChange: (val) {
-                    setState(
-                      () {
-                        _hardnessValue = val.value;
-                        _hardnessKey = val.key;
-                        print("Hardness: " +
-                            _hardnessValue +
-                            "  key: " +
-                            val.key.toString());
-                      },
-                    );
-                  },
-                  dropDownValue: _hardnessValue,
-                ),
-                DropDownComponent(
-                  options: _personCounts,
-                  detail: "Kişi Sayısı",
-                  onChange: (val) {
-                    setState(
-                      () {
-                        _personCountValue = val.value;
-                        _personKey = val.key;
-                        print("Kişi sayısı: " +
-                            _personCountValue +
-                            "  key: " +
-                            val.key.toString());
-                      },
-                    );
-                  },
-                  dropDownValue: _personCountValue,
-                ),
-                DropDownComponent(
-                  options: _prepTime,
-                  detail: "Hazırlama Süresi",
-                  onChange: (val) {
-                    setState(
-                      () {
-                        _prepTimeValue = val.value;
-                        _prepTimeKey = val.key;
-                        print("Hazırlama süresi: " +
-                            _prepTimeValue +
-                            "  key: " +
-                            val.key.toString());
-                      },
-                    );
-                  },
-                  dropDownValue: _prepTimeValue,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.orange),
-                      borderRadius: BorderRadius.all(Radius.circular(25.0))),
-                  child: InkWell(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Icon(Icons.add, color: Colors.orange)),
-                        Text(
-                          "Malzeme Ekle",
-                          style: TextStyle(color: Colors.orange),
-                        )
-                      ],
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+            backgroundColor: Color(0xFFFFC204), title: Text("Yemek Oluştur !")),
+        body: categoriesAll != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ImagePickerComponent(),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.amber)),
+                      child: CustomInputField1(
+                          filled: false,
+                          maxLines: 2,
+                          fontSize: 21,
+                          hint: "Yemek Adı",
+                          isNumeric: 0,
+                          tcontrol: foodNameController,
+                          size: Size(50, 60)),
                     ),
-                    onTap: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => IngredientsPage()));
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                btn(),
-                SizedBox(
-                  height: 20,
-                ),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.amber)),
+                      child: CustomInputField1(
+                          filled: false,
+                          maxLines: 9,
+                          fontSize: 21,
+                          hint: "Tarifi",
+                          isNumeric: 0,
+                          tcontrol: foodRecipeController,
+                          size: Size(50, 60)),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropDownComponent(
+                      options: _hardnessValues,
+                      detail: "Zorluk",
+                      onChange: (val) {
+                        setState(
+                          () {
+                            _hardnessValue = val.value;
+                            _hardnessKey = val.key;
+                            print("Hardness: " +
+                                _hardnessValue +
+                                "  key: " +
+                                val.key.toString());
+                          },
+                        );
+                      },
+                      dropDownValue: _hardnessValue,
+                    ),
+                    DropDownComponent(
+                      options: _personCounts,
+                      detail: "Kişi Sayısı",
+                      onChange: (val) {
+                        setState(
+                          () {
+                            _personCountValue = val.value;
+                            _personKey = val.key;
+                            print("Kişi sayısı: " +
+                                _personCountValue +
+                                "  key: " +
+                                val.key.toString());
+                          },
+                        );
+                      },
+                      dropDownValue: _personCountValue,
+                    ),
+                    DropDownComponent(
+                      options: _prepTime,
+                      detail: "Hazırlama Süresi",
+                      onChange: (val) {
+                        setState(
+                          () {
+                            _prepTimeValue = val.value;
+                            _prepTimeKey = val.key;
+                            print("Hazırlama süresi: " +
+                                _prepTimeValue +
+                                "  key: " +
+                                val.key.toString());
+                          },
+                        );
+                      },
+                      dropDownValue: _prepTimeValue,
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(20),
+                        child: Material(
+                          elevation: 20,
+                          borderRadius: BorderRadius.circular(20),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            IngredientsPage()));
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                    width: 56,
+                                    height: 56,
+                                    child:
+                                        Icon(Icons.add, color: Colors.orange)),
+                                Text(
+                                  "Malzeme Ekle",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 19),
+                                )
+                              ],
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 30,
+                    ),
 
-                /* Container(
+
+
+
+                    /*categoriesAll
+                        .map((e) => MultiSelectItem(e, e.nameTurkish))
+                        .toList(),*/
+
+                    /*MultiSelectChipField<TempModel>(
+                      initialValue: tempSelected,
+                      items: tempAll
+                          .map((data) =>
+                              MultiSelectItem<TempModel>(data, data.name))
+                          .toList(),
+                      onTap: (values) {
+                        tempSelected = values;
+                      },
+                    ),*/
+
+                    /* MultiSelectChipField<TempModel>(
+                      key: _multiSelectKey,
+                      initialValue: tempSelected.toList(),
+                      items: tempAll.map((data) => MultiSelectItem<TempModel>(data, data.name)).toList(),
+                     // icon: Icon(Icons.check),
+                      onTap: (values) {
+                        tempSelected = values;
+                        print("____________________");
+                        tempSelected.forEach((sel) {
+                          print(sel.name);
+                        });
+                        print("____________________");
+                      },
+                    ),*/
+
+                    CategorySelectComponent(
+                         categoriesAll: categoriesAll,
+                          categories: selectedCategories,
+                       ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    btn(),
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                    /* Container(
                   margin: EdgeInsets.only(left: 20),
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: TextFormField(
@@ -268,9 +349,11 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                       decoration: InputDecoration(
                         hintText: "kişi sayısı",
                       ))),*/
-              ],
-            ),
-          )),
+                  ],
+                ),
+              )
+            : CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -279,34 +362,33 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
 
   Container btn() {
     return Container(
-      margin: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: 50.0,
-      child: RaisedButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: Colors.orange)),
-          onPressed: () {
-            print("Gondert bakam");
-            createPost();
-          },
-          padding: EdgeInsets.all(10.0),
-          color: Color(_backGroundColor),
-          textColor: Color(_fontColor),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Gönder",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Icon(Icons.send),
-            ],
-          )),
-    );
+        margin: EdgeInsets.all(10),
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 50.0,
+        child: RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.orange)),
+            onPressed: () {
+              print("Gondert bakam");
+              createPost();
+            },
+            padding: EdgeInsets.all(10.0),
+            color: Color(_backGroundColor),
+            textColor: Color(_fontColor),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Gönder",
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(Icons.send),
+              ],
+            )));
   }
 
   int createPost() {
@@ -367,9 +449,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
       if (value != null) {
         //Navigator.pop(context);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RouterPage()));
+            context, MaterialPageRoute(builder: (context) => RouterPage()));
         _showToast(context, "Yemek paylaşıldı");
         GlobalVariables.INGREDIENT_LIST = [];
       } else {
