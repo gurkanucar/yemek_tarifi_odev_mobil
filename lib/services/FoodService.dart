@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
+import 'package:yemek_tarifi_odev_mobil/services/UserBanCheckService.dart';
 
 class FoodService {
   static String url = GlobalVariables.BASE_URL + "/api/food";
@@ -21,10 +22,12 @@ class FoodService {
         return foods;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -44,10 +47,12 @@ class FoodService {
         return food;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -67,6 +72,7 @@ class FoodService {
         return food;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
@@ -89,10 +95,12 @@ class FoodService {
         return foods;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -111,10 +119,12 @@ class FoodService {
         return foods;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -136,6 +146,7 @@ class FoodService {
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -152,10 +163,12 @@ class FoodService {
         return food;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -172,10 +185,12 @@ class FoodService {
         return food;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -194,10 +209,12 @@ class FoodService {
         return foods;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -219,10 +236,12 @@ class FoodService {
         return 1;
       } else {
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }

@@ -47,6 +47,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   GlobalVariables.CONTEXT=context;
+   GlobalVariables.IS_USER_BANNED=false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(

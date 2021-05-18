@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import '../GlobalVariables.dart';
+import 'UserBanCheckService.dart';
 
 
 class CategoryService {
@@ -27,11 +28,13 @@ class CategoryService {
       }
       else{
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     }
     catch (e){
       print("Hata Oluştu!\n"+e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -51,11 +54,13 @@ class CategoryService {
       }
       else{
         print("Hata Oluştu!");
+        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     }
     catch (e){
       print("Hata Oluştu!\n"+e.toString());
+      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }

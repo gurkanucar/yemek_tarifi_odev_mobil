@@ -25,6 +25,7 @@ class _RouterPageState extends State<RouterPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
+
     SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -42,21 +43,7 @@ class _RouterPageState extends State<RouterPage> {
 
    SearchFoodComponent(true),
 
-   /* SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(
-          height: 50,
-        ),
-          Text("Kayıtlı Yemeklerim",style: TextStyle(fontSize: 25),),
-          SizedBox(
-            height: 25,
-          ),*/
           SavedRecipesPage(),
-        /*],
-      ),
-    ),*/
 
 
 

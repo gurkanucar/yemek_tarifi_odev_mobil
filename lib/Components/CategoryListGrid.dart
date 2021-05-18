@@ -37,7 +37,7 @@ class _CategoryListGridState extends State<CategoryListGrid> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: _loading == false
+        child: _loading == false && _categories!=null
             ? GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),

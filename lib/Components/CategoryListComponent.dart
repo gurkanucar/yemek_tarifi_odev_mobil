@@ -30,7 +30,7 @@ class _CategoryListComponentState extends State<CategoryListComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading==false ? Material(
+    return isLoading==false && categories!=null ? Material(
       elevation: 10,
       borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)),
