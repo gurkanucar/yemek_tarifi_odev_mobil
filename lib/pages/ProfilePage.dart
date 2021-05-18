@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/BlurryDialog.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/UserService.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -32,11 +35,20 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.amber,),
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+      ),
       body: SingleChildScrollView(
         child: isLoading == false
             ? Column(
                 children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  widget.userID != GlobalVariables.USER_ID &&
+                          GlobalVariables.ROLE != "USER"
+                      ? BanButton()
+                      : SizedBox(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
@@ -80,6 +92,54 @@ class _ProfilePageState extends State<ProfilePage> {
               )
             : null,
       ),
+    );
+  }
+
+  Align BanButton() {
+    return Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          margin: EdgeInsets.only(right: 30),
+          child: Material(
+            elevation: 20,
+            borderRadius: BorderRadius.circular(20),
+            child: InkWell(
+              onTap: () {
+                _showDialog(context);
+              },
+              child: Icon(
+                Icons.block,
+                color: Colors.red,
+                size: 50,
+              ),
+            ),
+          ),
+        ));
+  }
+
+  void _showDialog(BuildContext context) {
+    VoidCallback continueCallBack = () {
+      Navigator.of(context).pop();
+      // code on continue comes here
+      print(widget.userID.toString() + " id'li user banlandı!");
+      UserService.delete(widget.userID).then((value) => {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => RouterPage()),
+              (Route<dynamic> route) => false,
+            )
+          });
+    };
+
+    BlurryDialog alert;
+    alert = BlurryDialog(
+        "Uyarı!", "Kullanıcıyı Banlamak İstiyor musunuz?", continueCallBack);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

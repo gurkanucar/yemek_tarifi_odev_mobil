@@ -105,6 +105,28 @@ class UserService {
     }
   }
 
+  static Future<UserModel> delete(int id) async {
+    try{
+      Map<String,String> header={
+        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response = await http.delete(url+"/"+id.toString(),headers: header);
+      if(response.statusCode==200){
+        UserModel user= userModelFromJson(response.body);
+        return user;
+      }
+      else{
+        print("Hata Oluştu!");
+        return null;
+      }
+    }
+    catch (e){
+      print("Hata Oluştu!\n"+e.toString());
+      return null;
+    }
+  }
+
   static Future<UserModel> getPublic(int id) async {
     try{
       Map<String,String> header={
