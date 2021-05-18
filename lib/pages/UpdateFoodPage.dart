@@ -13,7 +13,6 @@ import 'package:yemek_tarifi_odev_mobil/models/DropDownItemModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/TempModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
@@ -82,9 +81,6 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
 
   List<CategoryModel> selectedCategories = null;
   List<CategoryModel> categoriesAll;
-
-  static List<TempModel> tempSelected = [];
-  static List<TempModel> tempAll = [];
 
   @override
   void dispose() {
@@ -322,9 +318,6 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                     ),
                     SizedBox(
                       width: 20,
-                    ),
-                    SizedBox(
-                      height: 20,
                     ),
                     btn(),
                     SizedBox(

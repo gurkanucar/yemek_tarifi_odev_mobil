@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
-import 'package:yemek_tarifi_odev_mobil/models/TempModel.dart';
 
 import '../GlobalVariables.dart';
 
 class CategorySelectItemCompnent extends StatefulWidget {
   CategoryModel categoryModel;
+  bool create;
 
   CategorySelectItemCompnent({
-    @required this.categoryModel,
+    @required this.categoryModel,@required this.create
   });
 
   @override

@@ -6,11 +6,12 @@ import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import '../GlobalVariables.dart';
 
 class CategorySelectComponent extends StatefulWidget {
-  List<CategoryModel> categories= GlobalVariables.CATEGORY_LIST.toList();
+  List<CategoryModel> categories = GlobalVariables.CATEGORY_LIST.toList();
   List<CategoryModel> categoriesAll;
+  bool create = false;
 
   CategorySelectComponent(
-      {@required this.categories, @required this.categoriesAll});
+      {@required this.categories, @required this.categoriesAll, this.create});
 
   @override
   _CategorySelectComponentState createState() =>
@@ -31,6 +32,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
   Widget build(BuildContext context) {
     return widget.categoriesAll != null
         ? Material(
+            color: Colors.transparent,
             child: Container(
               //  color: Colors.amber,
               height: MediaQuery.of(context).size.height * 0.4,
@@ -43,7 +45,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
                     crossAxisSpacing: 3.0,
                     mainAxisSpacing: 3.0,
                   ),
-                 key: UniqueKey(),
+                  key: UniqueKey(),
                   itemCount: null == widget.categoriesAll
                       ? 0
                       : widget.categoriesAll.length,
@@ -58,6 +60,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
                               width: 15,
                             ),
                             CategorySelectItemCompnent(
+                              create:widget.create,
                               categoryModel: widget.categoriesAll[index],
                             ),
                             SizedBox(

@@ -1,17 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategorySelectComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
 
 import 'package:yemek_tarifi_odev_mobil/Components/DropDownComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/ImagePickerComponent.dart';
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/DropDownItemModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FileModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
+import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
@@ -78,6 +82,24 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     GlobalVariables.INGREDIENT_LIST = [];
   }
 
+  List<CategoryModel> selectedCategories;
+  List<CategoryModel> categoriesAll;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    CategoryService.getCategories().then((value) {
+      setState(() {
+        categoriesAll = value;
+
+        GlobalVariables.CATEGORY_LIST_FOOD_ID = 0;
+        GlobalVariables.CATEGORY_LIST = [];
+        selectedCategories = GlobalVariables.CATEGORY_LIST;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,35 +199,43 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                   dropDownValue: _prepTimeValue,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.orange),
-                      borderRadius: BorderRadius.all(Radius.circular(25.0))),
-                  child: InkWell(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Icon(Icons.add, color: Colors.orange)),
-                        Text(
-                          "Malzeme Ekle",
-                          style: TextStyle(color: Colors.orange),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => IngredientsPage()));
-                      });
-                    },
-                  ),
+                    margin: EdgeInsets.all(20),
+                    child: Material(
+                      elevation: 20,
+                      borderRadius: BorderRadius.circular(20),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => IngredientsPage()));
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                                width: 56,
+                                height: 56,
+                                child: Icon(Icons.add, color: Colors.orange)),
+                            Text(
+                              "Malzeme Ekle",
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
+                SizedBox(
+                  height: 30,
+                ),
+                CategorySelectComponent(
+                  create: true,
+                  categoriesAll: categoriesAll,
+                  categories: selectedCategories,
                 ),
                 SizedBox(
                   height: 20,
@@ -279,7 +309,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
         _prepTimeKey == -1) {
       showErrorDialog("Lütfen boş alan bırakmayın!");
       return 1;
-    } else if (GlobalVariables.INGREDIENT_LIST.length < 3) {
+    } else if (GlobalVariables.INGREDIENT_LIST.length < 1) {
       showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
       return 1;
     } else if (GlobalVariables.IMAGE_ID == 0) {
@@ -293,36 +323,23 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     food.completedCount = 0;
     food.prepTime = _prepTimeKey;
     food.personCount = _personKey;
-
-    String ingredientsData = "";
-    /* GlobalVariables.INGREDIENT_LIST.forEach((element) {
-      ingredientsData += element.name +
-          GlobalVariables.CHAR_IN_LINE +
-          element.count +
-          GlobalVariables.CHAR_NEW_LINE +
-          "\n";
-    });*/
-
-
-    List<IngredientsJsonModel> ingredientsList = List<IngredientsJsonModel>.from(GlobalVariables.INGREDIENT_LIST.map((model)=> ingredientsJsonModelToJson(model)));
-
-
-    //ingredientsDynamicList.add(name: element.name,element.count)
-
-    GlobalVariables.INGREDIENT_LIST = [];
-
-    food.ingredients = ingredientsList.toString();
-
-    food.categoryList = new List();
+    food.ingredients =
+        jsonEncode(GlobalVariables.INGREDIENT_LIST).toString() + "";
+    List<CategoryModel> tempList=[];
+    GlobalVariables.CATEGORY_LIST.forEach((element) {
+      tempList.add(element);
+    });
+    food.categoryList=tempList;
+    food.categoryList.forEach((element) { print(element?.nameTurkish);});
+    GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+    GlobalVariables.CATEGORY_LIST.clear();
     UserModel user = new UserModel();
     user.id = GlobalVariables.USER_ID;
     food.user = user;
-
     if (GlobalVariables.IMAGE_ID != 0) {
       int imageID = GlobalVariables.IMAGE_ID;
       FileModel image = new FileModel();
       image.id = imageID;
-      GlobalVariables.IMAGE_ID = 0;
       food.image = image;
       //food.image=image;
     } else {
@@ -333,6 +350,9 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       if (value != null) {
         Navigator.pop(context);
         ToastService.showToast(context, "Yemek paylaşıldı");
+        GlobalVariables.IMAGE_ID = 0;
+        GlobalVariables.INGREDIENT_LIST = [];
+
       } else {
         showErrorDialog("Bir hata oldu :(");
       }
@@ -367,6 +387,4 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       },
     );
   }
-
-
 }

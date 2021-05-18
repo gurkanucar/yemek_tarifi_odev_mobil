@@ -157,6 +157,10 @@ class FoodService {
         "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
+
+      GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+      GlobalVariables.CATEGORY_LIST.clear();
+
       final response =
           await http.post(url, headers: header, body: foodToJson(food));
       if (response.statusCode == 200) {
@@ -179,6 +183,10 @@ class FoodService {
         "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
+
+      GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+      GlobalVariables.CATEGORY_LIST.clear();
+
       final response =
           await http.put(url, headers: header, body: foodToJson(food));
       if (response.statusCode == 200) {
