@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 
 import 'models/IngredientJSONModel.dart';
 import 'models/UserModel.dart';
@@ -17,6 +18,8 @@ class GlobalVariables {
   static String ROLE="";
   static int IMAGE_ID = 0;
   static List<IngredientsJsonModel> INGREDIENT_LIST = [];
+  static List<CategoryModel> CATEGORY_LIST = [];
+  static int CATEGORY_LIST_FOOD_ID = 0;
   static bool IS_USER_BANNED=false;
   static BuildContext CONTEXT=null;
 }

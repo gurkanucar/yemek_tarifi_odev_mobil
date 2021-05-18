@@ -64,7 +64,7 @@ class FoodService {
         'Content-Type': 'application/json; charset=UTF-8',
       };
       final response =
-      await http.delete(url + "/" + id.toString(), headers: header);
+          await http.delete(url + "/" + id.toString(), headers: header);
       if (response.statusCode == 200) {
         // print(response.body);
         var jsonResponse = json.decode(response.body);
@@ -245,5 +245,4 @@ class FoodService {
       return null;
     }
   }
-
 }

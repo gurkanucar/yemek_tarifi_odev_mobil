@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategorySelectComponent.dart';
 
-
-
 import 'package:yemek_tarifi_odev_mobil/Components/CustomInputField1.dart';
 
 import 'package:yemek_tarifi_odev_mobil/Components/DropDownComponent.dart';
@@ -106,16 +104,16 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
         categoriesAll = value;
         selectedCategories = widget.foodModel.categoryList;
 
-        categoriesAll.forEach((element) {
-          tempAll.add(new TempModel(element.id, element.nameTurkish));
-        });
+        if (GlobalVariables.CATEGORY_LIST.length > 0 &&
+            GlobalVariables.CATEGORY_LIST_FOOD_ID == widget.foodModel.id) {
+          selectedCategories = GlobalVariables.CATEGORY_LIST.toList();
+        } else {
+          GlobalVariables.CATEGORY_LIST_FOOD_ID = widget.foodModel.id;
+          GlobalVariables.CATEGORY_LIST = selectedCategories;
+        }
 
-        selectedCategories.forEach((element) {
-          tempSelected.add(new TempModel(element.id, element.nameTurkish));
-        });
-
-        print("BAŞLANGIÇÇÇ ____________________");
-        selectedCategories.forEach((sel) {
+        print("CATEGORY LIST GLOBAL ____________________");
+        GlobalVariables.CATEGORY_LIST.forEach((sel) {
           print(sel.nameTurkish);
         });
         print("____________________");
@@ -288,9 +286,6 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                       height: 30,
                     ),
 
-
-
-
                     /*categoriesAll
                         .map((e) => MultiSelectItem(e, e.nameTurkish))
                         .toList(),*/
@@ -322,9 +317,9 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                     ),*/
 
                     CategorySelectComponent(
-                         categoriesAll: categoriesAll,
-                          categories: selectedCategories,
-                       ),
+                      categoriesAll: categoriesAll,
+                      categories: selectedCategories,
+                    ),
                     SizedBox(
                       width: 20,
                     ),
@@ -416,17 +411,22 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     food.completedCount = 0;
     food.prepTime = _prepTimeKey;
     food.personCount = _personKey;
+    food.categoryList=[];
 
-    /* List<IngredientsJsonModel> ingredientsList =
-        List<IngredientsJsonModel>.from(GlobalVariables.INGREDIENT_LIST
-            .map((model) =>  ingredientsJsonModelToJson(model)));*/
+    List<CategoryModel> tempList=[];
 
+    GlobalVariables.CATEGORY_LIST.forEach((element) {
+      tempList.add(element);
+    });
+
+    food.categoryList=tempList;
+
+
+    GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+    GlobalVariables.CATEGORY_LIST.clear();
     food.ingredients =
         jsonEncode(GlobalVariables.INGREDIENT_LIST).toString() + "";
 
-    print(food.ingredients);
-
-    food.categoryList = new List();
     UserModel user = new UserModel();
     user.id = GlobalVariables.USER_ID;
     food.user = user;

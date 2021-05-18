@@ -3,8 +3,10 @@ import 'package:yemek_tarifi_odev_mobil/Components/CategorySelectItemComponent.d
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 
+import '../GlobalVariables.dart';
+
 class CategorySelectComponent extends StatefulWidget {
-  List<CategoryModel> categories;
+  List<CategoryModel> categories= GlobalVariables.CATEGORY_LIST.toList();
   List<CategoryModel> categoriesAll;
 
   CategorySelectComponent(
@@ -41,7 +43,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
                     crossAxisSpacing: 3.0,
                     mainAxisSpacing: 3.0,
                   ),
-                  key: UniqueKey(),
+                 key: UniqueKey(),
                   itemCount: null == widget.categoriesAll
                       ? 0
                       : widget.categoriesAll.length,
@@ -57,8 +59,6 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
                             ),
                             CategorySelectItemCompnent(
                               categoryModel: widget.categoriesAll[index],
-                              selectedCategories: widget.categories,
-                              selected: false,
                             ),
                             SizedBox(
                               width: 15,
