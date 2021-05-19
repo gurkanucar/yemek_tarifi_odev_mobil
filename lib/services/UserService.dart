@@ -7,7 +7,6 @@ import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import '../GlobalVariables.dart';
 import 'UserBanCheckService.dart';
 
-
 class UserService {
   static String url = GlobalVariables.BASE_URL + "/api/user";
 
@@ -32,13 +31,20 @@ class UserService {
         await prefs.setString("token", token);
         GlobalVariables.BEARER_TOKEN = token;
         UserModel user;
-       await getSelf(token).then((value) {
-        user=value;
+        await getSelf(token).then((value) {
+          user = value;
         });
-        GlobalVariables.USER=user;
-        GlobalVariables.ROLE=user.role.toString();
-        GlobalVariables.USER_ID=user.id;
-        print("Login Olan USER!!!!! "+user.id.toString());
+        GlobalVariables.USER = user;
+        GlobalVariables.ROLE = user.role.toString();
+        GlobalVariables.USER_ID = user.id;
+        if (user.profilePhoto != null) {
+          GlobalVariables.PROFILE_IMAGE_URL = GlobalVariables.BASE_URL +
+              GlobalVariables.IMAGE_BASE_URL +
+              user.profilePhoto.name;
+        } else {
+          GlobalVariables.PROFILE_IMAGE_URL = null;
+        }
+        print("Login Olan USER!!!!! " + user.id.toString());
         return token;
       } else {
         print("Hata Oluştu!");
@@ -50,7 +56,6 @@ class UserService {
       return null;
     }
   }
-
 
   static Future<UserModel> register(String username, String password) async {
     try {
@@ -79,73 +84,93 @@ class UserService {
     }
   }
 
-
   static Future<UserModel> getSelf(String token) async {
-    try{
-      Map<String,String> header={
-        "Authorization":"Bearer "+token,
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + token,
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final response = await http.get(url+"/self",headers: header);
-      if(response.statusCode==200){
-        UserModel user= userModelFromJson(response.body);
+      final response = await http.get(url + "/self", headers: header);
+      if (response.statusCode == 200) {
+        UserModel user = userModelFromJson(response.body);
         return user;
-      }
-      else{
+      } else {
         print("Hata Oluştu!");
         return null;
       }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
+      return null;
     }
-    catch (e){
-      print("Hata Oluştu!\n"+e.toString());
+  }
+
+  static Future<UserModel> changeProfileImage(String imageID) async {
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      final response = await http.get(
+          url +
+              "/profileImage/" +
+              GlobalVariables.USER_ID.toString() +
+              "/" +
+              imageID,
+          headers: header);
+      if (response.statusCode == 200) {
+        UserModel user = userModelFromJson(response.body);
+        return user;
+      } else {
+        print("Hata Oluştu!");
+        return null;
+      }
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
       return null;
     }
   }
 
   static Future<UserModel> delete(int id) async {
-    try{
-      Map<String,String> header={
-        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final response = await http.delete(url+"/"+id.toString(),headers: header);
-      if(response.statusCode==200){
-        UserModel user= userModelFromJson(response.body);
+      final response =
+          await http.delete(url + "/" + id.toString(), headers: header);
+      if (response.statusCode == 200) {
+        UserModel user = userModelFromJson(response.body);
         return user;
-      }
-      else{
+      } else {
         print("Hata Oluştu!");
         return null;
       }
-    }
-    catch (e){
-      print("Hata Oluştu!\n"+e.toString());
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
       return null;
     }
   }
 
   static Future<UserModel> getPublic(int id) async {
-    try{
-      Map<String,String> header={
-        "Authorization":"Bearer "+GlobalVariables.BEARER_TOKEN,
+    try {
+      Map<String, String> header = {
+        "Authorization": "Bearer " + GlobalVariables.BEARER_TOKEN,
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final response = await http.get(url+"/public/"+id.toString(),headers: header);
-      if(response.statusCode==200){
-        UserModel user= userModelFromJson(response.body);
+      final response =
+          await http.get(url + "/public/" + id.toString(), headers: header);
+      if (response.statusCode == 200) {
+        UserModel user = userModelFromJson(response.body);
         return user;
-      }
-      else{
+      } else {
         print("Hata Oluştu!");
 
         return null;
       }
-    }
-    catch (e){
-      print("Hata Oluştu!\n"+e.toString());
+    } catch (e) {
+      print("Hata Oluştu!\n" + e.toString());
       UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
-
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/FoodListGrid.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/ProfileImageComponent.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/LoginPage.dart';
@@ -66,7 +67,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                Container(
+                /*Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   height: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
@@ -89,6 +90,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     ),
                   ),
                 ),
+*/
+                ProfileImageComponent(),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
