@@ -15,6 +15,7 @@ import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/IngredientsPage.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
@@ -233,7 +234,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                   height: 30,
                 ),
                 CategorySelectComponent(
-                  create: true,
+                  onlyShow: false,
                   categoriesAll: categoriesAll,
                   categories: selectedCategories,
                 ),
@@ -309,7 +310,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
         _prepTimeKey == -1) {
       showErrorDialog("Lütfen boş alan bırakmayın!");
       return 1;
-    } else if (GlobalVariables.INGREDIENT_LIST.length < 1) {
+    } else if (GlobalVariables.INGREDIENT_LIST.length < 3) {
       showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
       return 1;
     } else if (GlobalVariables.IMAGE_ID == 0) {
@@ -348,7 +349,11 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 
     FoodService.createFood(food).then((value) {
       if (value != null) {
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RouterPage()),
+              (Route<dynamic> route) => false,
+        );
         ToastService.showToast(context, "Yemek paylaşıldı");
         GlobalVariables.IMAGE_ID = 0;
         GlobalVariables.INGREDIENT_LIST = [];

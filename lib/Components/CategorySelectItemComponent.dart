@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
 
 import '../GlobalVariables.dart';
 
 class CategorySelectItemCompnent extends StatefulWidget {
   CategoryModel categoryModel;
-  bool create;
+  bool onlyShow;
 
-  CategorySelectItemCompnent({
-    @required this.categoryModel,@required this.create
-  });
+  CategorySelectItemCompnent(
+      {@required this.categoryModel, @required this.onlyShow});
 
   @override
   _CategorySelectItemCompnentState createState() =>
@@ -46,21 +46,30 @@ class _CategorySelectItemCompnentState
   Widget build(BuildContext context) {
     return selected != null
         ? Container(
+            margin: EdgeInsets.only(left: widget.onlyShow==true ? 20:0,right: widget.onlyShow==true ? 20:0),
             width: MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).size.width * 0.3,
             child: Material(
-              color: selected == true ? Colors.amber : Colors.white,
+              color: selected == true && widget.onlyShow == false
+                  ? Colors.amber
+                  : Colors.white,
               elevation: 10,
               borderRadius: BorderRadius.circular(20),
               child: InkWell(
                   onTap: () {
                     setState(() {
                       selected = !selected;
-                      if (selected == true) {
+                      if (selected == true && widget.onlyShow == false) {
                         GlobalVariables.CATEGORY_LIST.add(widget.categoryModel);
-                      } else {
+                      } else if (widget.onlyShow == false) {
                         GlobalVariables.CATEGORY_LIST.removeWhere(
                             (item) => item.id == widget.categoryModel.id);
+                      } else if (widget.onlyShow == true) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilterByCategoryPage(
+                                    categoryModel: widget.categoryModel)));
                       }
                     });
                   },
@@ -87,6 +96,7 @@ class _CategorySelectItemCompnentState
                           height: 10,
                         ),
                         Text(widget.categoryModel.nameTurkish,
+                            maxLines: 1,overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 21)),
                       ],
                     ),

@@ -8,10 +8,10 @@ import '../GlobalVariables.dart';
 class CategorySelectComponent extends StatefulWidget {
   List<CategoryModel> categories = GlobalVariables.CATEGORY_LIST.toList();
   List<CategoryModel> categoriesAll;
-  bool create = false;
+  bool onlyShow = false;
 
   CategorySelectComponent(
-      {@required this.categories, @required this.categoriesAll, this.create});
+      {@required this.categories, @required this.categoriesAll, this.onlyShow});
 
   @override
   _CategorySelectComponentState createState() =>
@@ -35,7 +35,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
             color: Colors.transparent,
             child: Container(
               //  color: Colors.amber,
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: widget.onlyShow == false ? MediaQuery.of(context).size.height * 0.4 : MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width * 0.95,
               child: GridView.builder(
                   shrinkWrap: true,
@@ -60,7 +60,7 @@ class _CategorySelectComponentState extends State<CategorySelectComponent> {
                               width: 15,
                             ),
                             CategorySelectItemCompnent(
-                              create:widget.create,
+                              onlyShow:widget.onlyShow,
                               categoryModel: widget.categoriesAll[index],
                             ),
                             SizedBox(

@@ -313,6 +313,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                     ),*/
 
                     CategorySelectComponent(
+                      onlyShow: false,
                       categoriesAll: categoriesAll,
                       categories: selectedCategories,
                     ),

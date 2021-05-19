@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yemek_tarifi_odev_mobil/Components/CategoryComponentInFoodDetail.dart';
 import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/models/IngredientJSONModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
@@ -26,6 +27,7 @@ class _FoodDetailState extends State<FoodDetail> {
   FoodModel foodModel = new FoodModel();
   String ingredientsParsed = "";
   bool isSaved = false;
+
 
   void checkSaved() {
     widget.foodModel.savedUsers.forEach((element) {
@@ -312,6 +314,11 @@ class _FoodDetailState extends State<FoodDetail> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            CategoryComponentInFoodDetail(categories: foodModel.categoryList),
+
                           ],
                         ),
                       ),
