@@ -4,6 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CommentService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 import '../GlobalVariables.dart';
 import 'BlurryDialog.dart';
@@ -132,6 +133,7 @@ class _CommentListItemState extends State<CommentListItem> {
       if(widget.commentModel.userId==GlobalVariables.USER_ID || GlobalVariables.ROLE != "USER") {
         CommentService.deleteCommentByID(widget.commentModel.id);
         print("Sildiniz beyfendi!");
+        ToastService.showToast(context, "Yorumu Sildiniz !");
         FoodService.getFoodByID(widget.commentModel.foodId).then((value) {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>RouterPage()));
           Navigator.push(context, MaterialPageRoute(
@@ -145,6 +147,7 @@ class _CommentListItemState extends State<CommentListItem> {
       }
       else{
         print("Şikayet Ettiniz beyfendi!");
+        ToastService.showToast(context, "Yorumu Şikayet Ettiniz !");
         CommentService.deleteCommentByID(widget.commentModel.id);
       }
 

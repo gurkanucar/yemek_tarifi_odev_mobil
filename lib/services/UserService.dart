@@ -47,7 +47,6 @@ class UserService {
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
-      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }
@@ -72,12 +71,10 @@ class UserService {
         return new UserModel();
       } else {
         print("Hata Oluştu!");
-        UserBanCheckService.check(GlobalVariables.CONTEXT);
         return null;
       }
     } catch (e) {
       print("Hata Oluştu!\n" + e.toString());
-      UserBanCheckService.check(GlobalVariables.CONTEXT);
       return null;
     }
   }

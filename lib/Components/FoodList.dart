@@ -81,7 +81,7 @@ class _FoodListState extends State<FoodList> {
                       SizedBox(
                         height: 15,
                       ),
-                      FoodListItem(
+                      _foods[index] !=null ?  FoodListItem(
                         foodModel: _foods[index],
                         onPressed: () {
                           print(_foods[index].id.toString() +
@@ -92,7 +92,7 @@ class _FoodListState extends State<FoodList> {
                                   builder: (context) =>
                                       FoodDetail(foodModel: _foods[index])));
                         },
-                      ),
+                      ):SizedBox(),
                       SizedBox(
                         height: 15,
                       )

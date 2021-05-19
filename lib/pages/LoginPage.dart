@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () async {
-                  loginUsername="admin";
+                  //loginUsername="admin";
                   loginPassword = "admin123";
                   if (isRegister == false) {
                     if (loginUsername.isEmpty || loginPassword.isEmpty) {

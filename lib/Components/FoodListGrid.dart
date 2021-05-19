@@ -49,16 +49,16 @@ class _FoodListGridState extends State<FoodListGrid> {
     });
   }
 
-  @override
-  void didUpdateWidget(covariant FoodListGrid oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    if (widget?.savedRecipes == true) {
-      getSavedRecipes();
-    } else {
-      getFoods();
-    }
-  }
+  // @override
+  // void didUpdateWidget(covariant FoodListGrid oldWidget) {
+  //   // TODO: implement didUpdateWidget
+  //   super.didUpdateWidget(oldWidget);
+  //   if (widget?.savedRecipes == true) {
+  //     getSavedRecipes();
+  //   } else {
+  //     getFoods();
+  //   }
+  // }
 
   @override
   void initState() {

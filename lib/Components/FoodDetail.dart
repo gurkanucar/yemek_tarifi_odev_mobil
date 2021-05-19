@@ -333,7 +333,6 @@ class _FoodDetailState extends State<FoodDetail> {
                         foodID: foodModel.id,
                         onClick: () {
                           setState(() {
-                            print("Geldi abeeey");
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

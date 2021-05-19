@@ -3,6 +3,7 @@ import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/ProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 import '../GlobalVariables.dart';
 import 'BlurryDialog.dart';
@@ -247,11 +248,16 @@ class _FoodListItemState extends State<FoodListItem> {
           GlobalVariables.ROLE != "USER") {
         print("Yemeği Sildiniz beyfendi!");
         FoodService.deleteFoodByID(widget.foodModel.id);
+        ToastService.showToast(context, "Yemeği Sildiniz !");
 
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => RouterPage()));
       } else {
         print("Yemeği Şikayet Ettiniz beyfendi!");
+        ToastService.showToast(context, "Yemeği Şikayet Ettiniz !");
+        FoodService.deleteFoodByID(widget.foodModel.id);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RouterPage()));
       }
     };
 
