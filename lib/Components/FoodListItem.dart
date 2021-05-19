@@ -249,9 +249,11 @@ class _FoodListItemState extends State<FoodListItem> {
         print("Yemeği Sildiniz beyfendi!");
         FoodService.deleteFoodByID(widget.foodModel.id);
         ToastService.showToast(context, "Yemeği Sildiniz !");
-
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RouterPage()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RouterPage()),
+              (Route<dynamic> route) => false,
+        );
       } else {
         print("Yemeği Şikayet Ettiniz beyfendi!");
         ToastService.showToast(context, "Yemeği Şikayet Ettiniz !");
