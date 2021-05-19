@@ -28,7 +28,6 @@ class _FoodDetailState extends State<FoodDetail> {
   String ingredientsParsed = "";
   bool isSaved = false;
 
-
   void checkSaved() {
     widget.foodModel.savedUsers.forEach((element) {
       if (element.id == GlobalVariables.USER_ID) {
@@ -39,24 +38,23 @@ class _FoodDetailState extends State<FoodDetail> {
     });
   }
 
-
   void getFood() {
     isLoading = true;
     FoodService.getFoodByID(widget?.foodModel?.id).then((value) {
       setState(() {
-        if(value!=null){
+        if (value != null) {
           foodModel = value;
           checkSaved();
-          ingredientsJsonModelFromJson(widget.foodModel.ingredients).forEach((element) {
-            ingredientsParsed += element.name+"  "+element.count+"\n";
+          ingredientsJsonModelFromJson(widget.foodModel.ingredients)
+              .forEach((element) {
+            ingredientsParsed += element.name + "  " + element.count + "\n";
           });
 
           isLoading = false;
-        }else{
+        } else {
           Navigator.of(context).pop();
           ToastService.showToast(context, "Yemek bulunamadı!");
         }
-
       });
     });
   }
@@ -72,7 +70,10 @@ class _FoodDetailState extends State<FoodDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          iconTheme: IconThemeData(
+            color: Colors.amber, //change your color here
+          ),
+          backgroundColor: Colors.white,
           title: Text(
             widget.foodModel.foodName != null
                 ? widget.foodModel.foodName[0].toUpperCase() +
@@ -80,7 +81,7 @@ class _FoodDetailState extends State<FoodDetail> {
                         .toLowerCase()
                         .substring(1, widget.foodModel.foodName.length)
                 : "",
-            style: TextStyle(color: Colors.white, fontSize: 25),
+            style: TextStyle(color: Colors.amber, fontSize: 25),
           ),
         ),
         body: isLoading == false
@@ -153,31 +154,33 @@ class _FoodDetailState extends State<FoodDetail> {
                                           ),
                                           flex: 3,
                                         ),
-
-                                        Expanded(child: Material(
-                                          child: InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                isSaved = !isSaved;
-                                                FoodService.updateSavedRecipe(
-                                                    widget.foodModel.id);
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) => RouterPage()));
-                                                print("saved: " + isSaved.toString());
-                                              });
-                                            },
-                                            child: isSaved == true
-                                                ? Icon(
-                                              Icons.save_alt,
-                                              color: Colors.amber,
-                                            )
-                                                : Icon(Icons.save_alt),
+                                        Expanded(
+                                          child: Material(
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isSaved = !isSaved;
+                                                  FoodService.updateSavedRecipe(
+                                                      widget.foodModel.id);
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              RouterPage()));
+                                                  print("saved: " +
+                                                      isSaved.toString());
+                                                });
+                                              },
+                                              child: isSaved == true
+                                                  ? Icon(
+                                                      Icons.save_alt,
+                                                      color: Colors.amber,
+                                                    )
+                                                  : Icon(Icons.save_alt),
+                                            ),
                                           ),
+                                          flex: 1,
                                         ),
-                                        flex: 1,),
-
                                         widget.foodModel.user.id ==
                                                 GlobalVariables.USER_ID
                                             ? Expanded(
@@ -306,7 +309,6 @@ class _FoodDetailState extends State<FoodDetail> {
                                     SizedBox(
                                       width: 20,
                                     ),
-
                                   ],
                                 ),
                                 SizedBox(
@@ -317,8 +319,11 @@ class _FoodDetailState extends State<FoodDetail> {
                             SizedBox(
                               height: 30,
                             ),
-                            CategoryComponentInFoodDetail(categories: foodModel.categoryList),
-
+                            foodModel.categoryList != null &&
+                                    foodModel.categoryList.length > 0
+                                ? CategoryComponentInFoodDetail(
+                                    categories: foodModel.categoryList)
+                                : SizedBox(),
                           ],
                         ),
                       ),

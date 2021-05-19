@@ -16,9 +16,20 @@ class _FilterByCategoryPageState extends State<FilterByCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.categoryModel.nameTurkish),backgroundColor: Colors.amber,),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.amber, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          widget.categoryModel.nameTurkish,
+          style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: SingleChildScrollView(
-        child: FoodList(categoryID: widget.categoryModel.id,),
+        child: FoodList(
+          categoryID: widget.categoryModel.id,
+        ),
       ),
     );
   }

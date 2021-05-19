@@ -157,7 +157,11 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-            backgroundColor: Color(0xFFFFC204), title: Text("Yemek Oluştur !")),
+            iconTheme: IconThemeData(
+              color: Colors.amber, //change your color here
+            ),
+            backgroundColor: Colors.white,
+            title: Text("Düzenle",style: TextStyle(color: Colors.amber,fontWeight: FontWeight.bold),)),
         body: categoriesAll != null
             ? SingleChildScrollView(
                 child: Column(

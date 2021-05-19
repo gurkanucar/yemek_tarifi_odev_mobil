@@ -111,8 +111,11 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
-              backgroundColor: Color(0xFFFFC204),
-              title: Text("Yemek Oluştur !")),
+              iconTheme: IconThemeData(
+                color: Colors.amber, //change your color here
+              ),
+              backgroundColor: Colors.white,
+              title: Text("Yemek Oluştur !",style: TextStyle(color: Colors.amber,fontWeight: FontWeight.bold),)),
           body: SingleChildScrollView(
             child: Column(
               children: [

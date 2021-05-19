@@ -76,7 +76,10 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
                                 borderRadius: BorderRadius.circular(20)),
                             width: 350,
                             height: 200,
-                            child:Image.network(GlobalVariables.FOOD_IMAGE_URL)
+                            child:ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.network(GlobalVariables.FOOD_IMAGE_URL,fit: BoxFit.cover,),
+                            )
                           ),
               ),
             ),
