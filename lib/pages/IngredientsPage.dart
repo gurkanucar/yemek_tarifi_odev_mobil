@@ -38,8 +38,11 @@ class _IngredientsPageState extends State<IngredientsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Malzeme Listesi"),
-          backgroundColor: Colors.amber,
+          iconTheme: IconThemeData(
+            color: Colors.amber, //change your color here
+          ),
+          backgroundColor: Colors.white,
+          title: Text("Malzeme Listesi",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.amber),),
           actions: [
             Material(
                 color: Colors.transparent,
@@ -58,7 +61,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                       child: Icon(
                         Icons.add_circle,
                         size: 30,
-                        color: Colors.white,
+                        color: Colors.amber,
                       ),
                     ),
                   ),

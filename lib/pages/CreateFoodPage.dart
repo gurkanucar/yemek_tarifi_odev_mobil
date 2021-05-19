@@ -111,6 +111,40 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
+            actions: [
+             Container(
+               margin: EdgeInsets.all(10),
+               child:  Material(
+                 borderRadius: BorderRadius.circular(20),
+                 elevation: 4,
+                 child: InkWell(
+                   onTap: (){
+                     print("Gonder");
+                     createPost();
+                   },
+                   child: Center(child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       SizedBox(
+                         width: 20,
+                       ),
+                       Text(
+                         "Gönder",
+                         style: TextStyle(fontWeight: FontWeight.bold),
+                       ),
+                       SizedBox(
+                         width: 20,
+                       ),
+                       Icon(Icons.send),
+                       SizedBox(
+                         width: 20,
+                       ),
+                     ],
+                   ))
+                 ),
+               ),
+             )
+            ],
               iconTheme: IconThemeData(
                 color: Colors.amber, //change your color here
               ),
@@ -221,11 +255,11 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                             SizedBox(
                                 width: 56,
                                 height: 56,
-                                child: Icon(Icons.add, color: Colors.orange)),
+                                child: Icon(Icons.add, color: Colors.amber)),
                             Text(
                               "Malzeme Ekle",
                               style: TextStyle(
-                                  color: Colors.orange,
+                                  color: Colors.amber,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 19),
                             )
@@ -244,7 +278,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                 SizedBox(
                   height: 20,
                 ),
-                btn(),
+               // btn(),
                 SizedBox(
                   height: 20,
                 ),
@@ -270,7 +304,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 
   var _backGroundColor = 0xFFffffff;
   var _fontColor = 0xFFFFC204;
-
+/*
   Container btn() {
     return Container(
       margin: EdgeInsets.all(10),
@@ -281,8 +315,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
               borderRadius: BorderRadius.circular(18.0),
               side: BorderSide(color: Colors.orange)),
           onPressed: () {
-            print("Gondert bakam");
-            createPost();
+
           },
           padding: EdgeInsets.all(10.0),
           color: Color(_backGroundColor),
@@ -302,7 +335,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
           )),
     );
   }
-
+*/
   int createPost() {
     if (foodNameController.text.isEmpty ||
         foodNameController.text.length < 3 ||
