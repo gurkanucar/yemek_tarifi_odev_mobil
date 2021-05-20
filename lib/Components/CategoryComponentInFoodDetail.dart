@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yemek_tarifi_odev_mobil/Components/CategoryListItem.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
-import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 
 import 'CategorySelectItemComponent.dart';
 
@@ -24,7 +22,7 @@ class _CategoryComponentInFoodDetailState extends State<CategoryComponentInFoodD
       elevation: 0,
       color: Colors.transparent,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.23,
+        height: MediaQuery.of(context).size.height * 0.28,
         width: MediaQuery.of(context).size.width * 0.85,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,

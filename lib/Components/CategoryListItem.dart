@@ -45,7 +45,8 @@ class _CategoryListItemState extends State<CategoryListItem> {
               ),
             ),
           ),
-          Text(widget.categoryModel.nameTurkish,style: TextStyle(fontSize: 25),),
+          SizedBox(height: 4,),
+          Text(widget.categoryModel.nameTurkish,style: TextStyle(fontSize: 23),),
         ],
 
       )

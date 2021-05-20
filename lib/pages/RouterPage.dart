@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/CategoryListComponent.dart';
-import 'package:yemek_tarifi_odev_mobil/Components/CustomInputText1.dart';
 
 import 'package:yemek_tarifi_odev_mobil/Components/FoodList.dart';
 import 'package:yemek_tarifi_odev_mobil/Components/SearchFoodComponent.dart';
-import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/MyProfilePage.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/SavedRecipes.dart';
-import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
 
 import 'CreateFoodPage.dart';
 
@@ -17,22 +14,15 @@ class RouterPage extends StatefulWidget {
 }
 
 class _RouterPageState extends State<RouterPage> {
-  List<FoodModel> _foods;
-  bool _loading;
-
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-
     SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 25,
-          ),
           CategoryListComponent(),
           FoodList(
             categoryID: -1,
@@ -40,29 +30,14 @@ class _RouterPageState extends State<RouterPage> {
         ],
       ),
     ),
-
-   SearchFoodComponent(true),
-
-          SavedRecipesPage(),
-
-
-
+    SearchFoodComponent(true),
+    SavedRecipesPage(),
     MyProfilePage(),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void getFoods() {
-    _loading = true;
-    FoodService.getFoods().then((value) {
-      setState(() {
-        _foods = value;
-        _loading = false;
-      });
     });
   }
 
@@ -125,9 +100,7 @@ class _RouterPageState extends State<RouterPage> {
         ),
       ),
       body: RefreshIndicator(
-        child: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
         onRefresh: () async {
           Navigator.pushReplacement(
               context,
