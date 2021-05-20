@@ -4,6 +4,7 @@ import 'package:yemek_tarifi_odev_mobil/models/FoodModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/CategoryService.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FoodService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/TextService.dart';
 
 import '../GlobalVariables.dart';
 import 'FoodDetail.dart';
@@ -82,9 +83,8 @@ class _CategoryListGridState extends State<CategoryListGrid> {
                                ),
                              ),
                               Center(
-                                child: Text(_categories[index].nameTurkish,style: TextStyle(fontSize: 20),),
+                                child: Text(TextService.checkLength(_categories[index].nameTurkish),style: TextStyle(fontSize: 20),),
                               ),
-
                             ],
                           )
                       ),

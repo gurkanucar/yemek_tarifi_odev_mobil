@@ -111,45 +111,49 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
-            actions: [
-             Container(
-               margin: EdgeInsets.all(10),
-               child:  Material(
-                 borderRadius: BorderRadius.circular(20),
-                 elevation: 4,
-                 child: InkWell(
-                   onTap: (){
-                     print("Gonder");
-                     createPost();
-                   },
-                   child: Center(child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       SizedBox(
-                         width: 20,
-                       ),
-                       Text(
-                         "Gönder",
-                         style: TextStyle(fontWeight: FontWeight.bold),
-                       ),
-                       SizedBox(
-                         width: 20,
-                       ),
-                       Icon(Icons.send),
-                       SizedBox(
-                         width: 20,
-                       ),
-                     ],
-                   ))
-                 ),
-               ),
-             )
-            ],
+              actions: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(20),
+                    elevation: 4,
+                    child: InkWell(
+                        onTap: () {
+                          print("Gonder");
+                          createPost();
+                        },
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "Gönder",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(Icons.send),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ))),
+                  ),
+                )
+              ],
               iconTheme: IconThemeData(
                 color: Colors.amber, //change your color here
               ),
               backgroundColor: Colors.white,
-              title: Text("Yemek Oluştur !",style: TextStyle(color: Colors.amber,fontWeight: FontWeight.bold),)),
+              title: Text(
+                "Yemek Oluştur !",
+                style:
+                    TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
+              )),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -278,7 +282,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
                 SizedBox(
                   height: 20,
                 ),
-               // btn(),
+                // btn(),
                 SizedBox(
                   height: 20,
                 ),
@@ -304,6 +308,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 
   var _backGroundColor = 0xFFffffff;
   var _fontColor = 0xFFFFC204;
+
 /*
   Container btn() {
     return Container(
@@ -338,15 +343,18 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 */
   int createPost() {
     if (foodNameController.text.isEmpty ||
-        foodNameController.text.length < 3 ||
+        foodNameController.text.length <
+            GlobalVariables.MIN_FOOD_DATA_TEXT_COUNT ||
         foodRecipeController.text.isEmpty ||
-        foodRecipeController.text.length < 3 ||
+        foodRecipeController.text.length <
+            GlobalVariables.MIN_FOOD_DATA_TEXT_COUNT ||
         _hardnessKey == -1 ||
         _personKey == -1 ||
         _prepTimeKey == -1) {
       showErrorDialog("Lütfen boş alan bırakmayın!");
       return 1;
-    } else if (GlobalVariables.INGREDIENT_LIST.length < 3) {
+    } else if (GlobalVariables.INGREDIENT_LIST.length <
+        GlobalVariables.MIN_INGREDIENTS_COUNT) {
       showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
       return 1;
     } else if (GlobalVariables.IMAGE_ID == 0) {
@@ -362,13 +370,15 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     food.personCount = _personKey;
     food.ingredients =
         jsonEncode(GlobalVariables.INGREDIENT_LIST).toString() + "";
-    List<CategoryModel> tempList=[];
+    List<CategoryModel> tempList = [];
     GlobalVariables.CATEGORY_LIST.forEach((element) {
       tempList.add(element);
     });
-    food.categoryList=tempList;
-    food.categoryList.forEach((element) { print(element?.nameTurkish);});
-    GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+    food.categoryList = tempList;
+    food.categoryList.forEach((element) {
+      print(element?.nameTurkish);
+    });
+    GlobalVariables.CATEGORY_LIST_FOOD_ID = 0;
     GlobalVariables.CATEGORY_LIST.clear();
     UserModel user = new UserModel();
     user.id = GlobalVariables.USER_ID;
@@ -388,12 +398,11 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => RouterPage()),
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
         ToastService.showToast(context, "Yemek paylaşıldı");
         GlobalVariables.IMAGE_ID = 0;
         GlobalVariables.INGREDIENT_LIST = [];
-
       } else {
         showErrorDialog("Bir hata oldu :(");
       }

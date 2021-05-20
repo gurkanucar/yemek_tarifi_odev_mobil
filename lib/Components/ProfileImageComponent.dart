@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yemek_tarifi_odev_mobil/GlobalVariables.dart';
+import 'package:yemek_tarifi_odev_mobil/pages/RouterPage.dart';
 import 'package:yemek_tarifi_odev_mobil/services/FileService.dart';
+import 'package:yemek_tarifi_odev_mobil/services/ToastService.dart';
 
 class ProfileImageComponent extends StatefulWidget {
   @override
@@ -20,7 +22,14 @@ class _ProfileImageComponentState extends State<ProfileImageComponent> {
 
     setState(() {
       _image = image;
-      FileService.uploadProfileImage(image);
+      FileService.uploadProfileImage(image).then((value)  {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RouterPage()),
+              (Route<dynamic> route) => false,
+        );
+        ToastService.showToast(context, "Profil resminiz değiştirildi!");
+      });
     });
   }
 
@@ -31,7 +40,14 @@ class _ProfileImageComponentState extends State<ProfileImageComponent> {
 
     setState(() {
       _image = image;
-      FileService.uploadProfileImage(image);
+      FileService.uploadProfileImage(image).then((value)  {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RouterPage()),
+              (Route<dynamic> route) => false,
+        );
+        ToastService.showToast(context, "Profil resminiz değiştirildi!");
+      });
     });
   }
 

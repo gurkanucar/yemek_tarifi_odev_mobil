@@ -160,15 +160,16 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
             actions: [
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Material(
+                child: Material(
                   borderRadius: BorderRadius.circular(20),
                   elevation: 4,
                   child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         print("Kaydet");
                         createPost();
                       },
-                      child: Center(child: Row(
+                      child: Center(
+                          child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
@@ -186,8 +187,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                             width: 20,
                           ),
                         ],
-                      ))
-                  ),
+                      ))),
                 ),
               )
             ],
@@ -195,7 +195,11 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
               color: Colors.amber, //change your color here
             ),
             backgroundColor: Colors.white,
-            title: Text("Düzenle",style: TextStyle(color: Colors.amber,fontWeight: FontWeight.bold),)),
+            title: Text(
+              "Düzenle",
+              style:
+                  TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
+            )),
         body: categoriesAll != null
             ? SingleChildScrollView(
                 child: Column(
@@ -358,7 +362,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
                     SizedBox(
                       width: 20,
                     ),
-                   // btn(),
+                    // btn(),
                     SizedBox(
                       height: 20,
                     ),
@@ -386,6 +390,7 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
 
   var _backGroundColor = 0xFFffffff;
   var _fontColor = 0xFFFFC204;
+
 /*
   Container btn() {
     return Container(
@@ -420,15 +425,18 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
 */
   int createPost() {
     if (foodNameController.text.isEmpty ||
-        foodNameController.text.length < 3 ||
+        foodNameController.text.length <
+            GlobalVariables.MIN_FOOD_DATA_TEXT_COUNT ||
         foodRecipeController.text.isEmpty ||
-        foodRecipeController.text.length < 3 ||
+        foodRecipeController.text.length <
+            GlobalVariables.MIN_FOOD_DATA_TEXT_COUNT ||
         _hardnessKey == -1 ||
         _personKey == -1 ||
         _prepTimeKey == -1) {
       showErrorDialog("Lütfen boş alan bırakmayın!");
       return 1;
-    } else if (GlobalVariables.INGREDIENT_LIST.length < 3) {
+    } else if (GlobalVariables.INGREDIENT_LIST.length <
+        GlobalVariables.MIN_INGREDIENTS_COUNT) {
       showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
       return 1;
     } else if (widget.foodModel.image.id == 0) {
@@ -443,18 +451,17 @@ class _UpdateFoodPageState extends State<UpdateFoodPage> {
     food.completedCount = 0;
     food.prepTime = _prepTimeKey;
     food.personCount = _personKey;
-    food.categoryList=[];
+    food.categoryList = [];
 
-    List<CategoryModel> tempList=[];
+    List<CategoryModel> tempList = [];
 
     GlobalVariables.CATEGORY_LIST.forEach((element) {
       tempList.add(element);
     });
 
-    food.categoryList=tempList;
+    food.categoryList = tempList;
 
-
-    GlobalVariables.CATEGORY_LIST_FOOD_ID =0;
+    GlobalVariables.CATEGORY_LIST_FOOD_ID = 0;
     GlobalVariables.CATEGORY_LIST.clear();
     food.ingredients =
         jsonEncode(GlobalVariables.INGREDIENT_LIST).toString() + "";

@@ -24,4 +24,6 @@ class GlobalVariables {
   static int CATEGORY_LIST_FOOD_ID = 0;
   static bool IS_USER_BANNED=false;
   static BuildContext CONTEXT=null;
+  static int MIN_INGREDIENTS_COUNT=1;
+  static int MIN_FOOD_DATA_TEXT_COUNT=1;
 }

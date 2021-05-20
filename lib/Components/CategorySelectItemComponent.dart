@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yemek_tarifi_odev_mobil/models/CategoryModel.dart';
 import 'package:yemek_tarifi_odev_mobil/pages/FilterByCategoryPage.dart';
+import 'package:yemek_tarifi_odev_mobil/services/TextService.dart';
 
 import '../GlobalVariables.dart';
 
@@ -95,7 +96,7 @@ class _CategorySelectItemCompnentState
                         SizedBox(
                           height: 10,
                         ),
-                        Text(widget.categoryModel.nameTurkish,
+                        Text(TextService.checkLength(widget.categoryModel.nameTurkish,),
                             maxLines: 1,overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 21)),
                       ],

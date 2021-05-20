@@ -36,7 +36,7 @@ class _CategoryListComponentState extends State<CategoryListComponent> {
                 bottomLeft: Radius.circular(50)),
             child: Container(
               //  color: Colors.amber,
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.26,
               width: MediaQuery.of(context).size.width ,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
