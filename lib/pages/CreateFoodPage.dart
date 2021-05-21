@@ -355,7 +355,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
       return 1;
     } else if (GlobalVariables.INGREDIENT_LIST.length <
         GlobalVariables.MIN_INGREDIENTS_COUNT) {
-      showErrorDialog("Lütfen en az 3 malzeme ekleyin!");
+      showErrorDialog("Lütfen en az "+GlobalVariables.MIN_INGREDIENTS_COUNT.toString()+" malzeme ekleyin!");
       return 1;
     } else if (GlobalVariables.IMAGE_ID == 0) {
       showErrorDialog("Lütfen resim seçin!");
@@ -378,8 +378,7 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
     food.categoryList.forEach((element) {
       print(element?.nameTurkish);
     });
-    GlobalVariables.CATEGORY_LIST_FOOD_ID = 0;
-    GlobalVariables.CATEGORY_LIST.clear();
+
     UserModel user = new UserModel();
     user.id = GlobalVariables.USER_ID;
     food.user = user;
@@ -395,6 +394,8 @@ class _CreateFoodPageState extends State<CreateFoodPage> {
 
     FoodService.createFood(food).then((value) {
       if (value != null) {
+        GlobalVariables.CATEGORY_LIST_FOOD_ID = 0;
+        GlobalVariables.CATEGORY_LIST.clear();
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => RouterPage()),

@@ -128,7 +128,7 @@ class _CommentListItemState extends State<CommentListItem> {
   void _showDialog(BuildContext context) {
 
     VoidCallback continueCallBack = () {
-       Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       // code on continue comes here
       if(widget.commentModel.userId==GlobalVariables.USER_ID || GlobalVariables.ROLE != "USER") {
         CommentService.deleteCommentByID(widget.commentModel.id);

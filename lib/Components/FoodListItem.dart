@@ -242,7 +242,7 @@ class _FoodListItemState extends State<FoodListItem> {
 
   void _showDialog(BuildContext context) {
     VoidCallback continueCallBack = () {
-      Navigator.of(context).pop();
+     // Navigator.of(context).pop();
       // code on continue comes here
       if (widget.foodModel.user.id == GlobalVariables.USER_ID ||
           GlobalVariables.ROLE != "USER") {

@@ -47,7 +47,7 @@ class _FoodDetailState extends State<FoodDetail> {
           checkSaved();
           ingredientsJsonModelFromJson(widget.foodModel.ingredients)
               .forEach((element) {
-            ingredientsParsed += element.name + "  " + element.count + "\n";
+            ingredientsParsed +=GlobalVariables.DOT_SHAPE +" "+ element.name + " - " + element.count + "\n";
           });
 
           isLoading = false;
