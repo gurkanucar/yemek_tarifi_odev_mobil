@@ -2,7 +2,6 @@ import 'package:http/http.dart' as http;
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yemek_tarifi_odev_mobil/models/UserModel.dart';
 import '../GlobalVariables.dart';
 import 'UserBanCheckService.dart';
@@ -27,8 +26,8 @@ class UserService {
       if (response.statusCode == 200) {
         token = response.body;
         print("Token:  " + token);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("token", token);
+        //SharedPreferences prefs = await SharedPreferences.getInstance();
+        //await prefs.setString("token", token);
         GlobalVariables.BEARER_TOKEN = token;
         UserModel user;
         await getSelf(token).then((value) {
