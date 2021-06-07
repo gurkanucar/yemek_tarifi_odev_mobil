@@ -55,18 +55,21 @@ class _FilterByCategoryPageState extends State<FilterByCategoryPage> {
                 SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                   return _foods[index] != null && _loading == false
-                      ? FoodListItem(
-                          foodModel: _foods[index],
-                          onPressed: () {
-                            print(_foods[index].id.toString() +
-                                " id li food tiklandi");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        FoodDetail(foodModel: _foods[index])));
-                          },
-                        )
+                      ? Container(
+                    margin: EdgeInsets.all(20),
+                    child: FoodListItem(
+                      foodModel: _foods[index],
+                      onPressed: () {
+                        print(_foods[index].id.toString() +
+                            " id li food tiklandi");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FoodDetail(foodModel: _foods[index])));
+                      },
+                    ),
+                  )
                       : SizedBox();
                 }, childCount: _foods?.length))
               ],

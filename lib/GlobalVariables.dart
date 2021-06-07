@@ -8,12 +8,11 @@ import 'models/UserModel.dart';
 class GlobalVariables {
   static String SEARCHED="";
   static String BASE_URL = "http://192.168.0.21:8080";
+  //static String BASE_URL = "https://yemektarifi-homework.herokuapp.com";
   static String IMAGE_BASE_URL = "/api/files/downloadFile/";
   static String FOOD_IMAGE_URL = null;
   static String PROFILE_IMAGE_URL = null;
   static String PROFILE_IMAGE_ID ="";
-  static String CHAR_NEW_LINE="#n#";
-  static String CHAR_IN_LINE="#-#";
   static String BEARER_TOKEN = "";
   static int USER_ID = 1;
   static UserModel USER;
