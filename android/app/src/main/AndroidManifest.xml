@@ -5,7 +5,7 @@
     <application
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="yemek_tarifi_odev_mobil"
+        android:label="Yap Ye Yemek"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
 
